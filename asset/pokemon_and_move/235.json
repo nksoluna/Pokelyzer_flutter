@@ -1,0 +1,1 @@
+{"index":235,"name":"smeargle","stats":{"HP":55,"ATK":20,"DEF":35,"SPATK":20,"SPDEF":45,"SPD":75},"type":["normal"],"abilities":[{"ability":"own-tempo","is_hidden":false},{"ability":"technician","is_hidden":false},{"ability":"moody","is_hidden":true}],"moves":[{"name":"sketch","power":null,"accuracy":null,"pp":1,"type":"normal","class":"status"}],"evolutions: ":[]}
