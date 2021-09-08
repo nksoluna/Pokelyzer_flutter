@@ -11,6 +11,28 @@ class PokelyzerState extends State<Pokelyzer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: IndexedStack(index: _currentindex, children: [
+        Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Pokedex Here')],
+        )),
+        Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Compare Here')],
+        )),
+        Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Team Builder Here')],
+        )),
+        Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Favourite Here')],
+        ))
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentindex,
         type: BottomNavigationBarType.fixed,
