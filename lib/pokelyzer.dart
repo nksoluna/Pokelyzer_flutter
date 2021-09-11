@@ -31,6 +31,11 @@ class PokelyzerState extends State<Pokelyzer> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Text('Favourite Here')],
+        )),
+        Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text('Character Here')],
         ))
       ]),
       bottomNavigationBar: BottomNavigationBar(
@@ -45,6 +50,8 @@ class PokelyzerState extends State<Pokelyzer> {
           BottomNavigationBarItem(icon: Icon(Icons.add), label: "Team Builder"),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: "Favourite"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: "One Pokemon Character Test"),
         ],
         onTap: (index) {
           setState(() {
