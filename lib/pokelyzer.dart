@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pokelyzer/compare.dart';
 
 class Pokelyzer extends StatefulWidget {
   @override
@@ -17,11 +18,7 @@ class PokelyzerState extends State<Pokelyzer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Text('Pokedex Here')],
         )),
-        Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('Compare Here')],
-        )),
+        CompareScreen(),
         Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
