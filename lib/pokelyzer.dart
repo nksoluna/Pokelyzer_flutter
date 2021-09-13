@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
-import 'package:pokelyzer/compare.dart';
-
+import 'package:pokelyzer/Screens/Compare/compare.dart';
 
 class Pokelyzer extends StatefulWidget {
   @override
