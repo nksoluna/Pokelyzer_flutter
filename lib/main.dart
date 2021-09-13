@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Helpers/palette.dart';
+import 'Screens/Compare/compare.dart';
+import 'Screens/Home/home.dart';
 import 'pokelyzer.dart';
 
 void main() async {
@@ -25,7 +27,11 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontSize: 15.0, color: Color(0xFF000000)),
         ),
       ),
-      home: Pokelyzer(),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => HomeScreen(),
+        '/compare': (context) => CompareScreen(),
+      },
     );
   }
 }

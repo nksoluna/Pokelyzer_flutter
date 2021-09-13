@@ -5,6 +5,8 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var route = ModalRoute.of(context);
+
     return Drawer(
       child: Container(
         child: Column(
@@ -60,6 +62,9 @@ class DrawerWidget extends StatelessWidget {
                         selected: true,
                         onTap: () {
                           Navigator.pop(context);
+                          if (route != null && route.settings.name != '/home') {
+                            Navigator.pushNamed(context, '/home');
+                          }
                         },
                       ),
                       ListTile(
@@ -68,7 +73,13 @@ class DrawerWidget extends StatelessWidget {
                         leading: Icon(
                           Icons.search,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          if (route != null &&
+                              route.settings.name != '/compare') {
+                            Navigator.pushNamed(context, '/compare');
+                          }
+                        },
                       ),
                       ListTile(
                         title: Text('Team Builder'),
