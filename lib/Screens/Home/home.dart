@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/drawer.dart';
 
-class CompareScreen extends StatefulWidget {
-  CompareScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _CompareScreenState createState() => _CompareScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _CompareScreenState extends State<CompareScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +18,7 @@ class _CompareScreenState extends State<CompareScreen> {
           children: [
             Expanded(
               child: Stack(
-                children: [
-                  Center(child: Text('Compare Screen')),
-                  DrawerButton()
-                ],
+                children: [Center(child: Text('Home Screen')), DrawerButton()],
               ),
             ),
           ],
