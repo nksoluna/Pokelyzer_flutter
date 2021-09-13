@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 Pokemon pokemonFromJson(String str) => Pokemon.fromJson(json.decode(str));
 String pokemonToJson(Pokemon data) => json.encode(data.toJson());
@@ -159,3 +160,12 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
+
+// class PokemonRepo {
+//   Future<Pokemon> fetchPokemon({int index = 1}) async {
+//     var response =
+//         await rootBundle.loadString('asset/pokemon_and_move/$index.json');
+//     dynamic result = response;
+//     return result.map((pokemon) => Pokemon.fromJson(pokemon));
+//   }
+// }
