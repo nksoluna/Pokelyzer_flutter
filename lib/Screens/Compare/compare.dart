@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokelyzer/CustomWidgets/drawer.dart';
+import 'package:pokelyzer/CustomWidgets/base.dart';
 
 class CompareScreen extends StatefulWidget {
   CompareScreen({Key? key}) : super(key: key);
@@ -11,22 +11,6 @@ class CompareScreen extends StatefulWidget {
 class _CompareScreenState extends State<CompareScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: DrawerWidget(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  Center(child: Text('Compare Screen')),
-                  DrawerButton()
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return BaseWidget(child: Center(child: Text('Compare Screen')));
   }
 }
