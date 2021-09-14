@@ -1,1 +1,0 @@
-{"index":132,"name":"ditto","stats":{"HP":48,"ATK":48,"DEF":48,"SPATK":48,"SPDEF":48,"SPD":48},"type":["normal"],"abilities":[{"ability":"limber","is_hidden":false},{"ability":"imposter","is_hidden":true}],"moves":[{"name":"transform","power":null,"accuracy":null,"pp":10,"type":"normal","class":"status"}],"evolutions: ":[]}
