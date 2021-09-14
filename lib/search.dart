@@ -1,9 +1,15 @@
-List<dynamic> searchWithType(List<dynamic> allpokemon, List<bool> types) {
-  var selectedPokemons = allpokemon;
-  List<int> typeIndex = [];
+import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/models/type.dart';
+
+List<dynamic> searchWithType(
+    List<dynamic> allpokemon, List<dynamic> allType, List<bool> types) {
+  List selectedPokemons = allpokemon;
+  List selectedType = [];
   for (int i = 0; i < 18; i++) {
-    if (types[i]) typeIndex.add(i);
+    if (types[i]) selectedType.add(allType[i]);
   }
+  selectedPokemons.retainWhere((element) =>
+      element.types.any((ele) => ele == selectedType[0].name.toLowerCase()));
 
   return selectedPokemons;
 }

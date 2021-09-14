@@ -22,8 +22,12 @@ class Type {
   }
 }
 
-Future<dynamic> readAllTypeFromJson() async {
+Future<List<Type>> readAllTypeFromJson() async {
   final String typeResponse = await rootBundle.loadString('assets/types.json');
   final typeData = await json.decode(typeResponse);
-  return typeData.map((it) => Type.fromJson(it)).toList();
+  List<Type> allType = [];
+  for (int i = 0; i < 18; i++) {
+    allType.add(Type.fromJson(typeData[i]));
+  }
+  return allType;
 }

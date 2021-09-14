@@ -34,14 +34,6 @@ class Pokemon {
   }
 }
 
-Future<dynamic> readAllFromJson() async {
-  final String pkmnResponse =
-      await rootBundle.loadString('assets/pokemons.json');
-  final pkmnData = await json.decode(pkmnResponse);
-  return pkmnData.map((it) => Pokemon.fromJson(it)).toList();
-  //return pkmnData;
-}
-
 class Stat {
   final int hp;
   final int atk;
@@ -78,4 +70,15 @@ class Move {
     return Move(json["name"], json["power"], json["accuracy"], json["pp"],
         json["type"], json["class"]);
   }
+}
+
+Future<List<Pokemon>> readAllPokemonFromJson() async {
+  final String pkmnResponse =
+      await rootBundle.loadString('assets/pokemons.json');
+  final pkmnData = await json.decode(pkmnResponse);
+  List<Pokemon> allPokemon = [];
+  for (int i = 0; i < 807; i++) {
+    allPokemon.add(Pokemon.fromJson(pkmnData[i]));
+  }
+  return allPokemon;
 }
