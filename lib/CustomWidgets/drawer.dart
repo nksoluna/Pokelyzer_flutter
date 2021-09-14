@@ -46,25 +46,24 @@ class DrawerWidget extends StatelessWidget {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(
                       "Pokelyzer",
-                      style: TextStyle(fontSize: 30.0, color: Colors.red),
+                      style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 5.0,
+                              color: Colors.black,
+                            )
+                          ]),
                     ),
-                    titlePadding: EdgeInsets.only(bottom: 40.0),
-                    centerTitle: true,
+                    titlePadding: EdgeInsets.only(bottom: 5.0, left: 15.0),
+                    centerTitle: false,
                     stretchModes: [StretchMode.zoomBackground],
-                    background: ShaderMask(
-                      shaderCallback: (rect) {
-                        return LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.black, Colors.transparent],
-                        ).createShader(
-                            Rect.fromLTRB(0, 0, rect.width, rect.height));
-                      },
-                      blendMode: BlendMode.dstIn,
-                      child: Image(
-                          alignment: Alignment.topCenter,
-                          image: AssetImage('assets/images/1.png')),
-                    ),
+                    background: Image(
+                        alignment: Alignment.topCenter,
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                            'assets/images/shapes/red_rectangle.jpg')),
                   ),
                 ),
                 SliverList(
