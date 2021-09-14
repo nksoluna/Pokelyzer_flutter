@@ -11,6 +11,12 @@ class CompareScreen extends StatefulWidget {
 class _CompareScreenState extends State<CompareScreen> {
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(child: Center(child: Text('Compare Screen')));
+    return BaseWidget(
+      children: [
+        Text('Compare Pokemon Page',
+            style: Theme.of(context).textTheme.headline5!),
+        Text('on testing', style: Theme.of(context).textTheme.headline4!),
+      ],
+    );
   }
 }

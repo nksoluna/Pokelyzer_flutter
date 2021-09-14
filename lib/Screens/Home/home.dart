@@ -11,6 +11,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(child: Center(child: Text('Home Screen')));
+    return BaseWidget(children: [Center(child: Text('Home Screen'))]);
   }
 }

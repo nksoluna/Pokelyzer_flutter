@@ -47,7 +47,8 @@ class DrawerWidget extends StatelessWidget {
                     title: Text(
                       "Pokelyzer",
                       style: TextStyle(
-                          fontSize: 30.0,
+                          fontSize: 35.0,
+                          fontWeight: FontWeight.w900,
                           color: Colors.white,
                           shadows: [
                             Shadow(
@@ -116,12 +117,11 @@ class DrawerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 8.0, left: 4.0),
+      alignment: Alignment.topLeft,
+      padding: const EdgeInsets.only(bottom: 30),
       child: IconButton(
-        icon: const Icon(
-          Icons.horizontal_split_rounded,
-          size: 50,
-        ),
+        iconSize: 40,
+        icon: const Icon(Icons.horizontal_split_rounded),
         color: Theme.of(context).brightness == Brightness.dark
             ? null
             : Colors.grey[700],
