@@ -32,7 +32,7 @@ class PokelyzerState extends State<Pokelyzer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Text('Favourite Here')],
         )),
-        Container(child: PokemonOverallInfo())
+        Container(child: PokemonInfoScreen())
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentindex,
