@@ -25,6 +25,7 @@ class PokelyzerState extends State<Pokelyzer> {
     searchIndexController = TextEditingController();
   }
 
+  // แก้
   Future<void> readJson() async {
     // load from assets/pokemons.json
     final String pkmnResponse = await rootBundle.loadString('pokemons.json');
@@ -41,6 +42,7 @@ class PokelyzerState extends State<Pokelyzer> {
     });
   }
 
+  // แก้
   List<dynamic> searchWithType() {
     var selectedPokemons1 = [];
     var selectedPokemons2 = [];
@@ -70,6 +72,7 @@ class PokelyzerState extends State<Pokelyzer> {
     return selectedPokemons1;
   }
 
+  // แก้
   List<dynamic> searchWithIndex(int i) {
     var selectedPokemon = [];
 
@@ -108,6 +111,7 @@ class PokelyzerState extends State<Pokelyzer> {
           child: Column(
             children: [
               selectedPokemon.length > 0
+                  // แก้เป็น StreamBuilder ให้โหลดข้อมูลตาม Async
                   ? Expanded(
                       child: ListView.builder(
                         itemCount: selectedPokemon.length,
