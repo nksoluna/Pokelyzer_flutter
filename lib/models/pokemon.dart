@@ -88,7 +88,7 @@ class PokemonsRepo {
     final String pkmnResponse =
         await rootBundle.loadString('assets/pokemons.json');
     final pkmnData = await json.decode(pkmnResponse);
-    Pokemon pokemon = Pokemon.fromJson(pkmnData[index - 1]);
+    Pokemon pokemon = Pokemon.fromJson(pkmnData[index]);
     return pokemon;
   }
 }
