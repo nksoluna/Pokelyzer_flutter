@@ -22,7 +22,7 @@ class RaisedGradientButton extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(16),
         gradient: gradient,
         boxShadow: [
           BoxShadow(
@@ -33,8 +33,9 @@ class RaisedGradientButton extends StatelessWidget {
         ],
       ),
       child: Material(
-        color: Colors.transparent,
+        type: MaterialType.transparency,
         child: InkWell(
+            borderRadius: BorderRadius.circular(16),
             onTap: onPressed,
             child: Center(
               child: child,
