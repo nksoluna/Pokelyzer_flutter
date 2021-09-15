@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
-import 'package:pokelyzer/CustomWidgets/raisedGradientButton.dart';
+import 'package:pokelyzer/CustomWidgets/pokemon_selector_circle.dart';
+import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
 
 class CompareScreen extends StatefulWidget {
   CompareScreen({Key? key}) : super(key: key);
@@ -16,29 +17,40 @@ class _CompareScreenState extends State<CompareScreen> {
     var imageSize = screenSize.width / 4;
     return BaseWidget(
       children: [
-        Text('Compare Pokemon Page',
-            style: Theme.of(context).textTheme.headline4!),
+        Text('Compare Pokemon',
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .merge(TextStyle(fontWeight: FontWeight.bold))),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
                 children: [
                   Text('Name', style: Theme.of(context).textTheme.headline5),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Image.asset('assets/images/1.png', width: imageSize),
-                  )
+                  PokemonSelectorWidget(
+                    width: imageSize,
+                    imagePath: 'assets/images/pokemons/134.png',
+                    onTap: () {
+                      print('1 Tapped!');
+                    },
+                  ),
+                  Text('types'),
                 ],
               ),
               Column(
                 children: [
                   Text('Name', style: Theme.of(context).textTheme.headline5),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Image.asset('assets/images/2.png', width: imageSize),
+                  PokemonSelectorWidget(
+                    width: imageSize,
+                    imagePath: 'assets/images/pokemons/500.png',
+                    onTap: () {
+                      print('2 Tapped!');
+                    },
                   ),
+                  Text('types'),
                 ],
               ),
             ],
@@ -49,7 +61,7 @@ class _CompareScreenState extends State<CompareScreen> {
           margin: EdgeInsets.only(right: imageSize / 2 - 20),
           child: RaisedGradientButton(
             child: Text(
-              'Compare pokemon!',
+              'Compare Pokemon!',
               style: TextStyle(color: Colors.white),
             ),
             width: 150,
