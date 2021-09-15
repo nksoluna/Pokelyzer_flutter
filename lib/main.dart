@@ -3,15 +3,15 @@ import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
-import 'pokelyzer.dart';
 
 void main() async {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  Color primaryColor = const Color(0xFFff2626);
-  Color secondaryColor = const Color(0xFFbd1616);
+  final Color primaryColor = const Color(0xFFff2626);
+  final Color secondaryColor = const Color(0xFFbd1616);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

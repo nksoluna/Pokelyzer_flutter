@@ -23,7 +23,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   }
 
   Future<void> fetchPokemon() async {
-    var pokemon = await _repo.getPokemonByIndex(_index - 1);
+    var pokemon = await _repo.getPokemonByIndex(_index);
     setState(() {
       _pokemon = pokemon;
     });
@@ -31,6 +31,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(child: Center(child: Text(_pokemon.name)));
+    return BaseWidget(children: [Center(child: Text(_pokemon.name))]);
   }
 }
