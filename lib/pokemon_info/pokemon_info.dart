@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
   PokemonInfoScreen({Key? key}) : super(key: key);
@@ -12,25 +12,136 @@ class PokemonInfoScreen extends StatefulWidget {
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final PokemonsRepo _repo;
   late Pokemon _pokemon;
-  late int _index;
+  final int _index = 1;
 
   _PokemonInfoScreenState() : _repo = new PokemonsRepo();
 
-  void initState() {
-    super.initState();
-    _index = 1;
-    fetchPokemon();
+  Future<Pokemon> getPokemon() async {
+    var pokemon = await _repo.getPokemonByIndex(_index);
+    return pokemon;
   }
 
-  Future<void> fetchPokemon() async {
-    var pokemon = await _repo.getPokemonByIndex(_index - 1);
-    setState(() {
-      _pokemon = pokemon;
-    });
+  Widget buildHeader(Pokemon pokemon) {
+    return Column(children: [
+      Text(
+        pokemon.name,
+        style: Theme.of(context).textTheme.headline4,
+      ),
+      getPokemonTypes(pokemon)
+    ]);
+  }
+
+  Widget getPokemonTypes(Pokemon pokemon) {
+    List<Widget> items = [];
+    for (var type in pokemon.types) {
+      if (type == 'grass') {
+        items.add(Text(
+          type,
+          style: TextStyle(backgroundColor: Colors.green[600]),
+        ));
+      } else
+        items.add(Text(
+          type,
+          style: TextStyle(backgroundColor: Colors.purple[800]),
+        ));
+    }
+    return Row(
+      children: items,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(child: Center(child: Text(_pokemon.name)));
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+    return Scaffold(
+        body: Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              FutureBuilder(
+                  future: getPokemon(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return buildHeader(snapshot.data as Pokemon);
+                    }
+                    return CircularProgressIndicator();
+                  }),
+              Image.asset('assets/images/1.png'),
+            ],
+          ),
+        ),
+        SlidingUpPanel(
+          panel: Center(
+            child: Text("This is the sliding Widget"),
+          ),
+          collapsed: Container(
+            decoration:
+                BoxDecoration(color: Colors.blueGrey, borderRadius: radius),
+            child: Center(
+              child: Text(
+                "This is the collapsed Widget",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        )
+      ],
+    ));
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   BorderRadiusGeometry radius = BorderRadius.only(
+  //     topLeft: Radius.circular(24.0),
+  //     topRight: Radius.circular(24.0),
+  //   );
+  //   return Scaffold(
+  //       body: Stack(
+  //     children: <Widget>[
+  //       Container(
+  //         child: Column(
+  //           children: [
+  //             FutureBuilder(
+  //               future: getPokemon(),
+  //               builder:
+  //                   (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
+  //                 if (snapshot.connectionState == ConnectionState.done) {
+  //                   return Text(
+  //                     snapshot.data!.name,
+  //                     style: Theme.of(context).textTheme.headline4,
+  //                   );
+  //                 }
+  //                 return CircularProgressIndicator();
+  //               },
+  //             ),
+  //             // getPokemonTypes(_pokemon),
+  //             Image.asset('assets/images/1.png')
+  //           ],
+  //         ),
+  //         padding: EdgeInsets.all(20),
+  //       ),
+  //       SlidingUpPanel(
+  //         panel: Center(
+  //           child: Text("This is the sliding Widget"),
+  //         ),
+  //         collapsed: Container(
+  //           decoration:
+  //               BoxDecoration(color: Colors.blueGrey, borderRadius: radius),
+  //           child: Center(
+  //             child: Text(
+  //               "This is the collapsed Widget",
+  //               style: TextStyle(color: Colors.white),
+  //             ),
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   ));
+  // }
 }
