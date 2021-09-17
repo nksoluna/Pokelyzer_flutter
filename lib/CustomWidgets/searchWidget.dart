@@ -96,7 +96,8 @@ class SearchWidgetState extends State<SearchWidget> {
               ),
             ),
             Container(
-                child: Row(
+                child: Expanded(
+                    child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
@@ -181,10 +182,10 @@ class SearchWidgetState extends State<SearchWidget> {
                   width: 50,
                 ),
               ],
-            )),
+            ))),
             Container(
                 alignment: Alignment.centerRight,
-                margin: const EdgeInsets.only(top: 10, right: 10),
+                margin: const EdgeInsets.only(bottom: 10, right: 10),
                 child: RaisedGradientButton(
                   height: 40,
                   width: 100,
