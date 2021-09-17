@@ -1,0 +1,1 @@
+{"index":201,"name":"unown","stats":{"HP":48,"ATK":72,"DEF":48,"SPATK":72,"SPDEF":48,"SPD":48},"type":["psychic"],"abilities":[{"ability":"levitate","is_hidden":false}],"moves":[{"name":"hidden-power","power":60,"accuracy":100,"pp":15,"type":"normal","class":"special"}],"evolutions: ":[]}
