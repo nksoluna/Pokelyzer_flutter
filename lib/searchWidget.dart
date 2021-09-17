@@ -130,6 +130,10 @@ class SearchResultState extends State<SearchResult> {
                   itemBuilder: (context, index) {
                     return Card(
                         child: ListTile(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context, widget.selectedPokemon[index]);
+                      },
                       title: Text(widget.selectedPokemon[index].name),
                     ));
                   }))

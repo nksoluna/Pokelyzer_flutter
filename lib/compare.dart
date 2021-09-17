@@ -21,14 +21,16 @@ class CompareWidgetTestState extends State<CompareWidgetTest> {
       children: [
         ElevatedButton(
           onPressed: () {
-            selectingPokemon(context);
+            selectingPokemon(context, 1);
           },
           child: selectedPokemon1 == null
               ? Text("no pokemon")
               : Text(selectedPokemon1!.name),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            selectingPokemon(context, 2);
+          },
           child: selectedPokemon2 == null
               ? Text("no pokemon")
               : Text(selectedPokemon2!.name),
@@ -38,10 +40,15 @@ class CompareWidgetTestState extends State<CompareWidgetTest> {
   }
 
   // might be value instead of void
-  void selectingPokemon(BuildContext context) async {
-    final result = await Navigator.push(
+  void selectingPokemon(BuildContext context, int side) async {
+    Pokemon result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SearchWidget()),
     );
+    setState(() {
+      if (side == 1)
+        selectedPokemon1 = result;
+      else if (side == 2) selectedPokemon2 = result;
+    });
   }
 }
