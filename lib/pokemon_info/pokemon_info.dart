@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -13,7 +14,7 @@ class PokemonInfoScreen extends StatefulWidget {
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final PokemonsRepo _repo;
   late Pokemon _pokemon;
-  final int _index = 1;
+  final int _index = 0;
 
   final panelController = PanelController();
   final double tabBarHeight = 80;
@@ -57,6 +58,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   Widget buildSlidingPanel({
     required PanelController panelController,
     required ScrollController scrollController,
+    required Pokemon pokemon,
   }) =>
       DefaultTabController(
         length: 4,
@@ -66,8 +68,9 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           ) as PreferredSizeWidget,
           body: TabBarView(
             children: [
-              TabWidget(
+              TabStatWidget(
                 scrollController: scrollController,
+                pokemon: pokemon,
               ),
               TabWidget(scrollController: scrollController),
               TabWidget(scrollController: scrollController),
@@ -133,16 +136,34 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             ],
           ),
         ),
-        SlidingUpPanel(
-          controller: panelController,
-          maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
-          panelBuilder: (scrollController) => buildSlidingPanel(
-            scrollController: scrollController,
-            panelController: panelController,
-          ),
-          body: Image.asset('assets/images/pokemons/1.png'),
-        )
+        FutureBuilder(
+            future: getPokemon(),
+            builder: (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return SlidingUpPanel(
+                  controller: panelController,
+                  maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
+                  panelBuilder: (scrollController) => buildSlidingPanel(
+                      scrollController: scrollController,
+                      panelController: panelController,
+                      pokemon: snapshot.data as Pokemon),
+                  body: Image.asset('assets/images/pokemons/1.png'),
+                );
+              }
+              return CircularProgressIndicator();
+            }),
       ],
     ));
   }
 }
+
+
+        // SlidingUpPanel(
+        //   controller: panelController,
+        //   maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
+        //   panelBuilder: (scrollController) => buildSlidingPanel(
+        //     scrollController: scrollController,
+        //     panelController: panelController,
+        //   ),
+        //   body: Image.asset('assets/images/pokemons/1.png'),
+        // )
