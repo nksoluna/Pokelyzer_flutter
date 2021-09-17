@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,59 +51,166 @@ class SearchWidgetState extends State<SearchWidget> {
       body: Center(
         child: Column(
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("<")),
+            Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 0, top: 5),
+                child: RawMaterialButton(
+                  fillColor: Colors.red[400],
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "<",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                  shape: CircleBorder(),
+                )),
             SizedBox(
-              height: 50,
-            ),
-            TextField(
-              controller: searchIndexController,
-              decoration: InputDecoration(labelText: 'Enter Index'),
-            ),
-            TextField(
-              controller: searchNameController,
-              decoration: InputDecoration(labelText: 'Enter Pokemon Name'),
+              height: 15,
             ),
             Container(
-              child: Expanded(
-                  child: ListView.builder(
-                      itemCount: selectedTypeArray.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(allTypeString[index]),
-                            tileColor: selectedTypeArray[index]
-                                ? Colors.redAccent
-                                : Colors.white,
-                            onTap: () {
-                              setState(() {
-                                selectedTypeArray[index] =
-                                    !selectedTypeArray[index];
-                              });
-                            },
-                          ),
-                        );
-                      })),
+              width: 300,
+              child: TextField(
+                controller: searchIndexController,
+                decoration: InputDecoration(labelText: 'Enter Index'),
+              ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    selectedPokemon = searchPokemon(
-                        searchIndexController.text,
-                        searchNameController.text,
-                        selectedTypeArray,
-                        allPokemon,
-                        allType);
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchResult(selectedPokemon)));
-                },
-                child: Text("Search")),
+            Container(
+              width: 300,
+              child: TextField(
+                controller: searchNameController,
+                decoration: InputDecoration(labelText: 'Enter Pokemon Name'),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(bottom: 20),
+              width: 300,
+              child: Text(
+                "Select Types( Up to 2 type )",
+                style: TextStyle(fontSize: 17),
+              ),
+            ),
+            Container(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 50,
+                ),
+                Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 9,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              height: 35,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Card(
+                                color: selectedTypeArray[index]
+                                    ? Colors.redAccent
+                                    : Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.red, width: 1),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedTypeArray[index] =
+                                          !selectedTypeArray[index];
+                                    });
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      allTypeString[index],
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        }),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 9,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              height: 35,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Card(
+                                color: selectedTypeArray[index + 9]
+                                    ? Colors.redAccent
+                                    : Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.red, width: 1),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedTypeArray[index + 9] =
+                                          !selectedTypeArray[index + 9];
+                                    });
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      allTypeString[index + 9],
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        }),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+              ],
+            )),
+            Container(
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.only(top: 10, right: 10),
+                child: RaisedGradientButton(
+                  height: 40,
+                  width: 100,
+                  gradient: LinearGradient(
+                    colors: <Color>[Colors.red[700]!, Colors.red[400]!],
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      selectedPokemon = searchPokemon(
+                          searchIndexController.text,
+                          searchNameController.text,
+                          selectedTypeArray,
+                          allPokemon,
+                          allType);
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SearchResult(selectedPokemon)));
+                  },
+                  child: Text(
+                    "Search",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ))
           ],
         ),
       ),
