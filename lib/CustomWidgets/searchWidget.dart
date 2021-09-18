@@ -51,180 +51,182 @@ class SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Container(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 0, top: 5),
+                  child: RawMaterialButton(
+                    fillColor: Colors.red[400],
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "<",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    padding: EdgeInsets.all(10.0),
+                    shape: CircleBorder(),
+                  )),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                width: 300,
+                child: TextField(
+                  controller: searchIndexController,
+                  decoration: InputDecoration(labelText: 'Enter Index'),
+                ),
+              ),
+              Container(
+                width: 300,
+                child: TextField(
+                  controller: searchNameController,
+                  decoration: InputDecoration(labelText: 'Enter Pokemon Name'),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
                 alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(left: 0, top: 5),
-                child: RawMaterialButton(
-                  fillColor: Colors.red[400],
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "<",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                  shape: CircleBorder(),
-                )),
-            SizedBox(
-              height: 15,
-            ),
-            Container(
-              width: 300,
-              child: TextField(
-                controller: searchIndexController,
-                decoration: InputDecoration(labelText: 'Enter Index'),
-              ),
-            ),
-            Container(
-              width: 300,
-              child: TextField(
-                controller: searchNameController,
-                decoration: InputDecoration(labelText: 'Enter Pokemon Name'),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(bottom: 20),
-              width: 300,
-              child: Text(
-                "Select Types( Up to 2 type )",
-                style: TextStyle(fontSize: 17),
-              ),
-            ),
-            Container(
-                child: Expanded(
-                    child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 50,
+                margin: const EdgeInsets.only(bottom: 20),
+                width: 300,
+                child: Text(
+                  "Select Types( Up to 2 type )",
+                  style: TextStyle(fontSize: 17),
                 ),
-                Expanded(
-                  child: Container(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 9,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              height: 35,
-                              margin: const EdgeInsets.only(bottom: 10),
-                              child: Card(
-                                color: selectedTypeArray[index]
-                                    ? typeColor[index]
-                                    : Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  side:
-                                      BorderSide(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedTypeArray[index] =
-                                          !selectedTypeArray[index];
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      allTypeString[index],
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          color: selectedTypeArray[index]
-                                              ? Colors.white
-                                              : typeColor[index]),
+              ),
+              Container(
+                  child: Expanded(
+                      child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 9,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                height: 35,
+                                margin: const EdgeInsets.only(bottom: 10),
+                                child: Card(
+                                  color: selectedTypeArray[index]
+                                      ? typeColor[index]
+                                      : Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedTypeArray[index] =
+                                            !selectedTypeArray[index];
+                                      });
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        allTypeString[index],
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: selectedTypeArray[index]
+                                                ? Colors.white
+                                                : typeColor[index]),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ));
-                        }),
+                                ));
+                          }),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                  child: Container(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 9,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              height: 35,
-                              margin: const EdgeInsets.only(bottom: 10),
-                              child: Card(
-                                color: selectedTypeArray[index + 9]
-                                    ? typeColor[index + 9]
-                                    : Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  side:
-                                      BorderSide(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedTypeArray[index + 9] =
-                                          !selectedTypeArray[index + 9];
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      allTypeString[index + 9],
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          color: selectedTypeArray[index + 9]
-                                              ? Colors.white
-                                              : typeColor[index + 9]),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 9,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                height: 35,
+                                margin: const EdgeInsets.only(bottom: 10),
+                                child: Card(
+                                  color: selectedTypeArray[index + 9]
+                                      ? typeColor[index + 9]
+                                      : Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedTypeArray[index + 9] =
+                                            !selectedTypeArray[index + 9];
+                                      });
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        allTypeString[index + 9],
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: selectedTypeArray[index + 9]
+                                                ? Colors.white
+                                                : typeColor[index + 9]),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ));
-                        }),
+                                ));
+                          }),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-              ],
-            ))),
-            Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.only(bottom: 10, right: 10),
-                child: RaisedGradientButton(
-                  height: 40,
-                  width: 100,
-                  gradient: LinearGradient(
-                    colors: <Color>[Colors.red[700]!, Colors.red[400]!],
+                  SizedBox(
+                    width: 50,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      selectedPokemon = searchPokemon(
-                          searchIndexController.text,
-                          searchNameController.text,
-                          selectedTypeArray,
-                          allPokemon,
-                          allType);
-                    });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SearchResult(selectedPokemon)));
-                  },
-                  child: Text(
-                    "Search",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ))
-          ],
+                ],
+              ))),
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: const EdgeInsets.only(bottom: 10, right: 10),
+                  child: RaisedGradientButton(
+                    height: 40,
+                    width: 100,
+                    gradient: LinearGradient(
+                      colors: <Color>[Colors.red[700]!, Colors.red[400]!],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        selectedPokemon = searchPokemon(
+                            searchIndexController.text,
+                            searchNameController.text,
+                            selectedTypeArray,
+                            allPokemon,
+                            allType);
+                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SearchResult(selectedPokemon)));
+                    },
+                    child: Text(
+                      "Search",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );
