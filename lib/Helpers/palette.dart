@@ -16,4 +16,34 @@ class Palette {
       900: const Color(0xff000000), //100%
     },
   );
+  List<Color> getAllTypeColor() {
+    return [
+      Color(0xffada595), // normal
+      Color(0xfff4533a), // fire
+      Color(0xff409efc), // water
+      Color(0xfffec543), // electric
+      Color(0xff7ecc59), // grass
+      Color(0xff60cee5), // ice
+      Color(0xffa3523d), // fighting
+      Color(0xffb45da4), // poison
+      Color(0xffbc9b50), // ground
+      Color(0xff9daff5), // flying
+      Color(0xfffd75a5), // psychic
+      Color(0xffadbb33), // bug
+      Color(0xffbca45f), // rock
+      Color(0xff6365b3), // ghost
+      Color(0xff7866db), // dragon
+      Color(0xff725a4a), // dark
+      Color(0xffadadc5), // steel
+      Color(0xfff6b7f6), // fairy
+    ];
+  }
+
+  Color getSelectedTypeColor(String pokemonType, List<String> allTypeString) {
+    List<Color> typeColors = getAllTypeColor();
+    for (int i = 0; i < 18; i++) {
+      if (pokemonType == allTypeString[i]) return typeColors[i];
+    }
+    return typeColors[0];
+  }
 }
