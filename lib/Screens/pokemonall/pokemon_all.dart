@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
+import 'package:pokelyzer/CustomWidgets/drawer.dart';
 import 'package:pokelyzer/Screens/pokemonall/drawer/drawer.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 
@@ -57,7 +58,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.blue,
-          drawer: PokemonDrawer(),
+          drawer: DrawerWidget(),
           body: Stack(children: <Widget>[
             SafeArea(
               child: Column(
@@ -71,7 +72,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(
-                              "./assets/material-image/background-firstpage.jpg",
+                              "./assets/material-image/background-mobile.jpg",
                             ),
                             fit: BoxFit.cover,
                           )),
@@ -201,9 +202,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
             double screenwidth = MediaQuery.of(context).size.width;
             Color typeColor = Color(0xFFFFFFFF);
             var types = _pkmns.types[0];
-            print('INDEX :  ${_pkmns.index}');
-            print('Name :  ${_pkmns.name}');
-            print('Type : $types');
+
             switch (types) {
               case 'normal':
                 typeColor = Color(0xFFA8A878);
@@ -262,48 +261,54 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
             }
 
             return Card(
-              elevation: 4,
-              shadowColor: Colors.grey,
-              margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              color: typeColor,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                      height: 81,
-                      width: 135,
-                      child: Image.asset(
-                        'assets/images/pokemons/${_pkmns.index}.png',
-                        height: 81,
-                        width: 135,
-                      )),
-                  Padding(
-                    // change style paddding
-                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-                    child: Column(children: [
-                      Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '${_pkmns.name.toUpperCase()}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: screenwidth * 0.04,
-                              shadows: <Shadow>[
-                                Shadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 0,
-                                    color: Colors.grey)
-                              ],
-                            ),
+                elevation: 4,
+                shadowColor: Colors.grey,
+                margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                color: typeColor,
+                child: InkWell(
+                  onTap: () {
+                    print('INDEX :  ${_pkmns.index}');
+                    print('Name :  ${_pkmns.name}');
+                    print('Type : $types');
+                  },
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                          height: 81,
+                          width: 135,
+                          child: Image.asset(
+                            'assets/images/pokemons/${_pkmns.index}.png',
+                            height: 81,
+                            width: 135,
                           )),
-                    ]),
+                      Padding(
+                        // change style paddding
+                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
+                        child: Column(children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '${_pkmns.name.toUpperCase()}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: screenwidth * 0.04,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 0,
+                                        color: Colors.grey)
+                                  ],
+                                ),
+                              )),
+                        ]),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
+                ));
           });
     }
   }
