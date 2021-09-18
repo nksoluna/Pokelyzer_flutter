@@ -76,17 +76,27 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                             fit: BoxFit.cover,
                           )),
                         ),
-                        Expanded(
+                        Container(
+                            height: double.infinity,
+                            margin: EdgeInsets.fromLTRB(0, 170, 0, 0),
                             child: Stack(
-                          children: [
-                            Text('Tesdt'),
-                            SizedBox(
-                              height: 100,
-                            ),
-                            Text('test2'),
-                            getBody(),
-                          ],
-                        )),
+                              children: [
+                                getBody(),
+                              ],
+                            )),
+                        Container(
+                            height: double.infinity,
+                            margin: EdgeInsets.fromLTRB(170, 80, 0, 0),
+                            child: Stack(
+                              children: [
+                                Text(
+                                  'POKEDEX',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              ],
+                            )),
                         Builder(
                           builder: (context) => Padding(
                             padding: const EdgeInsets.only(
@@ -264,7 +274,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                       height: 81,
                       width: 135,
                       child: Image.asset(
-                        'assets/images/${_pkmns.index}.png',
+                        'assets/images/pokemons/${_pkmns.index}.png',
                         height: 81,
                         width: 135,
                       )),
