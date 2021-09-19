@@ -183,10 +183,6 @@ class SearchWidgetState extends State<SearchWidget> {
                           }),
                     ),
                   ),
-<<<<<<< HEAD
-                  SizedBox(
-                    width: 50,
-=======
                   onPressed: () {
                     setState(() {
                       selectedPokemon = searchPokemon(
@@ -205,7 +201,6 @@ class SearchWidgetState extends State<SearchWidget> {
                   child: Text(
                     "Search",
                     style: TextStyle(fontSize: 18, color: Colors.white),
->>>>>>> a2b5b584fb37d27505e39d0b3d0178e51512653c
                   ),
                 ],
               ))),
