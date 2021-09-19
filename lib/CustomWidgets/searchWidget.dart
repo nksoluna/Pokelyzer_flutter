@@ -183,24 +183,8 @@ class SearchWidgetState extends State<SearchWidget> {
                           }),
                     ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      selectedPokemon = searchPokemon(
-                          searchIndexController.text,
-                          searchNameController.text,
-                          selectedTypeArray,
-                          widget.allPokemon,
-                          widget.allType);
-                    });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SearchResult(selectedPokemon)));
-                  },
-                  child: Text(
-                    "Search",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  SizedBox(
+                    width: 50,
                   ),
                 ],
               ))),
@@ -219,8 +203,8 @@ class SearchWidgetState extends State<SearchWidget> {
                             searchIndexController.text,
                             searchNameController.text,
                             selectedTypeArray,
-                            allPokemon,
-                            allType);
+                            widget.allPokemon,
+                            widget.allType);
                       });
                       Navigator.push(
                           context,
@@ -252,7 +236,8 @@ class SearchResult extends StatefulWidget {
 class SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: Center(
         child: Column(
           children: [
@@ -386,6 +371,6 @@ class SearchResultState extends State<SearchResult> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
