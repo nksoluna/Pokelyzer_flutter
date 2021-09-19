@@ -249,7 +249,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                         padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
                         child: Column(children: [
                           Align(
-                              alignment: Alignment.center,
+                              alignment: Alignment.topRight,
                               child: Text(
                                 '${_pkmns.name.toUpperCase()}',
                                 textAlign: TextAlign.center,
@@ -265,6 +265,23 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                                   ],
                                 ),
                               )),
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Type : ${_pkmns.types.toString().substring(1, _pkmns.types.toString().length - 1)}',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: screenwidth * 0.03,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 0,
+                                        color: Colors.grey)
+                                  ],
+                                ),
+                              ))
                         ]),
                       ),
                     ],
