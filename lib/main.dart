@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => AllpokemonScreen(),
         '/compare': (context) => CompareScreen(),
-        '/character': (context) => PokemonInfoScreen(),
         '/team_builder': (context) => TeamBuilderScreen(),
       },
     );

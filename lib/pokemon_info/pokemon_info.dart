@@ -7,26 +7,15 @@ import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
-  PokemonInfoScreen({Key? key}) : super(key: key);
-
+  final Pokemon pokemon;
+  PokemonInfoScreen(this.pokemon);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
 
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
-  final PokemonsRepo _repo;
-  late Pokemon _pokemon;
-  final int _index = 0;
-
   final panelController = PanelController();
   final double tabBarHeight = 80;
-
-  _PokemonInfoScreenState() : _repo = new PokemonsRepo();
-
-  Future<Pokemon> getPokemon() async {
-    var pokemon = await _repo.getPokemonByIndex(_index);
-    return pokemon;
-  }
 
   Widget getPokemonTypes(Pokemon pokemon) {
     List<Widget> items = [];
@@ -99,6 +88,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         child: GestureDetector(
           onTap: onClicked,
           child: AppBar(
+            automaticallyImplyLeading: false,
             title: buildDragIcon(), //Icon(Icons.drag_handle),
             centerTitle: true,
             bottom: TabBar(
@@ -128,53 +118,32 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     final double tabBarHeight = 80;
 
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              FutureBuilder(
-                  future: getPokemon(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return buildHeader(snapshot.data as Pokemon);
-                    }
-                    return CircularProgressIndicator();
-                  }),
-              // Image.asset('assets/images/pokemons/1.png'),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text("pokemon name"),
         ),
-        FutureBuilder(
-            future: getPokemon(),
-            builder: (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return SlidingUpPanel(
-                  controller: panelController,
-                  maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
-                  panelBuilder: (scrollController) => buildSlidingPanel(
-                      scrollController: scrollController,
-                      panelController: panelController,
-                      pokemon: snapshot.data as Pokemon),
-                  body: Image.asset('assets/images/pokemons/1.png'),
-                );
-              }
-              return CircularProgressIndicator();
-            }),
-      ],
-    ));
+        body: Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  buildHeader(widget.pokemon)
+
+                  // Image.asset('assets/images/pokemons/1.png'),
+                ],
+              ),
+            ),
+            SlidingUpPanel(
+              controller: panelController,
+              maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
+              panelBuilder: (scrollController) => buildSlidingPanel(
+                  scrollController: scrollController,
+                  panelController: panelController,
+                  pokemon: widget.pokemon),
+              body: Image.asset(
+                  'assets/images/pokemons/${widget.pokemon.index}.png'),
+            )
+          ],
+        ));
   }
 }
-
-
-        // SlidingUpPanel(
-        //   controller: panelController,
-        //   maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
-        //   panelBuilder: (scrollController) => buildSlidingPanel(
-        //     scrollController: scrollController,
-        //     panelController: panelController,
-        //   ),
-        //   body: Image.asset('assets/images/pokemons/1.png'),
-        // )
