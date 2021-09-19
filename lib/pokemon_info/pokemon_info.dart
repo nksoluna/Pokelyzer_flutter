@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/pokemon_info/widgets/tab_evolution.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
-import 'package:pokelyzer/pokemon_info/widgets/tab_widget.dart';
+import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
+import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
@@ -72,9 +74,18 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                 scrollController: scrollController,
                 pokemon: pokemon,
               ),
-              TabWidget(scrollController: scrollController),
-              TabWidget(scrollController: scrollController),
-              TabWidget(scrollController: scrollController)
+              TabSrengthWidget(
+                scrollController: scrollController,
+                pokemon: pokemon,
+              ),
+              TabEvolutionWidget(
+                scrollController: scrollController,
+                pokemon: pokemon,
+              ),
+              TabMoveWidget(
+                scrollController: scrollController,
+                pokemon: pokemon,
+              ),
             ],
           ),
         ),
