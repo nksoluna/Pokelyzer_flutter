@@ -44,85 +44,19 @@ class _CompareScreenState extends State<CompareScreen> {
           padding: const EdgeInsets.symmetric(vertical: 30),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Column(
-              children: [
-                (selectedPokemon1 == null)
-                    ? Text('-', style: Theme.of(context).textTheme.headline5)
-                    : Text(selectedPokemon1!.name,
-                        style: Theme.of(context).textTheme.headline5),
-                PokemonSelectorWidget(
-                  width: imageSize,
-                  imagePath: selectedPokemon1 == null
-                      ? 'assets/images/pokemons/201.png'
-                      : ('assets/images/pokemons/' +
-                          selectedPokemon1!.index.toString() +
-                          ".png"),
-                  onTap: () {
-                    selectingPokemon(context, 1);
-                  },
-                ),
-                (selectedPokemon1 != null)
-                    ? Row(
-                        children: [
-                          selectedPokemon1!.types.length == 2
-                              ? Container(
-                                  child: Row(
-                                    children: [
-                                      Text(selectedPokemon1!.types[0]),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(selectedPokemon1!.types[1])
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  child: Text(selectedPokemon1!.types[0]),
-                                )
-                        ],
-                      )
-                    : SizedBox()
-              ],
+            PokemonSelectorWidget(
+              selectedPokemon: selectedPokemon1,
+              width: imageSize,
+              onTap: () {
+                selectingPokemon(context, 1);
+              },
             ),
-            Column(
-              children: [
-                (selectedPokemon2 == null)
-                    ? Text('-', style: Theme.of(context).textTheme.headline5)
-                    : Text(selectedPokemon2!.name,
-                        style: Theme.of(context).textTheme.headline5),
-                PokemonSelectorWidget(
-                  width: imageSize,
-                  imagePath: selectedPokemon2 == null
-                      ? 'assets/images/pokemons/201.png'
-                      : ('assets/images/pokemons/' +
-                          selectedPokemon2!.index.toString() +
-                          ".png"),
-                  onTap: () {
-                    selectingPokemon(context, 2);
-                  },
-                ),
-                (selectedPokemon2 != null)
-                    ? Row(
-                        children: [
-                          selectedPokemon2!.types.length == 2
-                              ? Container(
-                                  child: Row(
-                                    children: [
-                                      Text(selectedPokemon2!.types[0]),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(selectedPokemon2!.types[1])
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  child: Text(selectedPokemon2!.types[0]),
-                                )
-                        ],
-                      )
-                    : SizedBox()
-              ],
+            PokemonSelectorWidget(
+              selectedPokemon: selectedPokemon2,
+              width: imageSize,
+              onTap: () {
+                selectingPokemon(context, 2);
+              },
             ),
           ]),
         ),
