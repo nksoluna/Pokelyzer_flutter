@@ -14,12 +14,7 @@ class TeamBuilderScreen extends StatefulWidget {
 }
 
 class TeamBuilderScreenState extends State<TeamBuilderScreen> {
-  Pokemon? selectedPokemon1;
-  Pokemon? selectedPokemon2;
-  Pokemon? selectedPokemon3;
-  Pokemon? selectedPokemon4;
-  Pokemon? selectedPokemon5;
-  Pokemon? selectedPokemon6;
+  List<Pokemon?> selectedPokemon = List.filled(6, null);
   List<Pokemon> allPokemon = [];
   List<Type> allType = [];
   List<int> totalWeakness = [];
@@ -52,58 +47,34 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon1,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 1);
-                      },
-                    ),
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon2,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 2);
-                      },
-                    ),
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon3,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 3);
-                      },
-                    ),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  3,
+                  (index) => PokemonSelectorWidget(
+                    selectedPokemon: selectedPokemon[index],
+                    width: imageSize,
+                    onTap: () {
+                      selectingPokemon(context, index);
+                    },
+                  ),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 20),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon4,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 4);
-                      },
-                    ),
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon5,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 5);
-                      },
-                    ),
-                    PokemonSelectorWidget(
-                      selectedPokemon: selectedPokemon6,
-                      width: imageSize,
-                      onTap: () {
-                        selectingPokemon(context, 6);
-                      },
-                    ),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  3,
+                  (index) => PokemonSelectorWidget(
+                    selectedPokemon: selectedPokemon[index + 3],
+                    width: imageSize,
+                    onTap: () {
+                      selectingPokemon(context, index + 3);
+                    },
+                  ),
+                ),
+              ),
             ),
             Container(
               alignment: Alignment.topRight,
@@ -119,15 +90,15 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                   colors: <Color>[Colors.red[700]!, Colors.red[400]!],
                 ),
                 onPressed: () {
-                  Analyzing().AnalyzingWeakness(
-                      selectedPokemon1,
-                      selectedPokemon2,
-                      selectedPokemon3,
-                      selectedPokemon4,
-                      selectedPokemon5,
-                      selectedPokemon6,
-                      allPokemon,
-                      allType);
+                  // Analyzing().AnalyzingWeakness(
+                  //     selectedPokemon1,
+                  //     selectedPokemon2,
+                  //     selectedPokemon3,
+                  //     selectedPokemon4,
+                  //     selectedPokemon5,
+                  //     selectedPokemon6,
+                  //     allPokemon,
+                  //     allType);
                 },
               ),
             ),
@@ -143,7 +114,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     );
   }
 
-  void selectingPokemon(BuildContext context, int side) async {
+  void selectingPokemon(BuildContext context, int index) async {
     Pokemon? result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -152,28 +123,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     setState(() {
       if (result != null) {
         setState(() {
-          switch (side) {
-            case 1:
-              selectedPokemon1 = result;
-              break;
-            case 2:
-              selectedPokemon2 = result;
-              break;
-            case 3:
-              selectedPokemon3 = result;
-              break;
-            case 4:
-              selectedPokemon4 = result;
-              break;
-            case 5:
-              selectedPokemon5 = result;
-              break;
-            case 6:
-              selectedPokemon6 = result;
-              break;
-            default:
-              break;
-          }
+          selectedPokemon[index] = result;
         });
       }
     });

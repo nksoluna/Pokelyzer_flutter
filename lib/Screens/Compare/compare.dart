@@ -14,8 +14,7 @@ class CompareScreen extends StatefulWidget {
 }
 
 class _CompareScreenState extends State<CompareScreen> {
-  Pokemon? selectedPokemon1;
-  Pokemon? selectedPokemon2;
+  List<Pokemon?> selectedPokemon = List.filled(2, null);
   List<Pokemon> allPokemon = [];
   List<Type> allType = [];
   @override
@@ -42,23 +41,19 @@ class _CompareScreenState extends State<CompareScreen> {
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            PokemonSelectorWidget(
-              selectedPokemon: selectedPokemon1,
-              width: imageSize,
-              onTap: () {
-                selectingPokemon(context, 1);
-              },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+              2,
+              (index) => PokemonSelectorWidget(
+                selectedPokemon: selectedPokemon[index],
+                width: imageSize,
+                onTap: () {
+                  selectingPokemon(context, index);
+                },
+              ),
             ),
-            PokemonSelectorWidget(
-              selectedPokemon: selectedPokemon2,
-              width: imageSize,
-              onTap: () {
-                selectingPokemon(context, 2);
-              },
-            ),
-          ]),
+          ),
         ),
         Container(
           alignment: Alignment.topRight,
@@ -82,16 +77,14 @@ class _CompareScreenState extends State<CompareScreen> {
     );
   }
 
-  void selectingPokemon(BuildContext context, int side) async {
+  void selectingPokemon(BuildContext context, int index) async {
     Pokemon? result = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => SearchWidget(allPokemon, allType)),
     );
     setState(() {
-      if (side == 1)
-        selectedPokemon1 = result;
-      else if (side == 2) selectedPokemon2 = result;
+      selectedPokemon[index] = result;
     });
   }
 }

@@ -91,9 +91,8 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
     if (pokemon != null) {
       final typeLength = pokemon.types.length;
       return Row(
-          children: List.generate(typeLength, (index) {
-        return buildCard(text: pokemon.types[index]);
-      }));
+          children: List.generate(
+              typeLength, (index) => buildCard(text: pokemon.types[index])));
     }
     return buildCard(text: '???', color: Colors.black);
   }
