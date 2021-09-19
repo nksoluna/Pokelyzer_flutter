@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
+import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_evolution.dart';
@@ -46,13 +47,18 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   }
 
   Widget buildHeader(Pokemon pokemon) {
-    return Column(children: [
-      Text(
-        pokemon.name,
-        style: Theme.of(context).textTheme.headline4,
+    return SafeArea(
+        child: Column(children: [
+      Row(
+        children: [
+          Text(
+            pokemon.name.capitalize(),
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ],
       ),
       buildPokemonTypes(pokemon)
-    ]);
+    ]));
   }
 
   Widget buildSlidingPanel({
@@ -76,11 +82,11 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                 scrollController: scrollController,
                 pokemon: pokemon,
               ),
-              TabEvolutionWidget(
+              TabMoveWidget(
                 scrollController: scrollController,
                 pokemon: pokemon,
               ),
-              TabMoveWidget(
+              TabEvolutionWidget(
                 scrollController: scrollController,
                 pokemon: pokemon,
               ),
@@ -97,6 +103,11 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         child: GestureDetector(
           onTap: onClicked,
           child: AppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
             automaticallyImplyLeading: false,
             title: buildDragIcon(), //Icon(Icons.drag_handle),
             centerTitle: true,
@@ -124,11 +135,12 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   @override
   Widget build(BuildContext context) {
     final panelController = PanelController();
-    final double tabBarHeight = 80;
+    var screenSize = MediaQuery.of(context).size;
+    var imageSize = screenSize.width / 4;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("pokemon name"),
+          title: Text(widget.pokemon.name),
         ),
         body: Stack(
           children: <Widget>[
@@ -136,22 +148,25 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
-                  buildHeader(widget.pokemon)
-
-                  // Image.asset('assets/images/pokemons/1.png'),
+                  buildHeader(widget.pokemon),
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: EdgeInsets.only(right: imageSize / 2 - 20),
+                    child: Image.asset(
+                        'assets/images/pokemons/${widget.pokemon.index}.png'),
+                  ),
                 ],
               ),
             ),
             SlidingUpPanel(
               controller: panelController,
-              maxHeight: MediaQuery.of(context).size.height - tabBarHeight,
+              maxHeight: MediaQuery.of(context).size.height * 0.5,
+              minHeight: MediaQuery.of(context).size.height * 0.1,
               panelBuilder: (scrollController) => buildSlidingPanel(
                   scrollController: scrollController,
                   panelController: panelController,
                   pokemon: widget.pokemon),
-              body: Image.asset(
-                  'assets/images/pokemons/${widget.pokemon.index}.png'),
-            )
+            ),
           ],
         ));
   }
