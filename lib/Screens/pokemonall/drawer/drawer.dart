@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Screens/Compare/compare.dart';
 import 'package:pokelyzer/Screens/Home/home.dart';
+import 'package:pokelyzer/Screens/TeamBuilder/teamBuilder.dart';
 
 class PokemonDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);

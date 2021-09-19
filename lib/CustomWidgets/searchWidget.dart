@@ -6,16 +6,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/searchFunction.dart';
+import 'package:pokelyzer/models/type.dart';
 
 class SearchWidget extends StatefulWidget {
+  final List<Pokemon> allPokemon;
+  final List<Type> allType;
+  SearchWidget(this.allPokemon, this.allType);
   @override
   SearchWidgetState createState() => SearchWidgetState();
 }
 
 class SearchWidgetState extends State<SearchWidget> {
   List<String> allTypeString = getAllTypeInString();
-  List<Pokemon> allPokemon = [];
-  List<Type> allType = [];
   List<Pokemon> selectedPokemon = [];
   List<bool> selectedTypeArray = [];
   List<Color> typeColor = [];
@@ -24,13 +26,10 @@ class SearchWidgetState extends State<SearchWidget> {
   @override
   void initState() {
     super.initState();
+    selectedTypeArray = List.filled(18, false);
     searchIndexController = TextEditingController();
     searchNameController = TextEditingController();
     typeColor = Palette().getAllTypeColor();
-    for (int i = 0; i < 18; i++) {
-      selectedTypeArray.add(false);
-    }
-    readData();
   }
 
   @override
@@ -38,13 +37,6 @@ class SearchWidgetState extends State<SearchWidget> {
     super.dispose();
     searchIndexController.dispose();
     searchNameController.dispose();
-  }
-
-  Future<void> readData() async {
-    var repo = PokemonsRepo();
-    allPokemon = await repo.readAllPokemonFromJson();
-    allType = await readAllTypeFromJson();
-    selectedPokemon = allPokemon;
   }
 
   @override
@@ -191,8 +183,29 @@ class SearchWidgetState extends State<SearchWidget> {
                           }),
                     ),
                   ),
+<<<<<<< HEAD
                   SizedBox(
                     width: 50,
+=======
+                  onPressed: () {
+                    setState(() {
+                      selectedPokemon = searchPokemon(
+                          searchIndexController.text,
+                          searchNameController.text,
+                          selectedTypeArray,
+                          widget.allPokemon,
+                          widget.allType);
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SearchResult(selectedPokemon)));
+                  },
+                  child: Text(
+                    "Search",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+>>>>>>> a2b5b584fb37d27505e39d0b3d0178e51512653c
                   ),
                 ],
               ))),
@@ -263,7 +276,9 @@ class SearchResultState extends State<SearchResult> {
                   padding: EdgeInsets.all(10.0),
                   shape: CircleBorder(),
                 )),
-            Divider(),
+            Divider(
+              color: Colors.grey,
+            ),
             Expanded(
                 child: ListView.builder(
                     itemCount: widget.selectedPokemon.length,
@@ -367,7 +382,9 @@ class SearchResultState extends State<SearchResult> {
                             ),
                           ));
                     })),
-            Divider(),
+            Divider(
+              color: Colors.grey,
+            ),
             SizedBox(
               height: 20,
             )

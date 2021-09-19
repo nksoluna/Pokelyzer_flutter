@@ -3,22 +3,47 @@ import 'dart:convert';
 
 class Type {
   final String name;
-  final List<String> weaknesses;
-  final List<String> immunes;
-  final List<String> strengths;
-  Type(this.name, this.immunes, this.weaknesses, this.strengths);
+  final List<String> weaknessesOffensive;
+  final List<String> immunesOffensive;
+  final List<String> strengthsOffensive;
+  final List<String> weaknessesDefensive;
+  final List<String> immunesDefensive;
+  final List<String> strengthsDefensive;
+  Type(
+      this.name,
+      this.immunesOffensive,
+      this.immunesDefensive,
+      this.weaknessesOffensive,
+      this.weaknessesDefensive,
+      this.strengthsOffensive,
+      this.strengthsDefensive);
   factory Type.fromJson(dynamic json) {
-    List<String> weakness = [], immune = [], strength = [];
-    for (int i = 0; i < json["weaknesses"].length; i++) {
-      weakness.add(json["weaknesses"][i]);
+    List<String> weaknessA = [],
+        immuneA = [],
+        strengthA = [],
+        weaknessD = [],
+        immuneD = [],
+        strengthD = [];
+    for (int i = 0; i < json["weaknesses-offensive"].length; i++) {
+      weaknessA.add(json["weaknesses-offensive"][i]);
     }
-    for (int i = 0; i < json["immunes"].length; i++) {
-      immune.add(json["immunes"][i]);
+    for (int i = 0; i < json["immunes-offensive"].length; i++) {
+      immuneA.add(json["immunes-offensive"][i]);
     }
-    for (int i = 0; i < json["strengths"].length; i++) {
-      strength.add(json["strengths"][i]);
+    for (int i = 0; i < json["strengths-offensive"].length; i++) {
+      strengthA.add(json["strengths-offensive"][i]);
     }
-    return Type(json["name"], weakness, immune, strength);
+    for (int i = 0; i < json["weaknesses-defensive"].length; i++) {
+      weaknessD.add(json["weaknesses-defensive"][i]);
+    }
+    for (int i = 0; i < json["immunes-defensive"].length; i++) {
+      immuneD.add(json["immunes-defensive"][i]);
+    }
+    for (int i = 0; i < json["strengths-defensive"].length; i++) {
+      strengthD.add(json["strengths-defensive"][i]);
+    }
+    return Type(json["name"], immuneA, immuneD, weaknessA, weaknessD, strengthA,
+        strengthD);
   }
 }
 

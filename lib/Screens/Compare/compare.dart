@@ -16,6 +16,18 @@ class CompareScreen extends StatefulWidget {
 class _CompareScreenState extends State<CompareScreen> {
   Pokemon? selectedPokemon1;
   Pokemon? selectedPokemon2;
+  List<Pokemon> allPokemon = [];
+  List<Type> allType = [];
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
+  Future<void> readData() async {
+    allPokemon = await PokemonsRepo().readAllPokemonFromJson();
+    allType = await readAllTypeFromJson();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +151,8 @@ class _CompareScreenState extends State<CompareScreen> {
   void selectingPokemon(BuildContext context, int side) async {
     Pokemon? result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SearchWidget()),
+      MaterialPageRoute(
+          builder: (context) => SearchWidget(allPokemon, allType)),
     );
     setState(() {
       if (side == 1)

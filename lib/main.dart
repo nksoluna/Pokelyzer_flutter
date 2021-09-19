@@ -3,6 +3,7 @@ import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
+import 'Screens/TeamBuilder/teamBuilder.dart';
 
 void main() async {
   runApp(MyApp());
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/compare': (context) => CompareScreen(),
         '/character': (context) => PokemonInfoScreen(),
+        '/team_builder': (context) => TeamBuilderScreen(),
       },
     );
   }
