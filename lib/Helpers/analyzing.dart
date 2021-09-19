@@ -20,7 +20,7 @@ class Analyzing {
     return teamPokemon;
   }
 
-  void AnalyzingWeakness(
+  List<int> AnalyzingWeakness(
     Pokemon? pokemon1,
     Pokemon? pokemon2,
     Pokemon? pokemon3,
@@ -52,6 +52,6 @@ class Analyzing {
         });
       }
     }
-    print(totalWeakness);
+    return totalWeakness;
   }
 }

@@ -4,6 +4,7 @@ import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
 import 'Screens/TeamBuilder/teamBuilder.dart';
+import 'Screens/pokemonall/pokemon_all.dart';
 
 void main() async {
   runApp(MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/home',
       routes: {
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => AllpokemonScreen(),
         '/compare': (context) => CompareScreen(),
         '/character': (context) => PokemonInfoScreen(),
         '/team_builder': (context) => TeamBuilderScreen(),

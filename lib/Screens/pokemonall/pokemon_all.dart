@@ -72,7 +72,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(
-                              "./assets/material-image/background-mobile.jpg",
+                              "~/assets/images/material-image/background-mobile.jpg",
                             ),
                             fit: BoxFit.cover,
                           )),
