@@ -12,6 +12,17 @@ class BaseWidget extends StatelessWidget {
       drawer: DrawerWidget(),
       body: Stack(
         children: [
+          Container(
+            height: double.infinity,
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage(
+                "./assets/material-image/background-mobile.jpg",
+              ),
+              fit: BoxFit.cover,
+            )),
+          ),
           SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 15),

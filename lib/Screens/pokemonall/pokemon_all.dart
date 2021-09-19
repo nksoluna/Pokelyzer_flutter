@@ -55,79 +55,34 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
 
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          drawer: DrawerWidget(),
-          body: Stack(children: <Widget>[
-            SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: double.infinity,
-                          constraints: BoxConstraints.expand(),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(
-                              "./assets/material-image/background-mobile.jpg",
-                            ),
-                            fit: BoxFit.cover,
-                          )),
-                        ),
-                        Container(
-                            height: double.infinity,
-                            margin: EdgeInsets.fromLTRB(0, 160, 0, 0),
-                            child: Stack(
-                              children: [
-                                getBody(),
-                              ],
-                            )),
-                        Container(
-                            height: double.infinity,
-                            margin: EdgeInsets.fromLTRB(170, 80, 0, 0),
-                            child: Stack(
-                              children: [
-                                Text(
-                                  'POKEDEX',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Builder(
-                          builder: (context) => Padding(
-                            padding: const EdgeInsets.only(
-                              top: 8.0,
-                              left: 4.0,
-                            ),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.menu,
-                                size: 30,
-                              ),
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? null
-                                  : Colors.black,
-                              onPressed: () {
-                                Scaffold.of(context).openDrawer();
-                              },
-                              tooltip: MaterialLocalizations.of(context)
-                                  .openAppDrawerTooltip,
-                            ),
-                          ),
-                        ),
-                      ],
+      child: BaseWidget(children: <Widget>[
+        Expanded(
+          child: Stack(
+            children: [
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 60, 0, 0),
+                  child: Stack(
+                    children: [
+                      getBody(),
+                    ],
+                  )),
+              Container(
+                margin: EdgeInsets.fromLTRB(170, 0, 0, 0),
+                child: Stack(
+                  children: [
+                    Text(
+                      'POKEDEX',
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ])),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 

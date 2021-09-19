@@ -121,7 +121,7 @@ class DrawerButton extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 30),
       child: IconButton(
         iconSize: 40,
-        icon: const Icon(Icons.horizontal_split_rounded),
+        icon: const Icon(Icons.menu),
         color: Theme.of(context).brightness == Brightness.dark
             ? null
             : Colors.grey[700],
