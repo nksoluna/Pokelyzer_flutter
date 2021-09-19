@@ -57,7 +57,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
     return Container(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.transparent,
           drawer: DrawerWidget(),
           body: Stack(children: <Widget>[
             SafeArea(
@@ -72,14 +72,14 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(
-                              "~/assets/material-image/background-mobile.jpg",
+                              "./assets/material-image/background-mobile.jpg",
                             ),
                             fit: BoxFit.cover,
                           )),
                         ),
                         Container(
                             height: double.infinity,
-                            margin: EdgeInsets.fromLTRB(0, 170, 0, 0),
+                            margin: EdgeInsets.fromLTRB(0, 160, 0, 0),
                             child: Stack(
                               children: [
                                 getBody(),
@@ -271,7 +271,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                   onTap: () {
                     print('INDEX :  ${_pkmns.index}');
                     print('Name :  ${_pkmns.name}');
-                    print('Type : $types');
+                    print('Type : ${_pkmns.types}');
                   },
                   child: Row(
                     children: <Widget>[
