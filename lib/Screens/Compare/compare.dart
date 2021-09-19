@@ -47,7 +47,7 @@ class _CompareScreenState extends State<CompareScreen> {
             Column(
               children: [
                 (selectedPokemon1 == null)
-                    ? Text('Name', style: Theme.of(context).textTheme.headline5)
+                    ? Text('-', style: Theme.of(context).textTheme.headline5)
                     : Text(selectedPokemon1!.name,
                         style: Theme.of(context).textTheme.headline5),
                 PokemonSelectorWidget(
@@ -87,7 +87,7 @@ class _CompareScreenState extends State<CompareScreen> {
             Column(
               children: [
                 (selectedPokemon2 == null)
-                    ? Text('Name', style: Theme.of(context).textTheme.headline5)
+                    ? Text('-', style: Theme.of(context).textTheme.headline5)
                     : Text(selectedPokemon2!.name,
                         style: Theme.of(context).textTheme.headline5),
                 PokemonSelectorWidget(
