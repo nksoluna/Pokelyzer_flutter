@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_evolution.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
@@ -17,23 +19,30 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
 
-  Widget getPokemonTypes(Pokemon pokemon) {
-    List<Widget> items = [];
-    for (var type in pokemon.types) {
-      if (type == 'grass') {
-        items.add(Text(
-          type,
-          style: TextStyle(backgroundColor: Colors.green[600]),
-        ));
-      } else
-        items.add(Text(
-          type,
-          style: TextStyle(backgroundColor: Colors.purple[800]),
-        ));
+  Widget buildPokemonTypes(Pokemon pokemon) {
+    if (pokemon != null) {
+      final typeLength = pokemon.types.length;
+      return Row(
+          children: List.generate(typeLength, (index) {
+        return Container(
+          height: 35,
+          width: 70,
+          child: Card(
+            color: Palette().getSelectedTypeColor(
+                pokemon.types[index], getAllTypeInString()),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Center(
+              child: Text(pokemon.types[index],
+                  style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        );
+      }));
+    } else {
+      return Text('???');
     }
-    return Row(
-      children: items,
-    );
   }
 
   Widget buildHeader(Pokemon pokemon) {
@@ -42,7 +51,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         pokemon.name,
         style: Theme.of(context).textTheme.headline4,
       ),
-      getPokemonTypes(pokemon)
+      buildPokemonTypes(pokemon)
     ]);
   }
 

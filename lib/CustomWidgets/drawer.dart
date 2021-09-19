@@ -14,7 +14,6 @@ class DrawerWidget extends StatelessWidget {
         'icon': Icon(Icons.add)
       },
       {'text': 'Favourite', 'route': '/favorite', 'icon': Icon(Icons.favorite)},
-      {'text': 'Character', 'route': '/character', 'icon': Icon(Icons.person)},
       {
         'text': 'Settings',
         'route': '/setting',
