@@ -3,6 +3,7 @@ import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/drawer.dart';
 import 'package:pokelyzer/Screens/pokemonall/drawer/drawer.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
 
 class AllpokemonScreen extends StatefulWidget {
   AllpokemonScreen({Key? key}) : super(key: key);
@@ -272,6 +273,11 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                     print('INDEX :  ${_pkmns.index}');
                     print('Name :  ${_pkmns.name}');
                     print('Type : ${_pkmns.types}');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PokemonInfoScreen(_pkmns)),
+                    );
                   },
                   child: Row(
                     children: <Widget>[
