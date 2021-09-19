@@ -14,8 +14,7 @@ class CompareScreen extends StatefulWidget {
 }
 
 class _CompareScreenState extends State<CompareScreen> {
-  Pokemon? selectedPokemon1;
-  Pokemon? selectedPokemon2;
+  List<Pokemon?> selectedPokemon = List.filled(2, null);
   List<Pokemon> allPokemon = [];
   List<Type> allType = [];
   @override
@@ -42,89 +41,19 @@ class _CompareScreenState extends State<CompareScreen> {
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Column(
-              children: [
-                (selectedPokemon1 == null)
-                    ? Text('-', style: Theme.of(context).textTheme.headline5)
-                    : Text(selectedPokemon1!.name,
-                        style: Theme.of(context).textTheme.headline5),
-                PokemonSelectorWidget(
-                  width: imageSize,
-                  imagePath: selectedPokemon1 == null
-                      ? 'assets/images/pokemons/201.png'
-                      : ('assets/images/pokemons/' +
-                          selectedPokemon1!.index.toString() +
-                          ".png"),
-                  onTap: () {
-                    selectingPokemon(context, 1);
-                  },
-                ),
-                (selectedPokemon1 != null)
-                    ? Row(
-                        children: [
-                          selectedPokemon1!.types.length == 2
-                              ? Container(
-                                  child: Row(
-                                    children: [
-                                      Text(selectedPokemon1!.types[0]),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(selectedPokemon1!.types[1])
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  child: Text(selectedPokemon1!.types[0]),
-                                )
-                        ],
-                      )
-                    : SizedBox()
-              ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+              2,
+              (index) => PokemonSelectorWidget(
+                selectedPokemon: selectedPokemon[index],
+                width: imageSize,
+                onTap: () {
+                  selectingPokemon(context, index);
+                },
+              ),
             ),
-            Column(
-              children: [
-                (selectedPokemon2 == null)
-                    ? Text('-', style: Theme.of(context).textTheme.headline5)
-                    : Text(selectedPokemon2!.name,
-                        style: Theme.of(context).textTheme.headline5),
-                PokemonSelectorWidget(
-                  width: imageSize,
-                  imagePath: selectedPokemon2 == null
-                      ? 'assets/images/pokemons/201.png'
-                      : ('assets/images/pokemons/' +
-                          selectedPokemon2!.index.toString() +
-                          ".png"),
-                  onTap: () {
-                    selectingPokemon(context, 2);
-                  },
-                ),
-                (selectedPokemon2 != null)
-                    ? Row(
-                        children: [
-                          selectedPokemon2!.types.length == 2
-                              ? Container(
-                                  child: Row(
-                                    children: [
-                                      Text(selectedPokemon2!.types[0]),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(selectedPokemon2!.types[1])
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  child: Text(selectedPokemon2!.types[0]),
-                                )
-                        ],
-                      )
-                    : SizedBox()
-              ],
-            ),
-          ]),
+          ),
         ),
         Container(
           alignment: Alignment.topRight,
@@ -148,16 +77,14 @@ class _CompareScreenState extends State<CompareScreen> {
     );
   }
 
-  void selectingPokemon(BuildContext context, int side) async {
+  void selectingPokemon(BuildContext context, int index) async {
     Pokemon? result = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => SearchWidget(allPokemon, allType)),
     );
     setState(() {
-      if (side == 1)
-        selectedPokemon1 = result;
-      else if (side == 2) selectedPokemon2 = result;
+      selectedPokemon[index] = result;
     });
   }
 }
