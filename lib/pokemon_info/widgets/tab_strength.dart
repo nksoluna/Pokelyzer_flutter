@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/models/type.dart';
 
 class TabSrengthWidget extends StatelessWidget {
   final Pokemon pokemon;
+  final List<Type> allType;
   const TabSrengthWidget({
     Key? key,
     required this.scrollController,
     required this.pokemon,
+    required this.allType,
   }) : super(key: key);
   final ScrollController scrollController;
 
   Widget buildStrength() => Text("Strength");
+
   Widget buildWeakness() => Text("Weakness");
   @override
   Widget build(BuildContext context) => Container(

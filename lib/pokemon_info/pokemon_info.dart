@@ -11,6 +11,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
   final Pokemon pokemon;
+
   PokemonInfoScreen(this.pokemon);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
@@ -19,6 +20,17 @@ class PokemonInfoScreen extends StatefulWidget {
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
+  List<Type> allType = [];
+
+  Future<void> readData() async {
+    allType = await readAllTypeFromJson();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
     if (pokemon != null) {
@@ -94,6 +106,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                   TabSrengthWidget(
                     scrollController: scrollController,
                     pokemon: pokemon,
+                    allType: allType,
                   ),
                   TabMoveWidget(
                     scrollController: scrollController,
