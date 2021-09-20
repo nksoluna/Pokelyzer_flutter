@@ -253,7 +253,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                             Padding(
                               // change style paddding
                               padding:
-                                  const EdgeInsets.fromLTRB(20, 40, 40, 20),
+                                  const EdgeInsets.fromLTRB(20, 35, 40, 10),
                               child: Column(children: [
                                 Align(
                                     child: Text(
@@ -275,27 +275,30 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                             )
                           ]),
                           Stack(children: [
-                            Row(
-                              children: List.generate(typeLength, (index) {
-                                return Container(
-                                  height: 35,
-                                  width: 70,
-                                  child: Card(
-                                    color: Palette().getSelectedTypeColor(
-                                        _pkmns.types[index],
-                                        getAllTypeInString()),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Center(
-                                      child: Text(_pkmns.types[index],
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
-                                  ),
-                                );
-                              }),
-                            )
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                child: Row(
+                                  children: List.generate(typeLength, (index) {
+                                    return Container(
+                                      height: 35,
+                                      width: 70,
+                                      child: Card(
+                                        color: Palette().getSelectedTypeColor(
+                                            _pkmns.types[index],
+                                            getAllTypeInString()),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Center(
+                                          child: Text(_pkmns.types[index],
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ))
                           ]),
                         ],
                       ),
