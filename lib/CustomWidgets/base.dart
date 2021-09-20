@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'drawer.dart';
 
 class BaseWidget extends StatelessWidget {
   final List<Widget> children;
-  const BaseWidget({Key? key, required this.children}) : super(key: key);
+  final List<Widget>? panelBody;
+  final List<String>? tabBar;
+  PanelController? panelController;
+
+  BaseWidget({
+    Key? key,
+    required this.children,
+    this.panelBody,
+    this.panelController,
+    this.tabBar,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +42,51 @@ class BaseWidget extends StatelessWidget {
                   children: [DrawerButton()]..addAll(children)),
             ),
           ),
+          buildSlidingUpPannel(),
         ],
       ),
     );
+  }
+
+  Widget buildSlidingUpPannel() {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+    if (panelBody != null) {
+      return SlidingUpPanel(
+        renderPanelSheet: false,
+        controller: panelController,
+        borderRadius: radius,
+        panel: DefaultTabController(
+          length: tabBar!.length,
+          child: GestureDetector(
+            onTap: () => panelController!.open(),
+            child: Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  width: 100,
+                  height: 8,
+                ),
+                shape: RoundedRectangleBorder(borderRadius: radius),
+                bottom: TabBar(
+                  tabs: List.generate(
+                      tabBar!.length, (index) => Tab(text: tabBar![index])),
+                ),
+              ),
+              body: TabBarView(
+                children: panelBody!,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    return SizedBox();
   }
 }

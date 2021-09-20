@@ -5,6 +5,7 @@ import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
 import 'package:pokelyzer/CustomWidgets/searchWidget.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class CompareScreen extends StatefulWidget {
   CompareScreen({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class CompareScreen extends StatefulWidget {
 
 class _CompareScreenState extends State<CompareScreen> {
   List<Pokemon?> selectedPokemon = List.filled(2, null);
+  PanelController _pc = PanelController();
   List<Pokemon> allPokemon = [];
   List<Type> allType = [];
   @override
@@ -32,7 +34,18 @@ class _CompareScreenState extends State<CompareScreen> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     var imageSize = screenSize.width / 4;
+
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
     return BaseWidget(
+      panelController: _pc,
+      tabBar: ['Stat', 'Weakness'],
+      panelBody: [
+        Center(child: Text('Stat Screen')),
+        Center(child: Text('Weakness Screenadd')),
+      ],
       children: [
         Text('Compare Pokemon',
             style: Theme.of(context)
