@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
-import 'package:pokelyzer/CustomWidgets/drawer.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
-import 'package:pokelyzer/Screens/pokemonall/drawer/drawer.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
