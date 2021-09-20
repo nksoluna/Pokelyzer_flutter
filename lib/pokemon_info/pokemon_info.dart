@@ -161,6 +161,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             SlidingUpPanel(
               borderRadius: BorderRadius.circular(25),
               controller: panelController,
+              panelSnapping: true,
               maxHeight: MediaQuery.of(context).size.height * 0.5,
               minHeight: MediaQuery.of(context).size.height * 0.1,
               panelBuilder: (scrollController) => buildSlidingPanel(
