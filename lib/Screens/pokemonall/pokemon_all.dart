@@ -226,9 +226,6 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                 color: typeColor.withOpacity(0.6),
                 child: InkWell(
                   onTap: () {
-                    print('INDEX :  ${_pkmns.index}');
-                    print('Name :  ${_pkmns.name}');
-                    print('Type : ${_pkmns.types}');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
