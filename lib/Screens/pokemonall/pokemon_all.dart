@@ -252,7 +252,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                           Stack(children: [
                             Padding(
                               // change style paddding
-                              padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 40, 40, 20),
                               child: Column(children: [
                                 Align(
                                     child: Text(
