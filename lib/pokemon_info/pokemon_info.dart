@@ -105,7 +105,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           child: AppBar(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20),
+                top: Radius.circular(50),
               ),
             ),
             automaticallyImplyLeading: false,
@@ -159,7 +159,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
               ),
             ),
             SlidingUpPanel(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(50),
               controller: panelController,
               maxHeight: MediaQuery.of(context).size.height * 0.5,
               minHeight: MediaQuery.of(context).size.height * 0.1,

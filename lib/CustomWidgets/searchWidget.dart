@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/searchFunction.dart';
-import 'package:pokelyzer/models/type.dart';
 
 class SearchWidget extends StatefulWidget {
   final List<Pokemon> allPokemon;
@@ -299,10 +298,33 @@ class SearchResultState extends State<SearchResult> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    widget.selectedPokemon[index].name,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
+                                  widget.selectedPokemon[index].name
+                                              .contains("-") &&
+                                          widget.selectedPokemon[index].name
+                                                  .length >=
+                                              10
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              widget.selectedPokemon[index].name
+                                                  .split("-")[0],
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              ": " +
+                                                  widget.selectedPokemon[index]
+                                                      .name
+                                                      .split("-")[1],
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ],
+                                        )
+                                      : Text(
+                                          widget.selectedPokemon[index].name,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
                                   widget.selectedPokemon[index].types.length ==
                                           2
                                       ? Row(
