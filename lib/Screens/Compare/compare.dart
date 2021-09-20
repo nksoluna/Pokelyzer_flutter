@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/pokemon_selector_circle.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
@@ -40,7 +41,78 @@ class _CompareScreenState extends State<CompareScreen> {
       tabBar: ['Stat', 'Weakness'],
       panelRadius: 24,
       panelBody: [
-        Center(child: Text('Stat Screen')),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                buildPercentBar(
+                  leading: Text('HP'),
+                  value: selectedPokemon[0]?.stats.hp,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('HP'),
+                  value: selectedPokemon[1]?.stats.hp,
+                  color: Colors.red,
+                ),
+                buildPercentBar(
+                  leading: Text('ATK'),
+                  value: selectedPokemon[0]?.stats.atk,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('ATK'),
+                  value: selectedPokemon[1]?.stats.atk,
+                  color: Colors.red,
+                ),
+                buildPercentBar(
+                  leading: Text('DEF'),
+                  value: selectedPokemon[0]?.stats.def,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('DEF'),
+                  value: selectedPokemon[1]?.stats.def,
+                  color: Colors.red,
+                ),
+                buildPercentBar(
+                  leading: Text('SPATK'),
+                  value: selectedPokemon[0]?.stats.spatk,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('SPATK'),
+                  value: selectedPokemon[1]?.stats.spatk,
+                  color: Colors.red,
+                ),
+                buildPercentBar(
+                  leading: Text('SPDEF'),
+                  value: selectedPokemon[0]?.stats.spdef,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('SPDEF'),
+                  value: selectedPokemon[1]?.stats.spdef,
+                  color: Colors.red,
+                ),
+                buildPercentBar(
+                  leading: Text('SPD'),
+                  value: selectedPokemon[0]?.stats.spd,
+                  color: Colors.blue,
+                ),
+                buildPercentBar(
+                  leading: Text('SPD'),
+                  value: selectedPokemon[1]?.stats.spd,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+        ),
         Center(child: Text('Weakness Screenadd')),
       ],
       children: [
@@ -85,6 +157,26 @@ class _CompareScreenState extends State<CompareScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildPercentBar({
+    Widget? leading,
+    num? value,
+    double max = 255,
+    Color color = Colors.red,
+  }) {
+    if (value == null) value = 0.0;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: LinearPercentIndicator(
+        lineHeight: 20.0,
+        leading: leading,
+        percent: value / max,
+        center: Text("${value}"),
+        linearStrokeCap: LinearStrokeCap.butt,
+        progressColor: color,
+      ),
     );
   }
 
