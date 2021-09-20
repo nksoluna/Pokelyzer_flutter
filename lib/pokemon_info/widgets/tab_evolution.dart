@@ -10,7 +10,8 @@ class TabEvolutionWidget extends StatelessWidget {
   }) : super(key: key);
   final ScrollController scrollController;
 
-  Widget buildEvolution() {
+  Widget buildEvolution(Pokemon pokemon) {
+    final int evolutionChainNumber = pokemon.evolutions.length;
     if (pokemon.evolutions.isEmpty) {
       return Text("None Evolution");
     } else
@@ -25,6 +26,7 @@ class TabEvolutionWidget extends StatelessWidget {
           ),
           itemCount: 3,
           itemBuilder: (context, index) {
+            print(pokemon.evolutions.indexOf(pokemon.name));
             return Container(
               child: Image.asset('assets/images/pokemons/${pokemon.index}.png'),
             );
@@ -42,7 +44,7 @@ class TabEvolutionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         child: Column(
-          children: [buildEvolution()],
+          children: [buildEvolution(pokemon)],
         ),
         padding: EdgeInsets.all(20),
         alignment: Alignment.center,

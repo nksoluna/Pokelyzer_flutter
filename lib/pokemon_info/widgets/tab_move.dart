@@ -21,11 +21,14 @@ class TabMoveWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 child: ListTile(
-                  leading: Text(pokemon.moves[index].name,
-                      style: TextStyle(fontSize: 14)),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Container(
+                        width: 110,
+                        child: Text(pokemon.moves[index].name,
+                            style: TextStyle(fontSize: 14)),
+                      ),
                       Column(
                         children: [
                           Text("Power", style: TextStyle(fontSize: 12)),
