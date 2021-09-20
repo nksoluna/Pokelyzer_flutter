@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/drawer.dart';
+import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Screens/pokemonall/drawer/drawer.dart';
 import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
 
 class AllpokemonScreen extends StatefulWidget {
@@ -158,6 +160,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
             double screenwidth = MediaQuery.of(context).size.width;
             Color typeColor = Color(0xFFFFFFFF);
             var types = _pkmns.types[0];
+            final typeLength = _pkmns.types.length;
 
             switch (types) {
               case 'normal':
@@ -222,7 +225,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                 margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
-                color: typeColor,
+                color: typeColor.withOpacity(0.6),
                 child: InkWell(
                   onTap: () {
                     print('INDEX :  ${_pkmns.index}');
@@ -244,48 +247,56 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                             height: 81,
                             width: 135,
                           )),
-                      Padding(
-                        // change style paddding
-                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-                        child: Column(children: [
-                          Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                '${_pkmns.name.toUpperCase()}',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: screenwidth * 0.04,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 0,
-                                        color: Colors.grey)
-                                  ],
-                                ),
-                              )),
-                          Container(
+                      Column(
+                        children: [
+                          Stack(children: [
+                            Padding(
                               // change style paddding
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    '${_pkmns.types.toString().substring(1, _pkmns.types.toString().length - 1)}',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: screenwidth * 0.03,
-                                      shadows: <Shadow>[
-                                        Shadow(
-                                            offset: Offset(0, 2),
-                                            blurRadius: 0,
-                                            color: Colors.grey)
-                                      ],
+                              padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
+                              child: Column(children: [
+                                Align(
+                                    child: Text(
+                                  '${_pkmns.name.toUpperCase()}',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: screenwidth * 0.04,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 0,
+                                          color: Colors.grey)
+                                    ],
+                                  ),
+                                )),
+                              ]),
+                            )
+                          ]),
+                          Stack(children: [
+                            Row(
+                              children: List.generate(typeLength, (index) {
+                                return Container(
+                                  height: 35,
+                                  width: 70,
+                                  child: Card(
+                                    color: Palette().getSelectedTypeColor(
+                                        _pkmns.types[index],
+                                        getAllTypeInString()),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
-                                  ))),
-                        ]),
+                                    child: Center(
+                                      child: Text(_pkmns.types[index],
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            )
+                          ]),
+                        ],
                       ),
                     ],
                   ),
