@@ -35,13 +35,10 @@ class _CompareScreenState extends State<CompareScreen> {
     var screenSize = MediaQuery.of(context).size;
     var imageSize = screenSize.width / 4;
 
-    BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(24.0),
-      topRight: Radius.circular(24.0),
-    );
     return BaseWidget(
       panelController: _pc,
       tabBar: ['Stat', 'Weakness'],
+      panelRadius: 24,
       panelBody: [
         Center(child: Text('Stat Screen')),
         Center(child: Text('Weakness Screenadd')),
@@ -83,6 +80,7 @@ class _CompareScreenState extends State<CompareScreen> {
             ),
             onPressed: () {
               print('button clicked');
+              _pc.open();
             },
           ),
         ),

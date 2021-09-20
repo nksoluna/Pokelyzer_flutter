@@ -7,6 +7,7 @@ class BaseWidget extends StatelessWidget {
   final List<Widget> children;
   final List<Widget>? panelBody;
   final List<String>? tabBar;
+  final double panelRadius;
   PanelController? panelController;
 
   BaseWidget({
@@ -15,6 +16,7 @@ class BaseWidget extends StatelessWidget {
     this.panelBody,
     this.panelController,
     this.tabBar,
+    this.panelRadius = 0.0,
   }) : super(key: key);
 
   @override
@@ -50,8 +52,8 @@ class BaseWidget extends StatelessWidget {
 
   Widget buildSlidingUpPannel() {
     BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(24.0),
-      topRight: Radius.circular(24.0),
+      topLeft: Radius.circular(panelRadius),
+      topRight: Radius.circular(panelRadius),
     );
     if (panelBody != null) {
       return SlidingUpPanel(
