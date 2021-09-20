@@ -8,6 +8,7 @@ import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:pokelyzer/models/type.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
   final Pokemon pokemon;
@@ -20,16 +21,21 @@ class PokemonInfoScreen extends StatefulWidget {
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
-  List<Type> allType = [];
-
-  Future<void> readData() async {
-    allType = await readAllTypeFromJson();
-  }
+  List<Type> _allType = [];
 
   @override
   void initState() {
     super.initState();
-    readData();
+    fetchAllTypes();
+  }
+
+  Future<void> fetchAllTypes() async {
+    try {
+      List<Type> allType = await readAllTypeFromJson();
+      _allType.addAll(allType);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
@@ -106,7 +112,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                   TabSrengthWidget(
                     scrollController: scrollController,
                     pokemon: pokemon,
-                    allType: allType,
+                    allType: _allType,
                   ),
                   TabMoveWidget(
                     scrollController: scrollController,
