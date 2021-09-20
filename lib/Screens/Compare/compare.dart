@@ -44,7 +44,7 @@ class _CompareScreenState extends State<CompareScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
-              2,
+              selectedPokemon.length,
               (index) => PokemonSelectorWidget(
                 selectedPokemon: selectedPokemon[index],
                 width: imageSize,
