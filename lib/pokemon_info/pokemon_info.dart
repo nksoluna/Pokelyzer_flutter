@@ -37,6 +37,68 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }
   }
 
+  Color getcolor(Pokemon pokemon) {
+    Color typeColor = Color(0xFFFFFFFF) ;
+    var types = pokemon.types[0] ;
+     switch (types) {
+              case 'normal':
+                typeColor = Color(0xFFA8A878);
+                break;
+              case 'fire':
+                typeColor = Color(0xFFF08030);
+                break;
+              case 'water':
+                typeColor = Color(0xFF6890F0);
+                break;
+              case 'grass':
+                typeColor = Color(0xFF78C850);
+                break;
+              case 'electric':
+                typeColor = Color(0xFFF8D030);
+                break;
+              case 'ice':
+                typeColor = Color(0xFF98D8D8);
+                break;
+              case 'fighting':
+                typeColor = Color(0xFFC03028);
+                break;
+              case 'poison':
+                typeColor = Color(0xFFA040A0);
+                break;
+              case 'ground':
+                typeColor = Color(0xFFE0C068);
+                break;
+              case 'flying':
+                typeColor = Color(0xFFA890F0);
+                break;
+              case 'psychic':
+                typeColor = Color(0xFFF85888);
+                break;
+              case 'bug':
+                typeColor = Color(0xFFA8B820);
+                break;
+              case 'rock':
+                typeColor = Color(0xFFB8A038);
+                break;
+              case 'ghost':
+                typeColor = Color(0xFF705898);
+                break;
+              case 'dark':
+                typeColor = Color(0xFF705848);
+                break;
+              case 'dragon':
+                typeColor = Color(0xFF7038F8);
+                break;
+              case 'steel':
+                typeColor = Color(0xB8B8D0);
+                break;
+              case 'fairy':
+                typeColor = Color(0xFFEE99AC);
+                break;
+            }
+  return typeColor ;
+  }
+
   Widget buildPokemonTypes(Pokemon pokemon) {
     if (pokemon != null) {
       final typeLength = pokemon.types.length;
@@ -62,7 +124,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
       return Text('???');
     }
   }
-
+  
   Widget buildHeader(Pokemon pokemon) {
     return SafeArea(
         child: Column(children: [
@@ -100,13 +162,13 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     required PanelController panelController,
     required ScrollController scrollController,
     required Pokemon pokemon,
-  }) =>
+  })  =>
       Column(
         children: [
           Container(
             height: 20,
             decoration: BoxDecoration(
-              color: Color(0xffff2626),
+              color: getcolor(pokemon),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(28.0),
                 topLeft: Radius.circular(28.0),
@@ -118,6 +180,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             length: 4,
             child: Scaffold(
               appBar: buildTabBar(
+                typeColor: getcolor(pokemon),
                 onClicked: panelController.open,
               ) as PreferredSizeWidget,
               body: TabBarView(
@@ -148,12 +211,16 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   Widget buildTabBar({
     required VoidCallback onClicked,
+    required Color typeColor ,
+
   }) =>
+ 
       PreferredSize(
         preferredSize: Size.fromHeight(tabBarHeight - 31),
         child: GestureDetector(
           onTap: onClicked,
           child: AppBar(
+            backgroundColor: typeColor,
             // shape: RoundedRectangleBorder(
             //   borderRadius: BorderRadius.vertical(
             //     top: Radius.circular(20),
@@ -191,6 +258,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     getListIndex(widget.pokemon);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: getcolor(widget.pokemon),
           title: Text(widget.pokemon.name),
         ),
         body: Stack(
