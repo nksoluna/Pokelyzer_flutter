@@ -62,4 +62,20 @@ class Analyzing {
     propertiesAndImmune.add(immuneProperty);
     return propertiesAndImmune;
   }
+
+  int totalActiveStrengthType(List<int> input) {
+    int activeType = 0;
+    input.forEach((element) {
+      if (element > 0) activeType += 1;
+    });
+    return activeType;
+  }
+
+  int totalActiveWeaknessType(List<int> input) {
+    int activeType = 0;
+    input.forEach((element) {
+      if (element < 0) activeType += 1;
+    });
+    return activeType;
+  }
 }

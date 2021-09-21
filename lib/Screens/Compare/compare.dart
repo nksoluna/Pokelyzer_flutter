@@ -184,7 +184,8 @@ class _CompareScreenState extends State<CompareScreen> {
     Pokemon? result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SearchWidget(allPokemon, allType)),
+          builder: (context) =>
+              SearchWidget(selectedPokemon[index], allPokemon, allType)),
     );
     setState(() {
       selectedPokemon[index] = result;

@@ -45,6 +45,14 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     return Stack(
       children: <Widget>[
         BaseWidget(
+          panelController: panelController,
+          tabBar: ["Weakness", "Strength", "Immune"],
+          panelRadius: 24,
+          panelBody: [
+            PropertiesShow(teamProperties[0], "Weakness"),
+            PropertiesShow(teamProperties[0], "Strength"),
+            PropertiesShow(teamProperties[1], "Immune")
+          ],
           children: [
             Text('Team Strength/Weakness Analyzing',
                 style: Theme.of(context).textTheme.headline4!.merge(
@@ -130,7 +138,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
               margin: EdgeInsets.only(right: imageSize / 2 - 20),
               child: RaisedGradientButton(
                 child: Text(
-                  'Compare Pokemon!',
+                  'Analyze!',
                   style: TextStyle(color: Colors.white),
                 ),
                 width: 150,
@@ -143,7 +151,6 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                   setState(() {
                     List<List<int>> result = Analyzing()
                         .teamAnalyzing(selectedPokemon, allPokemon, allType);
-
                     teamProperties[0] = result[0];
                     teamProperties[1] = result[1];
                   });
@@ -151,7 +158,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
               ),
             ),
           ],
-        ),
+        ), /*
         SlidingUpPanel(
             panelSnapping: true,
             borderRadius: radius,
@@ -197,7 +204,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                           )))
                 ],
               );
-            })
+            })*/
       ],
     );
   }
@@ -206,14 +213,12 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     Pokemon? result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SearchWidget(allPokemon, allType)),
+          builder: (context) =>
+              SearchWidget(selectedPokemon[index], allPokemon, allType)),
     );
+
     setState(() {
-      if (result != null) {
-        setState(() {
-          selectedPokemon[index] = result;
-        });
-      }
+      selectedPokemon[index] = result;
     });
   }
 }

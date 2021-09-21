@@ -8,7 +8,6 @@ import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:pokelyzer/models/type.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
   final Pokemon pokemon;
