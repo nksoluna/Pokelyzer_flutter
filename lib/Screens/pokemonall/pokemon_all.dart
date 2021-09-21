@@ -4,6 +4,7 @@ import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/pokemon_info/pokemon_info.dart';
+import 'package:pokelyzer/CustomWidgets/filter_widget.dart';
 
 class AllpokemonScreen extends StatefulWidget {
   AllpokemonScreen({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
   int _nextPokemonThreshold = 10;
   final int _defaultPkmnPerPage = 10;
   List<Pokemon> _pokemon = [];
+  List<Pokemon> _allPokemon = [];
+  List<Type> _allType = [];
   @override
   void initState() {
     super.initState();
@@ -36,7 +39,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
   Future<void> fetchpokemon() async {
     try {
       List<Pokemon> pokemonlist = await PokemonsRepo().readAllPokemonFromJson();
-
+      List<Type> typelist = await readAllTypeFromJson();
       setState(
         () {
           _hasmore = pokemonlist.length == _defaultPkmnPerPage;
@@ -44,6 +47,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
           _pokemonnumber = _pokemonnumber + 1;
           _nextPokemonThreshold = 10;
           _pokemon.addAll(pokemonlist);
+          _allPokemon = _pokemon;
+          _allType = typelist;
         },
       );
     } catch (e) {
@@ -52,6 +57,17 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
         _error = true;
       });
     }
+  }
+
+  void filterPokemon() async {
+    List<Pokemon> resultPokemon = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                FilterWidget(_pokemon, _allPokemon, _allType)));
+    setState(() {
+      _pokemon = resultPokemon;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -80,6 +96,22 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                   ],
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    backgroundColor: Colors.red[700],
+                    hoverColor: Colors.red,
+                    onPressed: () {
+                      filterPokemon();
+                    },
+                    child: Icon(
+                      Icons.search,
+                      size: 37,
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

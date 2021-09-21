@@ -6,24 +6,23 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> listItem = [
-      {'text': 'Pokedex', 'route': '/home', 'icon': Icon(Icons.data_usage)},
-      {'text': 'Compare', 'route': '/compare', 'icon': Icon(Icons.search)},
+      {
+        'text': 'Pokedex',
+        'route': '/home',
+        'icon': Icon(Icons.catching_pokemon)
+      },
+      {
+        'text': 'Compare',
+        'route': '/compare',
+        'icon': Icon(Icons.compare_arrows)
+      },
       {
         'text': 'Team Builder',
         'route': '/team_builder',
-        'icon': Icon(Icons.add)
+        'icon': Icon(Icons.build)
       },
       {'text': 'Favourite', 'route': '/favorite', 'icon': Icon(Icons.favorite)},
-      {
-        'text': 'Settings',
-        'route': '/setting',
-        'icon': Icon(Icons.settings_rounded)
-      },
-      {
-        'text': 'About',
-        'route': '/about',
-        'icon': Icon(Icons.info_outline_rounded)
-      },
+      {'text': 'About', 'route': '/about', 'icon': Icon(Icons.info)},
     ];
 
     return Drawer(

@@ -7,16 +7,16 @@ import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/searchFunction.dart';
 
-class SearchWidget extends StatefulWidget {
+class FilterWidget extends StatefulWidget {
+  final List<Pokemon?> previousPokemon;
   final List<Pokemon> allPokemon;
   final List<Type> allType;
-  final Pokemon? previousPokemon;
-  SearchWidget(this.previousPokemon, this.allPokemon, this.allType);
+  FilterWidget(this.previousPokemon, this.allPokemon, this.allType);
   @override
-  SearchWidgetState createState() => SearchWidgetState();
+  FilterWidgetState createState() => FilterWidgetState();
 }
 
-class SearchWidgetState extends State<SearchWidget> {
+class FilterWidgetState extends State<FilterWidget> {
   List<String> allTypeString = getAllTypeInString();
   List<Pokemon> selectedPokemon = [];
   List<Pokemon> allPokemon = [];
@@ -230,7 +230,11 @@ class SearchWidgetState extends State<SearchWidget> {
                               ],
                             ),
                             onPressed: () {
-                              Navigator.pop(context, null);
+                              setState(() {
+                                selectedTypeArray = List.filled(18, false);
+                                searchIndexController.clear();
+                                searchNameController.clear();
+                              });
                             },
                             child: Center(
                                 child: Row(
@@ -241,7 +245,7 @@ class SearchWidgetState extends State<SearchWidget> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  " Remove",
+                                  " Clear",
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.white),
                                 ),
@@ -267,11 +271,52 @@ class SearchWidgetState extends State<SearchWidget> {
                                     allPokemon,
                                     allType);
                               });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SearchResult(selectedPokemon)));
+                              if (selectedPokemon.isEmpty)
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20))),
+                                        contentPadding:
+                                            EdgeInsets.only(top: 20),
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.error_outline),
+                                            Text(
+                                              " Pokemon(s) not found!",
+                                              style: (TextStyle(fontSize: 20)),
+                                            )
+                                          ],
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                              Color>(
+                                                          Color(0xFFd93d40)),
+                                                  shape: MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  20.0),
+                                                          side: BorderSide(
+                                                              color:
+                                                                  Colors.red)))),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("Back"))
+                                        ],
+                                      );
+                                    });
+                              else
+                                Navigator.pop(context, selectedPokemon);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -292,189 +337,5 @@ class SearchWidgetState extends State<SearchWidget> {
         )),
       ),
     );
-  }
-}
-
-class SearchResult extends StatefulWidget {
-  final List<Pokemon> selectedPokemon;
-  const SearchResult(this.selectedPokemon);
-
-  @override
-  SearchResultState createState() => SearchResultState();
-}
-
-class SearchResultState extends State<SearchResult> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Center(
-          child: Stack(
-        children: [
-          // insert bg here
-          Column(
-            children: [
-              Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 0, top: 5),
-                  child: RawMaterialButton(
-                    fillColor: Colors.red[400],
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "<",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    padding: EdgeInsets.all(10.0),
-                    shape: CircleBorder(),
-                  )),
-              Divider(
-                color: Colors.grey,
-              ),
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: widget.selectedPokemon.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.pop(
-                                    context, widget.selectedPokemon[index]);
-                              },
-                              leading: Image.asset('assets/images/pokemons/' +
-                                  widget.selectedPokemon[index].index
-                                      .toString() +
-                                  '.png'),
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  widget.selectedPokemon[index].name
-                                              .contains("-") &&
-                                          widget.selectedPokemon[index].name
-                                                  .length >=
-                                              10
-                                      ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              widget.selectedPokemon[index].name
-                                                  .split("-")[0],
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            Text(
-                                              ": " +
-                                                  widget.selectedPokemon[index]
-                                                      .name
-                                                      .split("-")[1],
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                          ],
-                                        )
-                                      : Text(
-                                          widget.selectedPokemon[index].name,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                  widget.selectedPokemon[index].types.length ==
-                                          2
-                                      ? Row(
-                                          children: [
-                                            Container(
-                                              height: 35,
-                                              width: 70,
-                                              child: Card(
-                                                color: Palette()
-                                                    .getSelectedTypeColor(
-                                                        widget
-                                                            .selectedPokemon[
-                                                                index]
-                                                            .types[0],
-                                                        getAllTypeInString()),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                      widget
-                                                          .selectedPokemon[
-                                                              index]
-                                                          .types[0],
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              height: 35,
-                                              width: 70,
-                                              child: Card(
-                                                color: Palette()
-                                                    .getSelectedTypeColor(
-                                                        widget
-                                                            .selectedPokemon[
-                                                                index]
-                                                            .types[1],
-                                                        getAllTypeInString()),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                      widget
-                                                          .selectedPokemon[
-                                                              index]
-                                                          .types[1],
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Container(
-                                          height: 35,
-                                          width: 70,
-                                          child: Card(
-                                            color: Palette()
-                                                .getSelectedTypeColor(
-                                                    widget
-                                                        .selectedPokemon[index]
-                                                        .types[0],
-                                                    getAllTypeInString()),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                  widget.selectedPokemon[index]
-                                                      .types[0],
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                            ),
-                                          ),
-                                        ),
-                                ],
-                              ),
-                            ));
-                      })),
-              Divider(
-                color: Colors.grey,
-              ),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          ),
-        ],
-      )),
-    ));
   }
 }
