@@ -186,7 +186,7 @@ class PropertiesShowState extends State<PropertiesShow> {
             ? Column(
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +225,7 @@ class PropertiesShowState extends State<PropertiesShow> {
             ? Column(
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +264,7 @@ class PropertiesShowState extends State<PropertiesShow> {
             ? Column(
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -21,6 +21,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   // weakness & strength[weakness is - , strength is + in list]  another is immune
   List<List<int>> teamProperties = List.filled(2, List.filled(18, 0));
   double selectorWidth = 120;
+  bool isTeamChanged = false;
   final scrollController = ScrollController();
   final panelController = PanelController();
   @override
@@ -153,10 +154,29 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                         .teamAnalyzing(selectedPokemon, allPokemon, allType);
                     teamProperties[0] = result[0];
                     teamProperties[1] = result[1];
+                    isTeamChanged = false;
                   });
                 },
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            isTeamChanged
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.find_replace, color: Colors.red),
+                      Text(
+                        "Current analyzed data is from previous team!",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      )
+                    ],
+                  )
+                : SizedBox()
           ],
         ), /*
         SlidingUpPanel(
@@ -218,6 +238,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     );
 
     setState(() {
+      isTeamChanged = true;
       selectedPokemon[index] = result;
     });
   }

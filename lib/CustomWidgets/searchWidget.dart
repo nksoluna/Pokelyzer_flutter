@@ -10,7 +10,7 @@ import 'package:pokelyzer/Helpers/searchFunction.dart';
 class SearchWidget extends StatefulWidget {
   final List<Pokemon> allPokemon;
   final List<Type> allType;
-  final Pokemon? previousPokemon;
+  Pokemon? previousPokemon;
   SearchWidget(this.previousPokemon, this.allPokemon, this.allType);
   @override
   SearchWidgetState createState() => SearchWidgetState();
@@ -19,6 +19,8 @@ class SearchWidget extends StatefulWidget {
 class SearchWidgetState extends State<SearchWidget> {
   List<String> allTypeString = getAllTypeInString();
   List<Pokemon> selectedPokemon = [];
+  List<Pokemon> allPokemon = [];
+  List<Type> allType = [];
   List<bool> selectedTypeArray = [];
   List<Color> typeColor = [];
   late TextEditingController searchIndexController;
@@ -30,6 +32,16 @@ class SearchWidgetState extends State<SearchWidget> {
     searchIndexController = TextEditingController();
     searchNameController = TextEditingController();
     typeColor = Palette().getAllTypeColor();
+    allPokemon = widget.allPokemon;
+    allType = widget.allType;
+    if (allPokemon.length <= 0) {
+      readData();
+    }
+  }
+
+  Future<void> readData() async {
+    allPokemon = await PokemonsRepo().readAllPokemonFromJson();
+    allType = await readAllTypeFromJson();
   }
 
   @override
@@ -210,7 +222,7 @@ class SearchWidgetState extends State<SearchWidget> {
                         margin: const EdgeInsets.only(bottom: 10, right: 10),
                         child: RaisedGradientButton(
                             height: 40,
-                            width: 110,
+                            width: 130,
                             gradient: LinearGradient(
                               colors: <Color>[
                                 Colors.red[700]!,
@@ -221,40 +233,57 @@ class SearchWidgetState extends State<SearchWidget> {
                               Navigator.pop(context, null);
                             },
                             child: Center(
-                              child: Text(
-                                "Remove",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                            ))),
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.highlight_remove,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  " Remove",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                              ],
+                            )))),
                     Container(
                         margin: const EdgeInsets.only(bottom: 10, right: 10),
                         child: RaisedGradientButton(
-                          height: 40,
-                          width: 110,
-                          gradient: LinearGradient(
-                            colors: <Color>[Colors.red[700]!, Colors.red[400]!],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              selectedPokemon = searchPokemon(
-                                  searchIndexController.text,
-                                  searchNameController.text,
-                                  selectedTypeArray,
-                                  widget.allPokemon,
-                                  widget.allType);
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SearchResult(selectedPokemon)));
-                          },
-                          child: Text(
-                            "Search",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                        )),
+                            height: 40,
+                            width: 130,
+                            gradient: LinearGradient(
+                              colors: <Color>[
+                                Colors.red[700]!,
+                                Colors.red[400]!
+                              ],
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                selectedPokemon = searchPokemon(
+                                    searchIndexController.text,
+                                    searchNameController.text,
+                                    selectedTypeArray,
+                                    allPokemon,
+                                    allType);
+                              });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SearchResult(selectedPokemon)));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.search, color: Colors.white),
+                                Text(
+                                  " Search",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                              ],
+                            ))),
                   ],
                 ),
               ],
