@@ -39,10 +39,6 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     var imageSize = screenSize.width / 4.5;
-    BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(28.0),
-      topRight: Radius.circular(28.0),
-    );
     return Stack(
       children: <Widget>[
         BaseWidget(
@@ -150,8 +146,8 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                 onPressed: () {
                   panelController.open();
                   setState(() {
-                    List<List<int>> result = Analyzing()
-                        .teamAnalyzing(selectedPokemon, allPokemon, allType);
+                    List<List<int>> result =
+                        Analyzing().teamAnalyzing(selectedPokemon, allType);
                     teamProperties[0] = result[0];
                     teamProperties[1] = result[1];
                     isTeamChanged = false;
@@ -178,53 +174,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                   )
                 : SizedBox()
           ],
-        ), /*
-        SlidingUpPanel(
-            panelSnapping: true,
-            borderRadius: radius,
-            controller: panelController,
-            minHeight: 80,
-            panelBuilder: (scrollController) {
-              return Column(
-                children: [
-                  Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.red[700],
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(28.0),
-                        topLeft: Radius.circular(28.0),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      child: DefaultTabController(
-                          length: 3,
-                          child: Scaffold(
-                            appBar: PreferredSize(
-                              preferredSize: Size.fromHeight(50),
-                              child: AppBar(
-                                backgroundColor: Colors.red[700],
-                                bottom: TabBar(
-                                  tabs: [
-                                    Tab(child: Text("Weakness")),
-                                    Tab(child: Text("Strength")),
-                                    Tab(child: Text("Immune"))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            body: TabBarView(
-                              children: [
-                                PropertiesShow(teamProperties[0], "Weakness"),
-                                PropertiesShow(teamProperties[0], "Strength"),
-                                PropertiesShow(teamProperties[1], "Immune")
-                              ],
-                            ),
-                          )))
-                ],
-              );
-            })*/
+        ),
       ],
     );
   }

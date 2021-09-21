@@ -11,8 +11,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
   final Pokemon pokemon;
-
-  PokemonInfoScreen(this.pokemon);
+  final List<Type> allType;
+  PokemonInfoScreen(this.pokemon, this.allType);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
@@ -25,78 +25,69 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   @override
   void initState() {
     super.initState();
-    fetchAllTypes();
-  }
-
-  Future<void> fetchAllTypes() async {
-    try {
-      List<Type> allType = await readAllTypeFromJson();
-      _allType.addAll(allType);
-    } catch (e) {
-      print(e);
-    }
+    _allType = widget.allType;
   }
 
   Color getcolor(Pokemon pokemon) {
-    Color typeColor = Color(0xFFFFFFFF) ;
-    var types = pokemon.types[0] ;
-     switch (types) {
-              case 'normal':
-                typeColor = Color(0xFFA8A878);
-                break;
-              case 'fire':
-                typeColor = Color(0xFFF08030);
-                break;
-              case 'water':
-                typeColor = Color(0xFF6890F0);
-                break;
-              case 'grass':
-                typeColor = Color(0xFF78C850);
-                break;
-              case 'electric':
-                typeColor = Color(0xFFF8D030);
-                break;
-              case 'ice':
-                typeColor = Color(0xFF98D8D8);
-                break;
-              case 'fighting':
-                typeColor = Color(0xFFC03028);
-                break;
-              case 'poison':
-                typeColor = Color(0xFFA040A0);
-                break;
-              case 'ground':
-                typeColor = Color(0xFFE0C068);
-                break;
-              case 'flying':
-                typeColor = Color(0xFFA890F0);
-                break;
-              case 'psychic':
-                typeColor = Color(0xFFF85888);
-                break;
-              case 'bug':
-                typeColor = Color(0xFFA8B820);
-                break;
-              case 'rock':
-                typeColor = Color(0xFFB8A038);
-                break;
-              case 'ghost':
-                typeColor = Color(0xFF705898);
-                break;
-              case 'dark':
-                typeColor = Color(0xFF705848);
-                break;
-              case 'dragon':
-                typeColor = Color(0xFF7038F8);
-                break;
-              case 'steel':
-                typeColor = Color(0xB8B8D0);
-                break;
-              case 'fairy':
-                typeColor = Color(0xFFEE99AC);
-                break;
-            }
-  return typeColor ;
+    Color typeColor = Color(0xFFFFFFFF);
+    var types = pokemon.types[0];
+    switch (types) {
+      case 'normal':
+        typeColor = Color(0xFFA8A878);
+        break;
+      case 'fire':
+        typeColor = Color(0xFFF08030);
+        break;
+      case 'water':
+        typeColor = Color(0xFF6890F0);
+        break;
+      case 'grass':
+        typeColor = Color(0xFF78C850);
+        break;
+      case 'electric':
+        typeColor = Color(0xFFF8D030);
+        break;
+      case 'ice':
+        typeColor = Color(0xFF98D8D8);
+        break;
+      case 'fighting':
+        typeColor = Color(0xFFC03028);
+        break;
+      case 'poison':
+        typeColor = Color(0xFFA040A0);
+        break;
+      case 'ground':
+        typeColor = Color(0xFFE0C068);
+        break;
+      case 'flying':
+        typeColor = Color(0xFFA890F0);
+        break;
+      case 'psychic':
+        typeColor = Color(0xFFF85888);
+        break;
+      case 'bug':
+        typeColor = Color(0xFFA8B820);
+        break;
+      case 'rock':
+        typeColor = Color(0xFFB8A038);
+        break;
+      case 'ghost':
+        typeColor = Color(0xFF705898);
+        break;
+      case 'dark':
+        typeColor = Color(0xFF705848);
+        break;
+      case 'dragon':
+        typeColor = Color(0xFF7038F8);
+        break;
+      case 'steel':
+        typeColor = Color(0xB8B8D0);
+        break;
+      case 'fairy':
+        typeColor = Color(0xFFEE99AC);
+        break;
+    }
+    return typeColor;
   }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
@@ -124,7 +115,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
       return Text('???');
     }
   }
-  
+
   Widget buildHeader(Pokemon pokemon) {
     return SafeArea(
         child: Column(children: [
@@ -162,7 +153,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     required PanelController panelController,
     required ScrollController scrollController,
     required Pokemon pokemon,
-  })  =>
+  }) =>
       Column(
         children: [
           Container(
@@ -211,10 +202,8 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   Widget buildTabBar({
     required VoidCallback onClicked,
-    required Color typeColor ,
-
+    required Color typeColor,
   }) =>
- 
       PreferredSize(
         preferredSize: Size.fromHeight(tabBarHeight - 31),
         child: GestureDetector(
@@ -299,7 +288,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
               borderRadius: BorderRadius.circular(28),
               controller: panelController,
               panelSnapping: true,
-              maxHeight: MediaQuery.of(context).size.height * 0.46,
+              maxHeight: MediaQuery.of(context).size.height * 0.56,
               minHeight: MediaQuery.of(context).size.height * 0.08,
               panelBuilder: (scrollController) => buildSlidingPanel(
                   scrollController: scrollController,

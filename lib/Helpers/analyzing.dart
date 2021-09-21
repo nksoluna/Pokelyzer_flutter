@@ -2,14 +2,12 @@ import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 
 class Analyzing {
-  teamAnalyzing(List<Pokemon?> selectedPokemon, List<Pokemon> allPokemon,
-      List<Type> allType) {
+  teamAnalyzing(List<Pokemon?> selectedPokemon, List<Type> allType) {
     List<int> result = List.filled(18, 0);
     List<int> immuneProperty = List.filled(18, 0);
     selectedPokemon.forEach((element) {
       if (element != null) {
-        List<List<int>> elementResult =
-            singleAnalyzing(element, allPokemon, allType);
+        List<List<int>> elementResult = singleAnalyzing(element, allType);
         for (int i = 0; i < 18; i++) {
           result[i] += elementResult[0][i];
           immuneProperty[i] += elementResult[1][i];
@@ -22,8 +20,7 @@ class Analyzing {
     return finalResult;
   }
 
-  List<List<int>> singleAnalyzing(
-      Pokemon? pokemon, List<Pokemon> allPokemon, List<Type> allType) {
+  List<List<int>> singleAnalyzing(Pokemon? pokemon, List<Type> allType) {
     List<String> allTypeString = getAllTypeInString();
     List<int> result = List.filled(18, 0);
     List<int> pokemonTypeIndex = [];
@@ -77,5 +74,19 @@ class Analyzing {
       if (element < 0) activeType += 1;
     });
     return activeType;
+  }
+
+  List<String> getActiveTypeStringList(List<int> input, String operator) {
+    List<String> allTypeString = getAllTypeInString();
+    List<String> result = [];
+    if (operator == ">")
+      for (int i = 0; i < 18; i++) {
+        if (input[i] > 0) result.add(allTypeString[i]);
+      }
+    else if (operator == "<")
+      for (int i = 0; i < 18; i++) {
+        if (input[i] < 0) result.add(allTypeString[i]);
+      }
+    return result;
   }
 }
