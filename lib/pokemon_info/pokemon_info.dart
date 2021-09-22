@@ -1,3 +1,4 @@
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
@@ -21,11 +22,13 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
   List<Type> _allType = [];
+  bool _isfavorite = false;
 
   @override
   void initState() {
     super.initState();
     _allType = widget.allType;
+    _isfavorite = false;
   }
 
   Color getcolor(Pokemon pokemon) {
@@ -114,6 +117,18 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     } else {
       return Text('???');
     }
+  }
+
+  void _incrementEnter(_) {
+    setState(() {
+      _isfavorite = true;
+    });
+  }
+
+  void _incrementExit(_) {
+    setState(() {
+      _isfavorite = false;
+    });
   }
 
   Widget buildHeader(Pokemon pokemon) {
@@ -248,7 +263,15 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: getcolor(widget.pokemon),
-          title: Text(widget.pokemon.name),
+          title: Text(widget.pokemon.name.capitalize()),
+          actions: <Widget>[
+            Container(
+                margin: EdgeInsets.only(right: 10),
+                child: StarButton(
+                  valueChanged: (_isStarred) {},
+                  iconSize: 40,
+                ))
+          ],
         ),
         body: Stack(
           children: <Widget>[

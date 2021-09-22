@@ -19,7 +19,7 @@ class TabEvolutionWidget extends StatelessWidget {
       ),
       padding: EdgeInsets.all(20),
       alignment: Alignment.center,
-    );;
+    );
     // if (pokemon.evolutions.isEmpty) {
     //   return Text("None Evolution");
     // } else

@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sliding_up_panel: ^2.0.0+1
   percent_indicator: ^3.0.1
+  favorite_button: ^0.0.4
 
 dev_dependencies:
   flutter_test:

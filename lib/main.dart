@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokelyzer/Screens/favorites/favorites.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => AllpokemonScreen(),
         '/compare': (context) => CompareScreen(),
         '/team_builder': (context) => TeamBuilderScreen(),
+        '/favorite': (context) => FavoriteScreen(),
       },
     );
   }

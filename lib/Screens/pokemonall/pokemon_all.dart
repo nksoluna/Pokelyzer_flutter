@@ -107,7 +107,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                     },
                     child: Icon(
                       Icons.search,
-                      size: 37,
+                      size: 30,
                     ),
                   )
                 ],
