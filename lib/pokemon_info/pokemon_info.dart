@@ -266,9 +266,15 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           title: Text(widget.pokemon.name.capitalize()),
           actions: <Widget>[
             Container(
-                margin: EdgeInsets.only(right: 10),
+                margin: EdgeInsets.only(right: 10, top: 5),
                 child: StarButton(
-                  valueChanged: (_isStarred) {},
+                  valueChanged: (_isStarred) {
+                    if (_isStarred == true) {
+                      print('${widget.pokemon.name} is favorited');
+                    } else {
+                      print('${widget.pokemon.name} is not favorite');
+                    }
+                  },
                   iconSize: 40,
                 ))
           ],
