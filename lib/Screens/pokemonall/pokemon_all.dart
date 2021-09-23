@@ -262,7 +262,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              PokemonInfoScreen(_pkmns, _allType)),
+                              PokemonInfoScreen(_allPokemon, _pkmns, _allType)),
                     );
                   },
                   child: Row(

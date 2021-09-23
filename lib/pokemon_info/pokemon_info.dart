@@ -1,6 +1,7 @@
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
+import 'package:pokelyzer/Helpers/searchFunction.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
@@ -11,9 +12,10 @@ import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
+  final List<Pokemon> allPokemon;
   final Pokemon pokemon;
   final List<Type> allType;
-  PokemonInfoScreen(this.pokemon, this.allType);
+  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
@@ -22,6 +24,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
   List<Type> _allType = [];
+  List<Pokemon> _evolutionChainPokemon = [];
   bool _isfavorite = false;
 
   @override
@@ -29,6 +32,19 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     super.initState();
     _allType = widget.allType;
     _isfavorite = false;
+  }
+
+  List<int> getEvolutionsChainIndex(List<Pokemon> allPokemon, Pokemon pokemon) {
+    var evolutionChainPokemon = [];
+    List<int> listIndex = [];
+    pokemon.evolutions.forEach((pokemonName) {
+      evolutionChainPokemon.add(searchWithName(allPokemon, pokemonName));
+    });
+    evolutionChainPokemon.forEach((element) {
+      listIndex.add(element[0].index);
+    });
+    // listIndex.sort();
+    return listIndex;
   }
 
   Color getcolor(Pokemon pokemon) {
@@ -146,24 +162,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     ]));
   }
 
-  List<int> getListIndex(Pokemon pokemon) {
-    List<int> indexes = [];
-    final evolutionIndex = pokemon.evolutions.indexOf(pokemon.name);
-    var index = 0;
-    if (evolutionIndex == 2) {
-      index = -2;
-    } else if (evolutionIndex == 1) {
-      index = -1;
-    }
-
-    for (var i = 0; i < pokemon.evolutions.length; i++) {
-      indexes.add(pokemon.index + index);
-      index++;
-    }
-
-    return indexes;
-  }
-
   Widget buildSlidingPanel({
     required PanelController panelController,
     required ScrollController scrollController,
@@ -258,8 +256,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   Widget build(BuildContext context) {
     final panelController = PanelController();
     var screenSize = MediaQuery.of(context).size;
-    var imageSize = screenSize.width / 4;
-    getListIndex(widget.pokemon);
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: getcolor(widget.pokemon),
@@ -304,10 +301,14 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                   SizedBox(height: 20),
                   Row(
                       children: List.generate(
-                          getListIndex(widget.pokemon).length,
+                          getEvolutionsChainIndex(
+                                  widget.allPokemon, widget.pokemon)
+                              .length,
                           (index) => Container(
                                 padding: EdgeInsets.only(right: 20),
-                                child: Text(getListIndex(widget.pokemon)[index]
+                                child: Text(getEvolutionsChainIndex(
+                                        widget.allPokemon,
+                                        widget.pokemon)[index]
                                     .toString()),
                               )))
                 ],
