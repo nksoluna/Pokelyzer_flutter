@@ -5,7 +5,6 @@ import 'package:pokelyzer/Helpers/searchFunction.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
-import 'package:pokelyzer/pokemon_info/widgets/tab_evolution.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
 import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
@@ -181,7 +180,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           ),
           Expanded(
               child: DefaultTabController(
-            length: 4,
+            length: 3,
             child: Scaffold(
               appBar: buildTabBar(
                 typeColor: getcolor(pokemon),
@@ -199,10 +198,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                     allType: _allType,
                   ),
                   TabMoveWidget(
-                    scrollController: scrollController,
-                    pokemon: pokemon,
-                  ),
-                  TabEvolutionWidget(
                     scrollController: scrollController,
                     pokemon: pokemon,
                   ),
@@ -236,7 +231,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                 Tab(child: Text('Stat')),
                 Tab(child: Text('Strength')),
                 Tab(child: Text('Move')),
-                Tab(child: Text('Evolution')),
               ],
             ),
           ),
@@ -252,11 +246,25 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         height: 8,
       );
 
+  // Widget buildGridView(List<int> listIndex) {
+  //   return GridView.count(
+  //       crossAxisCount: listIndex.length,
+  //       children: List.generate(listIndex.length, (index) {
+  //         return Container(
+  //           padding: EdgeInsets.only(right: 20),
+  //           width: 300,
+  //           height: 300,
+  //           child:
+  //               Image.asset('assets/images/pokemons/${listIndex[index]}.png'),
+  //         );
+  //       }));
+  // }
+
   @override
   Widget build(BuildContext context) {
     final panelController = PanelController();
     var screenSize = MediaQuery.of(context).size;
-
+    var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: getcolor(widget.pokemon),
@@ -299,18 +307,17 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 20),
-                  Row(
-                      children: List.generate(
-                          getEvolutionsChainIndex(
-                                  widget.allPokemon, widget.pokemon)
-                              .length,
-                          (index) => Container(
-                                padding: EdgeInsets.only(right: 20),
-                                child: Text(getEvolutionsChainIndex(
-                                        widget.allPokemon,
-                                        widget.pokemon)[index]
-                                    .toString()),
-                              )))
+                  Scrollbar(
+                      child: GridView.count(
+                          crossAxisCount: 3,
+                          shrinkWrap: true,
+                          children: List.generate(listIndex.length, (index) {
+                            return Container(
+                              padding: EdgeInsets.only(right: 20),
+                              child: Image.asset(
+                                  'assets/images/pokemons/${listIndex[index]}.png'),
+                            );
+                          })))
                 ],
               ),
             ),
