@@ -30,7 +30,7 @@ List<Pokemon> searchWithName(List<Pokemon> allPokemon, String input) {
   List<Pokemon> selectedPokemons = [];
   input = input.toLowerCase();
   allPokemon.forEach((element) => {
-        if (element.name.contains(input)) {selectedPokemons.add(element)}
+        if (element.name == input) {selectedPokemons.add(element)}
       });
   return selectedPokemons;
 }

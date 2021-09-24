@@ -246,20 +246,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         height: 8,
       );
 
-  // Widget buildGridView(List<int> listIndex) {
-  //   return GridView.count(
-  //       crossAxisCount: listIndex.length,
-  //       children: List.generate(listIndex.length, (index) {
-  //         return Container(
-  //           padding: EdgeInsets.only(right: 20),
-  //           width: 300,
-  //           height: 300,
-  //           child:
-  //               Image.asset('assets/images/pokemons/${listIndex[index]}.png'),
-  //         );
-  //       }));
-  // }
-
   @override
   Widget build(BuildContext context) {
     final panelController = PanelController();
