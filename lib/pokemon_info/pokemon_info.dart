@@ -307,17 +307,16 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 20),
-                  Scrollbar(
-                      child: GridView.count(
-                          crossAxisCount: 3,
-                          shrinkWrap: true,
-                          children: List.generate(listIndex.length, (index) {
-                            return Container(
-                              padding: EdgeInsets.only(right: 20),
-                              child: Image.asset(
-                                  'assets/images/pokemons/${listIndex[index]}.png'),
-                            );
-                          })))
+                  GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: List.generate(listIndex.length, (index) {
+                        return Container(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Image.asset(
+                              'assets/images/pokemons/${listIndex[index]}.png'),
+                        );
+                      }))
                 ],
               ),
             ),
