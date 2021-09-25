@@ -57,6 +57,17 @@ Future<List<Type>> readAllTypeFromJson() async {
   return allType;
 }
 
+Future<Map<String, Type>> getAllTypeInMap() async {
+  final String typeResponse = await rootBundle.loadString('assets/types.json');
+  final typeData = await json.decode(typeResponse);
+  Map<String, Type> allType = {};
+  for (int i = 0; i < 18; i++) {
+    Type typeItem = Type.fromJson(typeData[i]);
+    allType[typeItem.name] = typeItem;
+  }
+  return allType;
+}
+
 List<String> getAllTypeInString() {
   return [
     "normal",
