@@ -41,76 +41,136 @@ class _CompareScreenState extends State<CompareScreen> {
       tabBar: ['Stat', 'Weakness'],
       panelRadius: 24,
       panelBody: [
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                buildPercentBar(
-                  leading: Text('HP'),
-                  value: selectedPokemon[0]?.stats.hp,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('HP'),
-                  value: selectedPokemon[1]?.stats.hp,
-                  color: Colors.red,
-                ),
-                buildPercentBar(
-                  leading: Text('ATK'),
-                  value: selectedPokemon[0]?.stats.atk,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('ATK'),
-                  value: selectedPokemon[1]?.stats.atk,
-                  color: Colors.red,
-                ),
-                buildPercentBar(
-                  leading: Text('DEF'),
-                  value: selectedPokemon[0]?.stats.def,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('DEF'),
-                  value: selectedPokemon[1]?.stats.def,
-                  color: Colors.red,
-                ),
-                buildPercentBar(
-                  leading: Text('SPATK'),
-                  value: selectedPokemon[0]?.stats.spatk,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('SPATK'),
-                  value: selectedPokemon[1]?.stats.spatk,
-                  color: Colors.red,
-                ),
-                buildPercentBar(
-                  leading: Text('SPDEF'),
-                  value: selectedPokemon[0]?.stats.spdef,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('SPDEF'),
-                  value: selectedPokemon[1]?.stats.spdef,
-                  color: Colors.red,
-                ),
-                buildPercentBar(
-                  leading: Text('SPD'),
-                  value: selectedPokemon[0]?.stats.spd,
-                  color: Colors.blue,
-                ),
-                buildPercentBar(
-                  leading: Text('SPD'),
-                  value: selectedPokemon[1]?.stats.spd,
-                  color: Colors.red,
-                ),
-              ],
-            ),
+        Padding(
+          padding: const EdgeInsets.all(30),
+          child: Wrap(
+            runSpacing: 5,
+            children: [
+              Row(
+                children: [
+                  Text('HP: '),
+                  SizedBox(width: 23),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.hp,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.hp,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('ATK: '),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.atk,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.atk,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('DEF: '),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.def,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.def,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('SPATK: '),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.spatk,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.spatk,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('SPDEF: '),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.spdef,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.spdef,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('SPD: '),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Wrap(
+                      runSpacing: 5,
+                      children: [
+                        buildPercentBar(
+                          value: selectedPokemon[0]?.stats.spd,
+                          color: Colors.blue,
+                        ),
+                        buildPercentBar(
+                          value: selectedPokemon[1]?.stats.spd,
+                          color: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         Center(child: Text('Weakness Screenadd')),
@@ -167,16 +227,13 @@ class _CompareScreenState extends State<CompareScreen> {
     Color color = Colors.red,
   }) {
     if (value == null) value = 0.0;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: LinearPercentIndicator(
-        lineHeight: 20.0,
-        leading: leading,
-        percent: value / max,
-        center: Text("${value}"),
-        linearStrokeCap: LinearStrokeCap.butt,
-        progressColor: color,
-      ),
+    return LinearPercentIndicator(
+      lineHeight: 20.0,
+      leading: leading,
+      percent: value / max,
+      center: Text("${value}"),
+      linearStrokeCap: LinearStrokeCap.butt,
+      progressColor: color,
     );
   }
 

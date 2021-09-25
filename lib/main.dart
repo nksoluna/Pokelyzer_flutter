@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(fontSize: 14.0, color: Color(0xFF000000)),
         ),
       ),
-      initialRoute: '/home',
+      initialRoute: '/compare',
       routes: {
         '/home': (context) => AllpokemonScreen(),
         '/compare': (context) => CompareScreen(),
