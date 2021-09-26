@@ -11,92 +11,106 @@ class TabStatWidget extends StatelessWidget {
   }) : super(key: key);
   final ScrollController scrollController;
 
-  Widget buildStatsBar() => Column(
-        children: [
-          Row(
-            children: [
+  Widget buildStatsBar() => Column(children: [
+        Padding(
+            padding: const EdgeInsets.all(30),
+            child: Wrap(runSpacing: 15, children: [
+              Text(
+                "Pokemon Stat",
+                style: TextStyle(fontSize: 20),
+              ),
               Container(
-                child: Text("HP"),
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("HP")),
+                    Container(width: 50, child: Text("${pokemon.stats.hp}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.hp / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.atk / 255,
-                progressColor: Colors.blue,
-              ),
-              SizedBox(width: 120),
-            ],
-          ),
-          Row(
-            children: [
               Container(
-                child: Text("ATK"),
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("ATK")),
+                    Container(width: 50, child: Text("${pokemon.stats.atk}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.atk / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.atk / 255,
-                progressColor: Colors.blue,
+              Container(
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("DEF")),
+                    Container(width: 50, child: Text("${pokemon.stats.def}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.def / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(width: 120),
-            ],
-          ),
-          Row(
-            children: [
-              Text("DEF"),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.def / 255,
-                progressColor: Colors.blue,
+              Container(
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("Sp.ATK")),
+                    Container(width: 50, child: Text("${pokemon.stats.spatk}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.spatk / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(width: 120),
-            ],
-          ),
-          Row(
-            children: [
-              Text("Sp.ATK"),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.spatk / 255,
-                progressColor: Colors.blue,
+              Container(
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("Sp.DEF")),
+                    Container(width: 50, child: Text("${pokemon.stats.spdef}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.spdef / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(width: 120),
-            ],
-          ),
-          Row(
-            children: [
-              Text("Sp.DEF"),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.spdef / 255,
-                progressColor: Colors.blue,
+              Container(
+                child: Row(
+                  children: [
+                    Container(width: 70, child: Text("SPEED")),
+                    Container(width: 50, child: Text("${pokemon.stats.spd}")),
+                    Expanded(
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: pokemon.stats.spd / 255,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(width: 120),
-            ],
-          ),
-          Row(
-            children: [
-              Text("Speed"),
-              Spacer(),
-              new LinearPercentIndicator(
-                width: 100.0,
-                lineHeight: 8.0,
-                percent: pokemon.stats.spd / 255,
-                progressColor: Colors.blue,
-              ),
-              SizedBox(width: 120),
-            ],
-          )
-        ],
-      );
+            ]))
+      ]);
 
   @override
   Widget build(BuildContext context) => Container(

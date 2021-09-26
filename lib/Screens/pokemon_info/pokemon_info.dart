@@ -122,7 +122,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             color: Palette().getSelectedTypeColor(
                 pokemon.types[index], getAllTypeInString()),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(28),
             ),
             child: Center(
               child: Text(pokemon.types[index],
@@ -167,86 +167,66 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     required PanelController panelController,
     required ScrollController scrollController,
     required Pokemon pokemon,
-  }) =>
-      Column(
-        children: [
-          Container(
-            height: 20,
-            decoration: BoxDecoration(
-              color: getcolor(pokemon),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(28.0),
-                topLeft: Radius.circular(28.0),
-              ),
-            ),
-          ),
-          Expanded(
-              child: DefaultTabController(
+  }) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24),
+      topRight: Radius.circular(24),
+    );
+    return SlidingUpPanel(
+        renderPanelSheet: false,
+        controller: panelController,
+        borderRadius: radius,
+        panelSnapping: true,
+        // maxHeight: MediaQuery.of(context).size.height * 0.56,
+        // minHeight: MediaQuery.of(context).size.height * 0.08,
+        panel: DefaultTabController(
             length: 3,
-            child: Scaffold(
-              appBar: buildTabBar(
-                typeColor: getcolor(pokemon),
-                onClicked: panelController.open,
-              ) as PreferredSizeWidget,
-              body: TabBarView(
-                children: [
-                  TabStatWidget(
-                    scrollController: scrollController,
-                    pokemon: pokemon,
+            child: GestureDetector(
+              onTap: () => panelController.open(),
+              child: Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: getcolor(pokemon),
+                  centerTitle: true,
+                  title: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: 100,
+                    height: 8,
                   ),
-                  TabSrengthWidget(
-                    scrollController: scrollController,
-                    pokemon: pokemon,
-                    allType: _allType,
+                  shape: RoundedRectangleBorder(borderRadius: radius),
+                  bottom: TabBar(tabs: [
+                    Tab(text: "Stat"),
+                    Tab(text: "Strength"),
+                    Tab(text: "Moves")
+                  ]),
+                ),
+                body: Container(
+                  color: Colors.white,
+                  child: TabBarView(
+                    children: [
+                      TabStatWidget(
+                        scrollController: scrollController,
+                        pokemon: pokemon,
+                      ),
+                      TabSrengthWidget(
+                        scrollController: scrollController,
+                        pokemon: pokemon,
+                        allType: _allType,
+                      ),
+                      TabMoveWidget(
+                        scrollController: scrollController,
+                        pokemon: pokemon,
+                      ),
+                    ],
                   ),
-                  TabMoveWidget(
-                    scrollController: scrollController,
-                    pokemon: pokemon,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ))
-        ],
-      );
-
-  Widget buildTabBar({
-    required VoidCallback onClicked,
-    required Color typeColor,
-  }) =>
-      PreferredSize(
-        preferredSize: Size.fromHeight(tabBarHeight - 31),
-        child: GestureDetector(
-          onTap: onClicked,
-          child: AppBar(
-            backgroundColor: typeColor,
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.vertical(
-            //     top: Radius.circular(20),
-            //   ),
-            // ),
-            automaticallyImplyLeading: false,
-            // title: buildDragIcon(), //Icon(Icons.drag_handle),
-            centerTitle: true,
-            bottom: TabBar(
-              tabs: [
-                Tab(child: Text('Stat')),
-                Tab(child: Text('Strength')),
-                Tab(child: Text('Move')),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  Widget buildDragIcon() => Container(
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        width: 40,
-        height: 8,
-      );
+            )));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,75 +235,68 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     var screenSize = MediaQuery.of(context).size;
     var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: getcolor(widget.pokemon),
-          title: Text(widget.pokemon.name.capitalize()),
-          actions: <Widget>[
-            Container(
-                margin: EdgeInsets.only(right: 10, top: 5),
-                child: StarButton(
-                  valueChanged: (_isStarred) {
-                    if (_isStarred == true) {
-                      print('${widget.pokemon.name} is favorited');
-                    } else {
-                      print('${widget.pokemon.name} is not favorite');
-                    }
-                  },
-                  iconSize: 40,
-                ))
-          ],
-        ),
-        body: Stack(
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      buildHeader(widget.pokemon),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          height: screenSize.height / 3,
-                          width: double.infinity,
-                          // alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            'assets/images/pokemons/${widget.pokemon.index}.png',
-                            height: screenSize.height / 1.6,
-                            width: screenSize.width / 1.6,
-                          )),
-                      SizedBox(height: 30),
-                      Text(
-                        "Evolution Chain",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 20),
-                      GridView.count(
-                          crossAxisCount: 3,
-                          shrinkWrap: true,
-                          children: List.generate(listIndex.length, (index) {
-                            return Container(
-                              padding: EdgeInsets.only(right: 20),
-                              child: Image.asset(
-                                  'assets/images/pokemons/${listIndex[index]}.png'),
-                            );
-                          })),
-                      SizedBox(height: 40),
-                    ],
+      backgroundColor: getcolor(widget.pokemon).withOpacity(0.4),
+      appBar: AppBar(
+        backgroundColor: getcolor(widget.pokemon),
+        title: Text(widget.pokemon.name.capitalize()),
+        actions: <Widget>[
+          Container(
+              margin: EdgeInsets.only(right: 10, top: 5),
+              child: StarButton(
+                valueChanged: (_isStarred) {
+                  if (_isStarred == true) {
+                    print('${widget.pokemon.name} is favorited');
+                  } else {
+                    print('${widget.pokemon.name} is not favorite');
+                  }
+                },
+                iconSize: 40,
+              ))
+        ],
+      ),
+      body: Stack(children: <Widget>[
+        Container(
+            padding: EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                children: [
+                  buildHeader(widget.pokemon),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      height: screenSize.height / 3,
+                      width: double.infinity,
+                      // alignment: Alignment.topCenter,
+                      child: Image.asset(
+                        'assets/images/pokemons/${widget.pokemon.index}.png',
+                        height: screenSize.height / 1.6,
+                        width: screenSize.width / 1.6,
+                      )),
+                  SizedBox(height: 30),
+                  Text(
+                    "Evolution Chain",
+                    style: TextStyle(fontSize: 16),
                   ),
-                )),
-            SlidingUpPanel(
-              borderRadius: BorderRadius.circular(28),
-              controller: panelController,
-              panelSnapping: true,
-              maxHeight: MediaQuery.of(context).size.height * 0.56,
-              minHeight: MediaQuery.of(context).size.height * 0.08,
-              panelBuilder: (scrollController) => buildSlidingPanel(
-                  scrollController: scrollController,
-                  panelController: panelController,
-                  pokemon: widget.pokemon),
-            ),
-          ],
-        ));
+                  SizedBox(height: 20),
+                  GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: List.generate(listIndex.length, (index) {
+                        return Container(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Image.asset(
+                              'assets/images/pokemons/${listIndex[index]}.png'),
+                        );
+                      })),
+                  SizedBox(height: 40),
+                ],
+              ),
+            )),
+        buildSlidingPanel(
+            scrollController: scrollController,
+            panelController: panelController,
+            pokemon: widget.pokemon),
+      ]),
+    );
   }
 }
