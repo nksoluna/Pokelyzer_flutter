@@ -3,7 +3,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/pokemon_selector_circle.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
-import 'package:pokelyzer/CustomWidgets/searchWidget.dart';
+import 'package:pokelyzer/CustomWidgets/search_widget.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';

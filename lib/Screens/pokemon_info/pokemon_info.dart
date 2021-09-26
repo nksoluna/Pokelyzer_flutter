@@ -5,9 +5,9 @@ import 'package:pokelyzer/Helpers/searchFunction.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
-import 'package:pokelyzer/pokemon_info/widgets/tab_stat.dart';
-import 'package:pokelyzer/pokemon_info/widgets/tab_strength.dart';
-import 'package:pokelyzer/pokemon_info/widgets/tab_move.dart';
+import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_stat.dart';
+import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_strength.dart';
+import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
