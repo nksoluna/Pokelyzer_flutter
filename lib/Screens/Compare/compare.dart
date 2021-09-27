@@ -19,6 +19,7 @@ class CompareScreen extends StatefulWidget {
 
 class _CompareScreenState extends State<CompareScreen> {
   List<Pokemon?> selectedPokemon = List.filled(2, null);
+  List<Color> textColors = [Colors.blue, Colors.red];
   PanelController _pc = PanelController();
   List<Pokemon> allPokemon = [];
   Map<String, Type> allTypeInMap = {};
@@ -57,16 +58,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.hp,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.hp,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.hp,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -78,16 +76,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.atk,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.atk,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.atk,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -99,16 +94,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.def,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.def,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.def,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -119,16 +111,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.spatk,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.spatk,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.spatk,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -139,16 +128,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.spdef,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.spdef,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.spdef,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -160,16 +146,13 @@ class _CompareScreenState extends State<CompareScreen> {
                   Expanded(
                     child: Wrap(
                       runSpacing: 5,
-                      children: [
-                        buildPercentBar(
-                          value: selectedPokemon[0]?.stats.spd,
-                          color: Colors.blue,
+                      children: List.generate(
+                        selectedPokemon.length,
+                        (index) => buildPercentBar(
+                          value: selectedPokemon[index]?.stats.spd,
+                          color: textColors[index],
                         ),
-                        buildPercentBar(
-                          value: selectedPokemon[1]?.stats.spd,
-                          color: Colors.red,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -201,6 +184,7 @@ class _CompareScreenState extends State<CompareScreen> {
             children: List.generate(
               selectedPokemon.length,
               (index) => PokemonSelectorWidget(
+                textColor: textColors[index],
                 selectedPokemon: selectedPokemon[index],
                 width: imageSize,
                 onTap: () {
@@ -262,7 +246,7 @@ class _CompareScreenState extends State<CompareScreen> {
       Pokemon pokemon1 = selectedPokemon[0]!;
       Pokemon pokemon2 = selectedPokemon[1]!;
       List<Widget> weaknessWidget = [];
-      TextStyle style = TextStyle(fontSize: 20);
+      TextStyle style = TextStyle(fontSize: 22);
       for (var type1 in pokemon1.types) {
         for (var type2 in pokemon2.types) {
           bool firstWeakToSec = allTypeInMap[type1.capitalize()]!
