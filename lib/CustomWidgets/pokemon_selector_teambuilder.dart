@@ -91,7 +91,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
       }
       return Container(
         height: 27,
-        width: 60,
+        width: 50,
         child: Card(
           color: cardColor,
           shape: RoundedRectangleBorder(
@@ -99,7 +99,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
           ),
           child: Center(
             child:
-                Text(text, style: TextStyle(color: Colors.white, fontSize: 14)),
+                Text(text, style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
         ),
       );

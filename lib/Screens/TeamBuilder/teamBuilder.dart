@@ -20,7 +20,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   List<Type> allType = [];
   // weakness & strength[weakness is - , strength is + in list]  another is immune
   List<List<int>> teamProperties = List.filled(2, List.filled(18, 0));
-  double selectorWidth = 120;
+  double selectorWidth = 100;
   bool isTeamChanged = false;
   final scrollController = ScrollController();
   final panelController = PanelController();
