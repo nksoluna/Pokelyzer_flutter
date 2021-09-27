@@ -305,7 +305,7 @@ class _CompareScreenState extends State<CompareScreen> {
       lineHeight: 20.0,
       leading: leading,
       percent: value / max,
-      center: Text("${value}"),
+      center: Text("$value"),
       linearStrokeCap: LinearStrokeCap.butt,
       progressColor: color,
     );
