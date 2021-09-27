@@ -234,69 +234,72 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     final panelController = PanelController();
     var screenSize = MediaQuery.of(context).size;
     var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
-    return Scaffold(
-      backgroundColor: getcolor(widget.pokemon).withOpacity(0.4),
-      appBar: AppBar(
-        backgroundColor: getcolor(widget.pokemon),
-        title: Text(widget.pokemon.name.capitalize()),
-        actions: <Widget>[
+    return Container(
+      color: Colors.white,
+      child: Scaffold(
+        backgroundColor: getcolor(widget.pokemon).withOpacity(0.4),
+        appBar: AppBar(
+          backgroundColor: getcolor(widget.pokemon),
+          title: Text(widget.pokemon.name.capitalize()),
+          actions: <Widget>[
+            Container(
+                margin: EdgeInsets.only(right: 10, top: 5),
+                child: StarButton(
+                  valueChanged: (_isStarred) {
+                    if (_isStarred == true) {
+                      print('${widget.pokemon.name} is favorited');
+                    } else {
+                      print('${widget.pokemon.name} is not favorite');
+                    }
+                  },
+                  iconSize: 40,
+                ))
+          ],
+        ),
+        body: Stack(children: <Widget>[
           Container(
-              margin: EdgeInsets.only(right: 10, top: 5),
-              child: StarButton(
-                valueChanged: (_isStarred) {
-                  if (_isStarred == true) {
-                    print('${widget.pokemon.name} is favorited');
-                  } else {
-                    print('${widget.pokemon.name} is not favorite');
-                  }
-                },
-                iconSize: 40,
-              ))
-        ],
+              padding: EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    buildHeader(widget.pokemon),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        height: screenSize.height / 3,
+                        width: double.infinity,
+                        // alignment: Alignment.topCenter,
+                        child: Image.asset(
+                          'assets/images/pokemons/${widget.pokemon.index}.png',
+                          height: screenSize.height / 1.6,
+                          width: screenSize.width / 1.6,
+                        )),
+                    SizedBox(height: 30),
+                    Text(
+                      "Evolution Chain",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 20),
+                    GridView.count(
+                        crossAxisCount: 3,
+                        shrinkWrap: true,
+                        children: List.generate(listIndex.length, (index) {
+                          return Container(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Image.asset(
+                                'assets/images/pokemons/${listIndex[index]}.png'),
+                          );
+                        })),
+                    SizedBox(height: 40),
+                  ],
+                ),
+              )),
+          buildSlidingPanel(
+              scrollController: scrollController,
+              panelController: panelController,
+              pokemon: widget.pokemon),
+        ]),
       ),
-      body: Stack(children: <Widget>[
-        Container(
-            padding: EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                children: [
-                  buildHeader(widget.pokemon),
-                  Container(
-                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      height: screenSize.height / 3,
-                      width: double.infinity,
-                      // alignment: Alignment.topCenter,
-                      child: Image.asset(
-                        'assets/images/pokemons/${widget.pokemon.index}.png',
-                        height: screenSize.height / 1.6,
-                        width: screenSize.width / 1.6,
-                      )),
-                  SizedBox(height: 30),
-                  Text(
-                    "Evolution Chain",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 20),
-                  GridView.count(
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      children: List.generate(listIndex.length, (index) {
-                        return Container(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Image.asset(
-                              'assets/images/pokemons/${listIndex[index]}.png'),
-                        );
-                      })),
-                  SizedBox(height: 40),
-                ],
-              ),
-            )),
-        buildSlidingPanel(
-            scrollController: scrollController,
-            panelController: panelController,
-            pokemon: widget.pokemon),
-      ]),
     );
   }
 }
