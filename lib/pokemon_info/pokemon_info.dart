@@ -134,18 +134,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }
   }
 
-  void _incrementEnter(_) {
-    setState(() {
-      _isfavorite = true;
-    });
-  }
-
-  void _incrementExit(_) {
-    setState(() {
-      _isfavorite = false;
-    });
-  }
-
   Widget buildHeader(Pokemon pokemon) {
     return SafeArea(
         child: Column(children: [

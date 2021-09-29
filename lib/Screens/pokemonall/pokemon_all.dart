@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
@@ -23,6 +25,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
   List<Pokemon> _pokemon = [];
   List<Pokemon> _allPokemon = [];
   List<Type> _allType = [];
+  List<Favpokemon> _favlist = [];
+
   @override
   void initState() {
     super.initState();
@@ -31,15 +35,16 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
     _nextPokemonThreshold = 10;
     _error = false;
     _loading = true;
-    _pokemon = _pokemon;
 
     fetchpokemon();
   }
 
   Future<void> fetchpokemon() async {
+    final box = await Hive.openBox<Favpokemon>('favpokemon');
     try {
       List<Pokemon> pokemonlist = await PokemonsRepo().readAllPokemonFromJson();
       List<Type> typelist = await readAllTypeFromJson();
+      List<Favpokemon> favlist = await box.values.toList();
       setState(
         () {
           _hasmore = pokemonlist.length == _defaultPkmnPerPage;
@@ -49,6 +54,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
           _pokemon.addAll(pokemonlist);
           _allPokemon = _pokemon;
           _allType = typelist;
+          _favlist = favlist;
         },
       );
     } catch (e) {
@@ -191,6 +197,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
             Color typeColor = Color(0xFFFFFFFF);
             var types = _pkmns.types[0];
             final typeLength = _pkmns.types.length;
+            bool fav = _favlist.toString().contains(_pkmns.name);
 
             switch (types) {
               case 'normal':
@@ -261,8 +268,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              PokemonInfoScreen(_allPokemon, _pkmns, _allType)),
+                          builder: (context) => PokemonInfoScreen(
+                              _pokemon, _pkmns, _allType, fav)),
                     );
                   },
                   child: Row(

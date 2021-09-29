@@ -1,8 +1,11 @@
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Helpers/searchFunction.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
+import 'package:pokelyzer/Screens/favorites/boxes.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_stat.dart';
@@ -14,7 +17,8 @@ class PokemonInfoScreen extends StatefulWidget {
   final List<Pokemon> allPokemon;
   final Pokemon pokemon;
   final List<Type> allType;
-  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType);
+  bool isfav;
+  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isfav);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
@@ -24,13 +28,20 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final double tabBarHeight = 80;
   List<Type> _allType = [];
   List<Pokemon> _evolutionChainPokemon = [];
-  bool _isfavorite = false;
+  bool issave = false;
 
   @override
   void initState() {
     super.initState();
     _allType = widget.allType;
-    _isfavorite = false;
+    issave = widget.isfav;
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+
+    super.dispose();
   }
 
   List<int> getEvolutionsChainIndex(List<Pokemon> allPokemon, Pokemon pokemon) {
@@ -136,16 +147,52 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }
   }
 
-  void _incrementEnter(_) {
-    setState(() {
-      _isfavorite = true;
-    });
+  Future addfav(int index, String name, List<String> types, bool _isfav) async {
+    final favpokemon = Favpokemon(0, '', [])
+      ..index = index
+      ..name = name
+      ..types = types;
+
+    final box = Boxes.getFavpokemon();
+    if (_isfav == false) {
+      box.add(favpokemon);
+    } else {
+      deletefav(favpokemon);
+    }
   }
 
-  void _incrementExit(_) {
-    setState(() {
-      _isfavorite = false;
-    });
+  void deletefav(Favpokemon favpokemon) async {
+    var box = await Hive.openBox<Favpokemon>('favpokemon');
+    List<Favpokemon> _favpokemon = <Favpokemon>[];
+    var favbox = box.values.toList();
+    _favpokemon.addAll(favbox);
+    for (int i = 0; i < _favpokemon.length; i++) {
+      if (favpokemon.name == _favpokemon[i].name) {
+        _favpokemon[i].delete();
+      }
+    }
+  }
+
+  Widget buildfavbutton(
+      BuildContext context, Favpokemon favpokemon, int position, bool issaved) {
+    var box = Hive.openBox<Favpokemon>('favpokemon');
+    return InkWell(
+      child: StarButton(
+        isStarred: issaved,
+        valueChanged: (_isStarred) {
+          if (_isStarred == true) {
+            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
+                !_isStarred);
+            print('${favpokemon.name} fav');
+          } else {
+            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
+                !_isStarred);
+            print('${favpokemon.name} unfav');
+          }
+        },
+        iconSize: 40,
+      ),
+    );
   }
 
   Widget buildHeader(Pokemon pokemon) {
@@ -234,6 +281,11 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     final panelController = PanelController();
     var screenSize = MediaQuery.of(context).size;
     var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
+    Favpokemon favpokemon = new Favpokemon(0, '', []);
+    favpokemon.index = widget.pokemon.index;
+    favpokemon.name = widget.pokemon.name;
+    favpokemon.types = widget.pokemon.types;
+    int position = 0;
     return Container(
       color: Colors.white,
       child: Scaffold(
@@ -243,17 +295,8 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           title: Text(widget.pokemon.name.capitalize()),
           actions: <Widget>[
             Container(
-                margin: EdgeInsets.only(right: 10, top: 5),
-                child: StarButton(
-                  valueChanged: (_isStarred) {
-                    if (_isStarred == true) {
-                      print('${widget.pokemon.name} is favorited');
-                    } else {
-                      print('${widget.pokemon.name} is not favorite');
-                    }
-                  },
-                  iconSize: 40,
-                ))
+                margin: EdgeInsets.only(right: 5),
+                child: buildfavbutton(context, favpokemon, position, issave))
           ],
         ),
         body: Stack(children: <Widget>[

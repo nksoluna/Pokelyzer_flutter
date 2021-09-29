@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pokelyzer/Screens/favorites/favorites.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
@@ -7,8 +9,15 @@ import 'Screens/TeamBuilder/teamBuilder.dart';
 import 'Screens/pokemonall/pokemon_all.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() async {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(FavpokemonAdapter());
+  await Hive.openBox<Favpokemon>('Favpokemon');
   runApp(MyApp());
 }
 

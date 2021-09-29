@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type.dart';
 import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
@@ -17,12 +19,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   bool _hasmore = true;
   int _pokemonnumber = 1;
   bool _error = false;
-  bool _loading = true;
   int _nextPokemonThreshold = 10;
   final int _defaultPkmnPerPage = 10;
+  List<Favpokemon> _favpokemon = <Favpokemon>[];
   List<Pokemon> _pokemon = [];
-  List<Pokemon> _allPokemon = [];
+  List<Pokemon> _allpokemon = [];
   List<Type> _allType = [];
+  @override
+  void dispose() {
+    Hive.close();
+
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,47 +39,51 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     _pokemonnumber = 1;
     _nextPokemonThreshold = 10;
     _error = false;
-    _loading = true;
-    _pokemon = _pokemon;
+    _favpokemon = [];
+    _pokemon = [];
 
     fetchpokemon();
   }
 
   Future<void> fetchpokemon() async {
+    final box = await Hive.openBox<Favpokemon>('favpokemon');
     try {
       List<Pokemon> pokemonlist = await PokemonsRepo().readAllPokemonFromJson();
       List<Type> typelist = await readAllTypeFromJson();
+      List<Favpokemon> favlist = box.values.toList();
       setState(
         () {
-          _hasmore = pokemonlist.length == _defaultPkmnPerPage;
-          _loading = false;
+          _hasmore = favlist.length == _defaultPkmnPerPage;
           _pokemonnumber = _pokemonnumber + 1;
           _nextPokemonThreshold = 10;
-          _pokemon.addAll(pokemonlist);
-          _allPokemon = _pokemon;
           _allType = typelist;
+          _favpokemon = favlist;
+          _allpokemon = pokemonlist;
+          pokemonlist.forEach((element) {
+            for (int i = 0; i < _favpokemon.length; i++) {
+              if (favlist[i].name == element.name) {
+                _pokemon.insert(i, element);
+              }
+            }
+          });
         },
       );
     } catch (e) {
       setState(() {
-        _loading = false;
         _error = true;
       });
     }
+    print(_favpokemon);
+    print(_pokemon);
   }
 
-  void filterPokemon() async {
-    List<Pokemon> resultPokemon = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                FilterWidget(_pokemon, _allPokemon, _allType)));
-    setState(() {
-      _pokemon = resultPokemon;
-    });
+  void clearbox() async {
+    var box = await Hive.openBox<Favpokemon>('favpokemon');
+    box.clear();
   }
 
   Widget build(BuildContext context) {
+    var box = Hive.openBox<Favpokemon>('favpokemon');
     return Container(
       child: BaseWidget(children: <Widget>[
         Expanded(
@@ -87,31 +100,33 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 margin: EdgeInsets.fromLTRB(170, 0, 0, 0),
                 child: Stack(
                   children: [
-                    Text(
-                      'Favorites',
-                      style: TextStyle(
-                        fontSize: 24,
+                    Row(children: [
+                      Text(
+                        'Favorites',
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
+                      Container(
+                        margin: EdgeInsets.only(left: 30),
+                        width: 30,
+                        height: 30,
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.red[700],
+                          hoverColor: Colors.white,
+                          onPressed: () {
+                            clearbox();
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 20,
+                          ),
+                        ),
+                      )
+                    ]),
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FloatingActionButton(
-                    backgroundColor: Colors.red[700],
-                    hoverColor: Colors.red,
-                    onPressed: () {
-                      filterPokemon();
-                    },
-                    child: Icon(
-                      Icons.search,
-                      size: 30,
-                    ),
-                  )
-                ],
-              )
             ],
           ),
         ),
@@ -120,219 +135,208 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   Widget getBody() {
-    if (_loading) {
-      return Center(
-          child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: CircularProgressIndicator(), // loading with circular loader
-      ));
-    } else if (_error) {
-      // if error = true
-      return Center(
-        child: InkWell(
-          onTap: () => setState(
-            () {
-              _loading =
-                  true; //change loading to true and trying load same page
-              _error = false; //change error to false
-              fetchpokemon(); // tap to set new State
-            },
-          ),
-          child: Padding(
-            // if cannot loading
-            padding: const EdgeInsets.all(16),
-            child: Text(
-                "Error While Loading Data. Please Try Again"), // return this text to change the upper state
-          ),
+    if (_favpokemon.isEmpty) {
+      return Container(
+        child: Center(
+          child: Text('NONE FAV'),
         ),
       );
-    } else {
-      // if error = false
-      return ListView.builder(
-          itemCount: _pokemon.length +
-              (_hasmore
-                  ? 1
-                  : 0), // itemCount = amount of people and if _hasmore = true this count will stop in last element
-          itemBuilder: (context, index) {
-            if (index == _pokemon.length) {
-              // if people.length has more     than nextpagethreshold
-              fetchpokemon(); //fetching people
-            }
-            if (index == _pokemon.length + _nextPokemonThreshold) {
-              if (_error) {
-                // same as error
-                return Center(
-                  child: InkWell(
-                    onTap: () => setState(
-                      () {
-                        _loading = true;
-                        _error = false;
-                        fetchpokemon();
-                      },
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                          "Error while loading more Data ,Please tap to try again"),
-                    ),
+    }
+    return ListView.builder(
+        itemCount: _favpokemon.length + (_hasmore ? 1 : 0),
+        itemBuilder: (context, index) {
+          if (index == _favpokemon.length) {
+            fetchpokemon();
+          }
+          if (index == _favpokemon.length + _nextPokemonThreshold) {
+            if (_error) {
+              return Center(
+                child: InkWell(
+                  onTap: () => setState(
+                    () {
+                      _error = false;
+                      fetchpokemon();
+                    },
                   ),
-                );
-              } else {
-                return Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(), // Primary Swatch
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                        "Error while loading more Data ,Please tap to try again"),
                   ),
-                );
+                ),
+              );
+            } else {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          }
+          try {
+            for (int i = 0; i < _favpokemon.length; i++) {
+              if (i != index) {
+                if (_favpokemon[index].name == _favpokemon[i].name) {
+                  _favpokemon[_favpokemon.length - 1].delete();
+                }
               }
             }
-            final Pokemon _pkmns = _pokemon[index];
-            double screenwidth = MediaQuery.of(context).size.width;
-            Color typeColor = Color(0xFFFFFFFF);
-            var types = _pkmns.types[0];
-            final typeLength = _pkmns.types.length;
+          } catch (e) {
+            return Container();
+          }
+          final Favpokemon _favpkmns = _favpokemon[index];
 
-            switch (types) {
-              case 'normal':
-                typeColor = Color(0xFFA8A878);
-                break;
-              case 'fire':
-                typeColor = Color(0xFFF08030);
-                break;
-              case 'water':
-                typeColor = Color(0xFF6890F0);
-                break;
-              case 'grass':
-                typeColor = Color(0xFF78C850);
-                break;
-              case 'electric':
-                typeColor = Color(0xFFF8D030);
-                break;
-              case 'ice':
-                typeColor = Color(0xFF98D8D8);
-                break;
-              case 'fighting':
-                typeColor = Color(0xFFC03028);
-                break;
-              case 'poison':
-                typeColor = Color(0xFFA040A0);
-                break;
-              case 'ground':
-                typeColor = Color(0xFFE0C068);
-                break;
-              case 'flying':
-                typeColor = Color(0xFFA890F0);
-                break;
-              case 'psychic':
-                typeColor = Color(0xFFF85888);
-                break;
-              case 'bug':
-                typeColor = Color(0xFFA8B820);
-                break;
-              case 'rock':
-                typeColor = Color(0xFFB8A038);
-                break;
-              case 'ghost':
-                typeColor = Color(0xFF705898);
-                break;
-              case 'dark':
-                typeColor = Color(0xFF705848);
-                break;
-              case 'dragon':
-                typeColor = Color(0xFF7038F8);
-                break;
-              case 'steel':
-                typeColor = Color(0xB8B8D0);
-                break;
-              case 'fairy':
-                typeColor = Color(0xFFEE99AC);
-                break;
-            }
+          final Pokemon _pkmns = _pokemon.elementAt(index);
+          double screenwidth = MediaQuery.of(context).size.width;
+          Color typeColor = Color(0xFFFFFFFF);
+          var types = _favpkmns.types[0];
+          final typeLength = _favpkmns.types.length;
+          bool fav = _favpokemon.toString().contains(_pkmns.name);
 
-            return Card(
-                elevation: 4,
-                shadowColor: Colors.grey,
-                margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                color: typeColor.withOpacity(0.6),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              PokemonInfoScreen(_allPokemon, _pkmns, _allType)),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Container(
+          switch (types) {
+            case 'normal':
+              typeColor = Color(0xFFA8A878);
+              break;
+            case 'fire':
+              typeColor = Color(0xFFF08030);
+              break;
+            case 'water':
+              typeColor = Color(0xFF6890F0);
+              break;
+            case 'grass':
+              typeColor = Color(0xFF78C850);
+              break;
+            case 'electric':
+              typeColor = Color(0xFFF8D030);
+              break;
+            case 'ice':
+              typeColor = Color(0xFF98D8D8);
+              break;
+            case 'fighting':
+              typeColor = Color(0xFFC03028);
+              break;
+            case 'poison':
+              typeColor = Color(0xFFA040A0);
+              break;
+            case 'ground':
+              typeColor = Color(0xFFE0C068);
+              break;
+            case 'flying':
+              typeColor = Color(0xFFA890F0);
+              break;
+            case 'psychic':
+              typeColor = Color(0xFFF85888);
+              break;
+            case 'bug':
+              typeColor = Color(0xFFA8B820);
+              break;
+            case 'rock':
+              typeColor = Color(0xFFB8A038);
+              break;
+            case 'ghost':
+              typeColor = Color(0xFF705898);
+              break;
+            case 'dark':
+              typeColor = Color(0xFF705848);
+              break;
+            case 'dragon':
+              typeColor = Color(0xFF7038F8);
+              break;
+            case 'steel':
+              typeColor = Color(0xB8B8D0);
+              break;
+            case 'fairy':
+              typeColor = Color(0xFFEE99AC);
+              break;
+          }
+
+          return Card(
+              elevation: 4,
+              shadowColor: Colors.grey,
+              margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              color: typeColor.withOpacity(0.6),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PokemonInfoScreen(
+                              _allpokemon,
+                              _pkmns,
+                              _allType,
+                              fav,
+                            )),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                        height: 81,
+                        width: 135,
+                        child: Image.asset(
+                          'assets/images/pokemons/${_favpkmns.index}.png',
                           height: 81,
                           width: 135,
-                          child: Image.asset(
-                            'assets/images/pokemons/${_pkmns.index}.png',
-                            height: 81,
-                            width: 135,
-                          )),
-                      Column(
-                        children: [
-                          Stack(children: [
-                            Padding(
-                              // change style paddding
-                              padding: const EdgeInsets.fromLTRB(0, 35, 20, 10),
-                              child: Column(children: [
-                                Align(
-                                    child: Text(
-                                  '${_pkmns.name.toUpperCase()}',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: screenwidth * 0.04,
-                                    shadows: <Shadow>[
-                                      Shadow(
-                                          offset: Offset(0, 2),
-                                          blurRadius: 0,
-                                          color: Colors.grey)
-                                    ],
-                                  ),
-                                )),
-                              ]),
-                            )
-                          ]),
-                          Stack(children: [
-                            Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                child: Row(
-                                  children: List.generate(typeLength, (index) {
-                                    return Container(
-                                      height: 35,
-                                      width: 70,
-                                      child: Card(
-                                        color: Palette().getSelectedTypeColor(
-                                            _pkmns.types[index],
-                                            getAllTypeInString()),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        child: Center(
-                                          child: Text(_pkmns.types[index],
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ),
+                        )),
+                    Column(
+                      children: [
+                        Stack(children: [
+                          Padding(
+                            // change style paddding
+                            padding: const EdgeInsets.fromLTRB(0, 35, 20, 10),
+                            child: Column(children: [
+                              Align(
+                                  child: Text(
+                                '${_favpkmns.name.toUpperCase()}',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: screenwidth * 0.04,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 0,
+                                        color: Colors.grey)
+                                  ],
+                                ),
+                              )),
+                            ]),
+                          )
+                        ]),
+                        Stack(children: [
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                              child: Row(
+                                children: List.generate(typeLength, (index) {
+                                  return Container(
+                                    height: 35,
+                                    width: 70,
+                                    child: Card(
+                                      color: Palette().getSelectedTypeColor(
+                                          _favpkmns.types[index],
+                                          getAllTypeInString()),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                    );
-                                  }),
-                                ))
-                          ]),
-                        ],
-                      ),
-                    ],
-                  ),
-                ));
-          });
-    }
+                                      child: Center(
+                                        child: Text(_favpkmns.types[index],
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ))
+                        ]),
+                      ],
+                    ),
+                  ],
+                ),
+              ));
+        });
   }
 }
