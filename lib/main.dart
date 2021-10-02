@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/home',
       routes: {
-        '/home': (context) => AllpokemonScreen(),
+        '/home': (context) => HomeScreen(),
+        '/all_pokemon': (context) => AllpokemonScreen(),
         '/compare': (context) => CompareScreen(),
         '/team_builder': (context) => TeamBuilderScreen(),
         '/favorite': (context) => FavoriteScreen(),
