@@ -7,8 +7,6 @@ import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
 import 'Screens/TeamBuilder/teamBuilder.dart';
 import 'Screens/pokemonall/pokemon_all.dart';
-import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
 import 'package:hive_flutter/adapters.dart';
 
 Future main() async {
