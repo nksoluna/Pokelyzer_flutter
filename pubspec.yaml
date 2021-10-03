@@ -35,6 +35,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.1
   build_runner: ^2.1.2
+  google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:

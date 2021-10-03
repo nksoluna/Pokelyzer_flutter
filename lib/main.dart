@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:pokelyzer/Screens/about.dart';
 import 'package:pokelyzer/Screens/favorites/favorites.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'Helpers/palette.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/compare': (context) => CompareScreen(),
         '/team_builder': (context) => TeamBuilderScreen(),
         '/favorite': (context) => FavoriteScreen(),
+        '/about': (context) => AboutScreen(),
       },
     );
   }
