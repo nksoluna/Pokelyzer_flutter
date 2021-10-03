@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             image: DecorationImage(
           image: AssetImage(
-            "./assets/material-image/home-background2.png",
+            "./assets/material-image/home-background-with-rotom.png",
           ),
           fit: BoxFit.cover,
         )),
@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: 110,
                         width: 110,
+                        margin: EdgeInsets.only(bottom: 10),
                         child: MaterialButton(
                           child: Image.asset('assets/icon/pokedex_icon.png'),
                           color: Colors.white,
@@ -59,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: 110,
                         width: 110,
+                        margin: EdgeInsets.only(bottom: 10),
                         child: MaterialButton(
                           child: Image.asset('assets/icon/compare_icon.png'),
                           color: Colors.white,
@@ -82,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: 110,
                         width: 110,
+                        margin: EdgeInsets.only(bottom: 10),
                         child: MaterialButton(
                           child:
                               Image.asset('assets/icon/teambuilder_icon.png'),
@@ -106,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: 110,
                         width: 110,
+                        margin: EdgeInsets.only(bottom: 10),
                         child: MaterialButton(
                           child: Image.asset('assets/icon/fav_icon.png'),
                           color: Colors.white,
