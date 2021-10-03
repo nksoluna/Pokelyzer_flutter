@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/pokemon_selector_teambuilder.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
-import 'package:pokelyzer/CustomWidgets/searchWidget.dart';
+import 'package:pokelyzer/CustomWidgets/search_widget.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/Helpers/analyzing.dart';
 import 'package:pokelyzer/Screens/TeamBuilder/propertiesShow.dart';

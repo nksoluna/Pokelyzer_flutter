@@ -8,8 +8,10 @@ class PokemonSelectorWidget extends StatefulWidget {
   final double width;
   final Pokemon? selectedPokemon;
   final Function() onTap;
+  final Color textColor;
   PokemonSelectorWidget({
     Key? key,
+    this.textColor = Colors.black,
     this.selectedPokemon,
     required this.width,
     required this.onTap,
@@ -24,7 +26,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildPokemonName(widget.selectedPokemon),
+        buildPokemonName(),
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -44,30 +46,36 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
             child: Material(
               type: MaterialType.transparency,
               child: InkWell(
-                child: Image.asset(getImagePath(widget.selectedPokemon)),
+                child: Image.asset(getImagePath()),
                 onTap: widget.onTap,
               ),
             ),
           ),
         ),
-        buildPokemonType(widget.selectedPokemon),
+        buildPokemonType(),
       ],
     );
   }
 
-  String getImagePath(Pokemon? pokemon) {
-    if (pokemon != null) {
-      return 'assets/images/pokemons/' + pokemon.index.toString() + ".png";
+  String getImagePath() {
+    if (widget.selectedPokemon != null) {
+      return 'assets/images/pokemons/' +
+          widget.selectedPokemon!.index.toString() +
+          ".png";
     }
     return 'assets/images/pokemons/201.png';
   }
 
-  Widget buildPokemonName(Pokemon? pokemon) {
+  Widget buildPokemonName() {
     final pokemonName = widget.selectedPokemon?.name.capitalize() ?? '-';
-    return Text(pokemonName, style: Theme.of(context).textTheme.headline4);
+    return Text(pokemonName,
+        style: Theme.of(context)
+            .textTheme
+            .headline4!
+            .merge(TextStyle(color: widget.textColor)));
   }
 
-  Widget buildPokemonType(Pokemon? pokemon) {
+  Widget buildPokemonType() {
     Widget buildCard({required String text, Color? color}) {
       var cardColor = color;
       if (color == null) {
@@ -88,11 +96,13 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
       );
     }
 
-    if (pokemon != null) {
-      final typeLength = pokemon.types.length;
+    if (widget.selectedPokemon != null) {
+      final typeLength = widget.selectedPokemon!.types.length;
       return Row(
           children: List.generate(
-              typeLength, (index) => buildCard(text: pokemon.types[index])));
+              typeLength,
+              (index) =>
+                  buildCard(text: widget.selectedPokemon!.types[index])));
     }
     return buildCard(text: '???', color: Colors.black);
   }

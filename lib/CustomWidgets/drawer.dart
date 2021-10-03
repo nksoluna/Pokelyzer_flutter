@@ -8,7 +8,7 @@ class DrawerWidget extends StatelessWidget {
     List<Map<String, dynamic>> listItem = [
       {
         'text': 'Pokedex',
-        'route': '/home',
+        'route': '/all_pokemon',
         'icon': Icon(Icons.catching_pokemon)
       },
       {

@@ -32,6 +32,9 @@ class Pokemon {
     return Pokemon(json["index"], json["name"], type,
         Stat.fromJson(json["stats"]), ability, evolution, move);
   }
+
+  @override
+  toString() => '$name';
 }
 
 class Stat {
