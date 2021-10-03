@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             image: DecorationImage(
           image: AssetImage(
-            "./assets/material-image/background-mobile.jpg",
+            "./assets/material-image/home-background2.png",
           ),
           fit: BoxFit.cover,
         )),
@@ -37,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 110,
                         width: 110,
                         child: MaterialButton(
-                          color: Colors.blue,
+                          child: Image.asset('assets/icon/pokedex_icon.png'),
+                          color: Colors.white,
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           onPressed: () {
@@ -46,14 +47,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text("Pokedex"),
+                      Text(
+                        "Pokedex",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ]),
                     Column(children: [
                       Container(
                         height: 110,
                         width: 110,
                         child: MaterialButton(
-                          color: Colors.blue,
+                          child: Image.asset('assets/icon/compare_icon.png'),
+                          color: Colors.white,
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           onPressed: () {
@@ -62,14 +70,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text("Compare"),
+                      Text(
+                        "Compare",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ]),
                     Column(children: [
                       Container(
                         height: 110,
                         width: 110,
                         child: MaterialButton(
-                          color: Colors.blue,
+                          child:
+                              Image.asset('assets/icon/teambuilder_icon.png'),
+                          color: Colors.white,
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           onPressed: () {
@@ -78,14 +94,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text("Team Builder"),
+                      Text(
+                        "Team Builder",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ]),
                     Column(children: [
                       Container(
                         height: 110,
                         width: 110,
                         child: MaterialButton(
-                          color: Colors.blue,
+                          child: Image.asset('assets/icon/fav_icon.png'),
+                          color: Colors.white,
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           onPressed: () {
@@ -94,7 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text("Favourite"),
+                      Text(
+                        "Favourite",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ]),
                   ]),
               Column(mainAxisSize: MainAxisSize.min, children: [
@@ -102,7 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 110,
                   width: 110,
                   child: MaterialButton(
-                    color: Colors.blue,
+                    child: Image.asset('assets/icon/about_icon.png'),
+                    color: Colors.white,
                     shape: CircleBorder(side: BorderSide(color: Colors.white)),
                     onPressed: () {
                       Navigator.pushNamed(context, '/about');
@@ -110,7 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Text("About"),
+                Text(
+                  "About",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
+                ),
               ]),
             ],
           ),

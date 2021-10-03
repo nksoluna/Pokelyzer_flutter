@@ -57,6 +57,7 @@ flutter:
     - assets/material-image/
     - assets/images/pokemons/
     - assets/images/shapes/
+    - assets/icon/
     - assets/pokemons.json
     - assets/types.json
 
