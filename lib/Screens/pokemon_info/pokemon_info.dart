@@ -43,29 +43,25 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
-    if (pokemon != null) {
-      final typeLength = pokemon.types.length;
-      return Row(
-          children: List.generate(typeLength, (index) {
-        return Container(
-          height: 35,
-          width: 70,
-          child: Card(
-            color: Palette().getSelectedTypeColor(
-                pokemon.types[index], getAllTypeInString()),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28),
-            ),
-            child: Center(
-              child: Text(pokemon.types[index],
-                  style: TextStyle(color: Colors.white)),
-            ),
+    final typeLength = pokemon.types.length;
+    return Row(
+        children: List.generate(typeLength, (index) {
+      return Container(
+        height: 35,
+        width: 70,
+        child: Card(
+          color: Palette()
+              .getSelectedTypeColor(pokemon.types[index], getAllTypeInString()),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28),
           ),
-        );
-      }));
-    } else {
-      return Text('???');
-    }
+          child: Center(
+            child: Text(pokemon.types[index],
+                style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      );
+    }));
   }
 
   Future addfav(int index, String name, List<String> types, bool _isfav) async {
@@ -145,8 +141,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         controller: panelController,
         borderRadius: radius,
         panelSnapping: true,
-        // maxHeight: MediaQuery.of(context).size.height * 0.56,
-        // minHeight: MediaQuery.of(context).size.height * 0.08,
         panel: DefaultTabController(
             length: 3,
             child: GestureDetector(

@@ -101,7 +101,7 @@ class Palette {
         typeColor = Color(0xFF7038F8);
         break;
       case 'steel':
-        typeColor = Color(0xB8B8D0);
+        typeColor = Color(0xFFADADC5);
         break;
       case 'fairy':
         typeColor = Color(0xFFEE99AC);
