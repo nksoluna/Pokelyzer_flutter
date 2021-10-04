@@ -27,7 +27,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final panelController = PanelController();
   final double tabBarHeight = 80;
   List<Type> _allType = [];
-  List<Pokemon> _evolutionChainPokemon = [];
   bool issave = false;
 
   @override
@@ -42,21 +41,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     Hive.close();
 
     super.dispose();
-  }
-
-  List<int> getEvolutionsChainIndex(List<Pokemon> allPokemon, Pokemon pokemon) {
-    var evolutionChainPokemon = [];
-    List<int> listIndex = [];
-    List<int> result = [];
-    pokemon.evolutions.forEach((pokemonName) {
-      evolutionChainPokemon.add(searchWithName(allPokemon, pokemonName));
-    });
-    evolutionChainPokemon.forEach((element) {
-      listIndex.add(element[0].index);
-    });
-    listIndex.sort();
-    result = listIndex.toSet().toList();
-    return result;
   }
 
   Color getcolor(Pokemon pokemon) {

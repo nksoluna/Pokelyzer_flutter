@@ -115,7 +115,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           backgroundColor: Colors.red[700],
                           hoverColor: Colors.white,
                           onPressed: () {
-                            clearbox();
+                            setState(() {
+                              clearbox();
+                            });
                           },
                           child: Icon(
                             Icons.close,
@@ -260,6 +262,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               color: typeColor.withOpacity(0.6),
               child: InkWell(
                 onTap: () {
+                  /*
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -270,6 +273,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               fav,
                             )),
                   );
+                  */
                 },
                 child: Row(
                   children: <Widget>[

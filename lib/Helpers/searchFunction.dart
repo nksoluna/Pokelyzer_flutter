@@ -30,7 +30,7 @@ List<Pokemon> searchWithName(List<Pokemon> allPokemon, String input) {
   List<Pokemon> selectedPokemons = [];
   input = input.toLowerCase();
   allPokemon.forEach((element) => {
-        if (element.name == input) {selectedPokemons.add(element)}
+        if (element.name.contains(input)) {selectedPokemons.add(element)}
       });
   return selectedPokemons;
 }
@@ -65,4 +65,27 @@ List<Pokemon> searchPokemon(
         searchWithType(selectedPokemon, allType, selectedTypeArray);
   }
   return selectedPokemon;
+}
+
+Pokemon searchWithSpacificName(List<Pokemon> allPokemon, String input) {
+  Pokemon selectedPokemons;
+  input = input.toLowerCase();
+  selectedPokemons = allPokemon.firstWhere(
+      (element) => element.name.toLowerCase() == input.toLowerCase());
+  return selectedPokemons;
+}
+
+List<int> getEvolutionsChainIndex(List<Pokemon> allPokemon, Pokemon pokemon) {
+  var evolutionChainPokemon = [];
+  List<int> listIndex = [];
+  List<int> result = [];
+  pokemon.evolutions.forEach((pokemonName) {
+    evolutionChainPokemon.add(searchWithSpacificName(allPokemon, pokemonName));
+  });
+  evolutionChainPokemon.forEach((element) {
+    listIndex.add(element.index);
+  });
+  listIndex.sort();
+  result = listIndex.toSet().toList();
+  return result;
 }
