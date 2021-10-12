@@ -24,12 +24,14 @@ class PokemonSelectorWidget extends StatefulWidget {
 class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildPokemonName(),
-        buildPokemonSelector(),
-        buildPokemonType(),
-      ],
+    return Expanded(
+      child: Column(
+        children: [
+          buildPokemonName(),
+          buildPokemonSelector(),
+          buildPokemonType(),
+        ],
+      ),
     );
   }
 
@@ -45,6 +47,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
   Widget buildPokemonName() {
     final pokemonName = widget.selectedPokemon?.name.capitalize() ?? '-';
     return Text(pokemonName,
+        textAlign: TextAlign.center,
         style: TextStyle(
             color: widget.textColor,
             fontSize: 30,
@@ -103,6 +106,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
     if (widget.selectedPokemon != null) {
       final typeLength = widget.selectedPokemon!.types.length;
       return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
               typeLength,
               (index) =>

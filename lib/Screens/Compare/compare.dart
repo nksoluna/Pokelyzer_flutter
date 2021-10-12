@@ -183,7 +183,7 @@ class _CompareScreenState extends State<CompareScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: List.generate(
               selectedPokemon.length,
               (index) => PokemonSelectorWidget(
