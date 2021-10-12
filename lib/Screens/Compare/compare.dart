@@ -197,6 +197,30 @@ class _CompareScreenState extends State<CompareScreen> {
             ),
           ),
         ),
+        Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 35),
+          child: RaisedGradientButton(
+            child: Text(
+              'Clear selected pokemon',
+              style: TextStyle(color: Colors.white),
+            ),
+            gradient: LinearGradient(
+              colors: <Color>[
+                Colors.grey[800]!,
+                Colors.grey[700]!,
+                Colors.grey[600]!,
+                Colors.grey[700]!,
+                Colors.grey[800]!
+              ],
+            ),
+            onPressed: () {
+              setState(() {
+                selectedPokemon = List.filled(2, null);
+              });
+            },
+          ),
+        ),
       ],
     );
   }
@@ -306,5 +330,8 @@ class _CompareScreenState extends State<CompareScreen> {
     setState(() {
       selectedPokemon[index] = result;
     });
+    if (selectedPokemon.every((element) => element != null)) {
+      _pc.open();
+    }
   }
 }
