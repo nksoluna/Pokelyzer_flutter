@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/pokemon_selector_circle.dart';
@@ -7,7 +8,7 @@ import 'package:pokelyzer/CustomWidgets/search_widget.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class CompareScreen extends StatefulWidget {
@@ -22,8 +23,8 @@ class _CompareScreenState extends State<CompareScreen> {
   List<Color> textColors = [Colors.blue, Colors.red];
   PanelController _pc = PanelController();
   List<Pokemon> allPokemon = [];
-  Map<String, Type> allTypeInMap = {};
-  List<Type> allType = [];
+  Map<String, TypePokemon> allTypeInMap = {};
+  List<TypePokemon> allType = [];
   @override
   void initState() {
     super.initState();
@@ -31,8 +32,10 @@ class _CompareScreenState extends State<CompareScreen> {
   }
 
   Future<void> readData() async {
-    allPokemon = await PokemonsRepo().readAllPokemonFromJson();
-    allType = await readAllTypeFromJson();
+    final box = Hive.box<Pokemon>('allpokemon');
+    allPokemon.addAll(box.values);
+    final typebox = Hive.box<TypePokemon>('alltype');
+    allType.addAll(typebox.values);
     allTypeInMap = await getAllTypeInMap();
   }
 

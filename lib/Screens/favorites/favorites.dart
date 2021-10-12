@@ -4,7 +4,7 @@ import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
 import 'package:pokelyzer/CustomWidgets/filter_widget.dart';
 
@@ -16,6 +16,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  final box = Hive.box<Favpokemon>('favpokemon');
   bool _hasmore = true;
   int _pokemonnumber = 1;
   bool _error = false;
@@ -24,11 +25,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   List<Favpokemon> _favpokemon = <Favpokemon>[];
   List<Pokemon> _pokemon = [];
   List<Pokemon> _allpokemon = [];
-  List<Type> _allType = [];
+  List<TypePokemon> _allType = [];
   @override
   void dispose() {
-    Hive.close();
-
     super.dispose();
   }
 
@@ -46,10 +45,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   Future<void> fetchpokemon() async {
-    final box = await Hive.openBox<Favpokemon>('favpokemon');
+    final box = Hive.box<Favpokemon>('favpokemon');
     try {
-      List<Pokemon> pokemonlist = await PokemonsRepo().readAllPokemonFromJson();
-      List<Type> typelist = await readAllTypeFromJson();
+      final allPokemonbox = Hive.box<Pokemon>('allpokemon');
+      final allTypeBox = Hive.box<TypePokemon>('alltype');
+      List<Pokemon> pokemonlist = [];
+      pokemonlist.addAll(allPokemonbox.values);
+      List<TypePokemon> typelist = [];
+      typelist.addAll(allTypeBox.values);
       List<Favpokemon> favlist = box.values.toList();
       setState(
         () {
@@ -78,12 +81,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   void clearbox() async {
-    var box = await Hive.openBox<Favpokemon>('favpokemon');
     box.clear();
   }
 
   Widget build(BuildContext context) {
-    var box = Hive.openBox<Favpokemon>('favpokemon');
+    var box = Hive.box<Favpokemon>('favpokemon');
     return Container(
       child: BaseWidget(children: <Widget>[
         Expanded(

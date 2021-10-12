@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/analyzing.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 class TabSrengthWidget extends StatelessWidget {
   final Pokemon pokemon;
-  final List<Type> allType;
+  final List<TypePokemon> allType;
   const TabSrengthWidget({
     Key? key,
     required this.scrollController,

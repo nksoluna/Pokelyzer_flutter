@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/CustomWidgets/pokemon_selector_teambuilder.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
@@ -6,7 +7,7 @@ import 'package:pokelyzer/CustomWidgets/search_widget.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/Helpers/analyzing.dart';
 import 'package:pokelyzer/Screens/TeamBuilder/propertiesShow.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class TeamBuilderScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class TeamBuilderScreen extends StatefulWidget {
 class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   List<Pokemon?> selectedPokemon = List.filled(6, null);
   List<Pokemon> allPokemon = [];
-  List<Type> allType = [];
+  List<TypePokemon> allType = [];
   // weakness & strength[weakness is - , strength is + in list]  another is immune
   List<List<int>> teamProperties = List.filled(2, List.filled(18, 0));
   double selectorWidth = 100;
@@ -31,8 +32,10 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   }
 
   Future<void> readData() async {
-    allPokemon = await PokemonsRepo().readAllPokemonFromJson();
-    allType = await readAllTypeFromJson();
+    final box = Hive.box<Pokemon>('allpokemon');
+    allPokemon.addAll(box.values);
+    final typebox = Hive.box<TypePokemon>('alltype');
+    allType.addAll(typebox.values);
   }
 
   @override

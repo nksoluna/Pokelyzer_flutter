@@ -1,13 +1,23 @@
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'dart:convert';
+part 'pokemon.g.dart';
 
+@HiveType(typeId: 2)
 class Pokemon {
+  @HiveField(1)
   final int index;
+  @HiveField(2)
   final String name;
+  @HiveField(3)
   final List<String> types;
+  @HiveField(4)
   final Stat stats;
+  @HiveField(5)
   final List<Ability> abilities;
+  @HiveField(6)
   final List<String> evolutions;
+  @HiveField(7)
   final List<Move> moves;
   Pokemon(this.index, this.name, this.types, this.stats, this.abilities,
       this.evolutions, this.moves);
@@ -37,12 +47,19 @@ class Pokemon {
   toString() => '$name';
 }
 
+@HiveType(typeId: 3)
 class Stat {
+  @HiveField(1)
   final int hp;
+  @HiveField(2)
   final int atk;
+  @HiveField(3)
   final int def;
+  @HiveField(4)
   final int spatk;
+  @HiveField(5)
   final int spdef;
+  @HiveField(6)
   final int spd;
   Stat(this.hp, this.atk, this.def, this.spatk, this.spdef, this.spd);
   factory Stat.fromJson(dynamic json) {
@@ -51,21 +68,32 @@ class Stat {
   }
 }
 
+@HiveType(typeId: 4)
 class Ability {
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final bool ishidden;
+  @HiveField(1)
   Ability(this.name, this.ishidden);
   factory Ability.fromJson(dynamic json) {
     return Ability(json["ability"], json["is_hidden"]);
   }
 }
 
+@HiveType(typeId: 5)
 class Move {
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final int power;
+  @HiveField(3)
   final int accuracy;
+  @HiveField(4)
   final int pp;
+  @HiveField(5)
   final String damageType;
+  @HiveField(6)
   final String damageClass;
   Move(this.name, this.power, this.accuracy, this.pp, this.damageType,
       this.damageClass);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 class PokemonSelectorWidget extends StatefulWidget {
   final double width;

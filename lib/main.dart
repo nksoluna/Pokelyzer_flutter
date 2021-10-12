@@ -9,15 +9,31 @@ import 'Screens/Home/home.dart';
 import 'Screens/TeamBuilder/teamBuilder.dart';
 import 'Screens/pokemonall/pokemon_all.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:pokelyzer/models/pokemon.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-
   Hive.registerAdapter(FavpokemonAdapter());
-  await Hive.openBox<Favpokemon>('Favpokemon');
+  Hive.registerAdapter(PokemonAdapter());
+  Hive.registerAdapter(StatAdapter());
+  Hive.registerAdapter(AbilityAdapter());
+  Hive.registerAdapter(MoveAdapter());
+  Hive.registerAdapter(TypePokemonAdapter());
+  await Hive.openBox<Favpokemon>('favpokemon');
+  await Hive.openBox<Pokemon>('allpokemon');
+  await Hive.openBox<TypePokemon>('alltype');
+  await readData();
   runApp(MyApp());
+}
+
+readData() async {
+  var box = Hive.box<Pokemon>('allpokemon');
+  if (box.isEmpty) box.addAll(await PokemonsRepo().readAllPokemonFromJson());
+  var typebox = Hive.box<TypePokemon>('alltype');
+  if (typebox.isEmpty) typebox.addAll(await readAllTypeFromJson());
 }
 
 class MyApp extends StatelessWidget {

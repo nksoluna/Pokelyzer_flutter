@@ -7,7 +7,7 @@ import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/Screens/favorites/boxes.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_stat.dart';
 import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_strength.dart';
 import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_move.dart';
@@ -16,7 +16,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class PokemonInfoScreen extends StatefulWidget {
   final List<Pokemon> allPokemon;
   final Pokemon pokemon;
-  final List<Type> allType;
+  final List<TypePokemon> allType;
   bool isfav;
   PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isfav);
   @override
@@ -24,8 +24,9 @@ class PokemonInfoScreen extends StatefulWidget {
 }
 
 class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
+  final box = Hive.box<Favpokemon>('favpokemon');
   final panelController = PanelController();
-  List<Type> _allType = [];
+  List<TypePokemon> _allType = [];
   bool issave = false;
 
   @override
@@ -37,8 +38,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   @override
   void dispose() {
-    Hive.close();
-
     super.dispose();
   }
 
@@ -79,7 +78,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   }
 
   void deletefav(Favpokemon favpokemon) async {
-    var box = await Hive.openBox<Favpokemon>('favpokemon');
     List<Favpokemon> _favpokemon = <Favpokemon>[];
     var favbox = box.values.toList();
     _favpokemon.addAll(favbox);
@@ -92,7 +90,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   Widget buildfavbutton(
       BuildContext context, Favpokemon favpokemon, int position, bool issaved) {
-    var box = Hive.openBox<Favpokemon>('favpokemon');
     return InkWell(
       child: StarButton(
         isStarred: issaved,
@@ -208,7 +205,10 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             Palette().getColorFromPokemonType(widget.pokemon).withOpacity(0.4),
         appBar: AppBar(
           backgroundColor: Palette().getColorFromPokemonType(widget.pokemon),
-          title: Text(widget.pokemon.name.capitalize()),
+          title: Text(
+            "Index NO.${widget.pokemon.index.toString()}",
+            style: TextStyle(fontStyle: FontStyle.normal),
+          ),
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),

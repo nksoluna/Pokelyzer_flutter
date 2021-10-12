@@ -1,16 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/searchFunction.dart';
+import 'package:hive/hive.dart';
 
 class FilterWidget extends StatefulWidget {
   final List<Pokemon?> previousPokemon;
   final List<Pokemon> allPokemon;
-  final List<Type> allType;
+  final List<TypePokemon> allType;
   FilterWidget(this.previousPokemon, this.allPokemon, this.allType);
   @override
   FilterWidgetState createState() => FilterWidgetState();
@@ -20,7 +21,7 @@ class FilterWidgetState extends State<FilterWidget> {
   List<String> allTypeString = getAllTypeInString();
   List<Pokemon> selectedPokemon = [];
   List<Pokemon> allPokemon = [];
-  List<Type> allType = [];
+  List<TypePokemon> allType = [];
   List<bool> selectedTypeArray = [];
   List<Color> typeColor = [];
   late TextEditingController searchIndexController;
@@ -40,8 +41,10 @@ class FilterWidgetState extends State<FilterWidget> {
   }
 
   Future<void> readData() async {
-    allPokemon = await PokemonsRepo().readAllPokemonFromJson();
-    allType = await readAllTypeFromJson();
+    final allPokemonBox = Hive.box<Pokemon>('allpokemon');
+    allPokemon.addAll(allPokemonBox.values);
+    final allTypeBox = Hive.box<TypePokemon>('alltype');
+    allType.addAll(allTypeBox.values);
   }
 
   @override

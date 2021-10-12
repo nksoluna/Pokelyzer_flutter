@@ -1,15 +1,26 @@
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
-class Type {
+import 'package:hive/hive.dart';
+part 'type_pokemon.g.dart';
+
+@HiveType(typeId: 7)
+class TypePokemon {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final List<String> weaknessesOffensive;
+  @HiveField(2)
   final List<String> immunesOffensive;
+  @HiveField(3)
   final List<String> strengthsOffensive;
+  @HiveField(4)
   final List<String> weaknessesDefensive;
+  @HiveField(5)
   final List<String> immunesDefensive;
+  @HiveField(6)
   final List<String> strengthsDefensive;
-  Type(
+  TypePokemon(
       this.name,
       this.immunesOffensive,
       this.immunesDefensive,
@@ -17,7 +28,7 @@ class Type {
       this.weaknessesDefensive,
       this.strengthsOffensive,
       this.strengthsDefensive);
-  factory Type.fromJson(dynamic json) {
+  factory TypePokemon.fromJson(dynamic json) {
     List<String> weaknessA = [],
         immuneA = [],
         strengthA = [],
@@ -42,27 +53,27 @@ class Type {
     for (int i = 0; i < json["strengths-defensive"].length; i++) {
       strengthD.add(json["strengths-defensive"][i]);
     }
-    return Type(json["name"], immuneA, immuneD, weaknessA, weaknessD, strengthA,
-        strengthD);
+    return TypePokemon(json["name"], immuneA, immuneD, weaknessA, weaknessD,
+        strengthA, strengthD);
   }
 }
 
-Future<List<Type>> readAllTypeFromJson() async {
+Future<List<TypePokemon>> readAllTypeFromJson() async {
   final String typeResponse = await rootBundle.loadString('assets/types.json');
   final typeData = await json.decode(typeResponse);
-  List<Type> allType = [];
+  List<TypePokemon> allType = [];
   for (int i = 0; i < 18; i++) {
-    allType.add(Type.fromJson(typeData[i]));
+    allType.add(TypePokemon.fromJson(typeData[i]));
   }
   return allType;
 }
 
-Future<Map<String, Type>> getAllTypeInMap() async {
+Future<Map<String, TypePokemon>> getAllTypeInMap() async {
   final String typeResponse = await rootBundle.loadString('assets/types.json');
   final typeData = await json.decode(typeResponse);
-  Map<String, Type> allType = {};
+  Map<String, TypePokemon> allType = {};
   for (int i = 0; i < 18; i++) {
-    Type typeItem = Type.fromJson(typeData[i]);
+    TypePokemon typeItem = TypePokemon.fromJson(typeData[i]);
     allType[typeItem.name] = typeItem;
   }
   return allType;

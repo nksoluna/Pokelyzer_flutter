@@ -1,8 +1,8 @@
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 List<Pokemon> searchWithType(
-    List<Pokemon> allPokemon, List<Type> allType, List<bool> types) {
+    List<Pokemon> allPokemon, List<TypePokemon> allType, List<bool> types) {
   List<String> selectedType = [];
   List<Pokemon> selectedPokemon = [];
   for (int i = 0; i < 18; i++) {
@@ -47,7 +47,7 @@ List<Pokemon> searchPokemon(
     String inputName,
     List<bool> selectedTypeArray,
     List<Pokemon> allPokemon,
-    List<Type> allType) {
+    List<TypePokemon> allType) {
   List<Pokemon> selectedPokemon = [];
   if (!selectedTypeArray.any((element) => element) &&
       inputIndex.isEmpty &&

@@ -1,8 +1,8 @@
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 class Analyzing {
-  teamAnalyzing(List<Pokemon?> selectedPokemon, List<Type> allType) {
+  teamAnalyzing(List<Pokemon?> selectedPokemon, List<TypePokemon> allType) {
     List<int> result = List.filled(18, 0);
     List<int> immuneProperty = List.filled(18, 0);
     selectedPokemon.forEach((element) {
@@ -20,7 +20,7 @@ class Analyzing {
     return finalResult;
   }
 
-  List<List<int>> singleAnalyzing(Pokemon? pokemon, List<Type> allType) {
+  List<List<int>> singleAnalyzing(Pokemon? pokemon, List<TypePokemon> allType) {
     List<String> allTypeString = getAllTypeInString();
     List<int> result = List.filled(18, 0);
     List<int> pokemonTypeIndex = [];

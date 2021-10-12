@@ -4,7 +4,7 @@ import 'package:pokelyzer/CustomWidgets/base.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
 import 'package:pokelyzer/CustomWidgets/filter_widget.dart';
 
@@ -16,6 +16,9 @@ class AllpokemonScreen extends StatefulWidget {
 }
 
 class _AllpokemonScreenState extends State<AllpokemonScreen> {
+  final allPokemonBox = Hive.box<Pokemon>('allpokemon');
+  final allTypeBox = Hive.box<TypePokemon>('alltype');
+  final favBox = Hive.box<Favpokemon>('favpokemon');
   bool _hasmore = true;
   int _pokemonnumber = 1;
   bool _error = false;
@@ -24,7 +27,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
   final int _defaultPkmnPerPage = 10;
   List<Pokemon> _pokemon = [];
   List<Pokemon> _allPokemon = [];
-  List<Type> _allType = [];
+  List<TypePokemon> _allType = [];
   List<Favpokemon> _favlist = [];
 
   @override
@@ -40,20 +43,18 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
   }
 
   Future<void> fetchpokemon() async {
-    final box = await Hive.openBox<Favpokemon>('favpokemon');
     try {
-      List<Pokemon> pokemonlist = await PokemonsRepo().readAllPokemonFromJson();
-      List<Type> typelist = await readAllTypeFromJson();
-      List<Favpokemon> favlist = await box.values.toList();
+      List<Favpokemon> favlist = [];
+      favlist.addAll(favBox.values);
       setState(
         () {
-          _hasmore = pokemonlist.length == _defaultPkmnPerPage;
+          _hasmore = allPokemonBox.length == _defaultPkmnPerPage;
           _loading = false;
           _pokemonnumber = _pokemonnumber + 1;
           _nextPokemonThreshold = 10;
-          _pokemon.addAll(pokemonlist);
+          _pokemon.addAll(allPokemonBox.values);
+          _allType.addAll(allTypeBox.values);
           _allPokemon = _pokemon;
-          _allType = typelist;
           _favlist = favlist;
         },
       );

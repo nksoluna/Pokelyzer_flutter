@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/pokemon.dart';
-import 'package:pokelyzer/models/type.dart';
+import 'package:pokelyzer/models/type_pokemon.dart';
 
 class TabMoveWidget extends StatelessWidget {
   final Pokemon pokemon;
