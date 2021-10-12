@@ -86,6 +86,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         _favpokemon[i].delete();
       }
     }
+    print(_favpokemon);
   }
 
   Widget buildfavbutton(
@@ -94,15 +95,8 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
       child: StarButton(
         isStarred: issaved,
         valueChanged: (_isStarred) {
-          if (_isStarred == true) {
-            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
-                !_isStarred);
-            print('${favpokemon.name} fav');
-          } else {
-            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
-                !_isStarred);
-            print('${favpokemon.name} unfav');
-          }
+          addfav(
+              favpokemon.index, favpokemon.name, favpokemon.types, !_isStarred);
         },
         iconSize: 40,
       ),

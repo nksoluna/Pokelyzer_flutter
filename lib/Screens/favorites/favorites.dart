@@ -5,6 +5,7 @@ import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
+import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
 
 class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   final int _defaultPkmnPerPage = 10;
   List<Favpokemon> _favpokemon = <Favpokemon>[];
   List<Pokemon> _pokemon = [];
+  List<Pokemon> _allpokemon = [];
+  List<TypePokemon> _allType = [];
   @override
   void dispose() {
     super.dispose();
@@ -55,7 +58,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           _hasmore = favlist.length == _defaultPkmnPerPage;
           _pokemonnumber = _pokemonnumber + 1;
           _nextPokemonThreshold = 10;
+          _allType = typelist;
           _favpokemon = favlist;
+          _allpokemon = pokemonlist;
           pokemonlist.forEach((element) {
             for (int i = 0; i < _favpokemon.length; i++) {
               if (favlist[i].name == element.name) {
@@ -72,10 +77,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     }
     print(_favpokemon);
     print(_pokemon);
-  }
-
-  void clearbox() async {
-    box.clear();
   }
 
   Widget build(BuildContext context) {
@@ -111,7 +112,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           hoverColor: Colors.white,
                           onPressed: () {
                             setState(() {
-                              clearbox();
+                              box.clear();
+                              _favpokemon = [];
                             });
                           },
                           child: Icon(
@@ -184,10 +186,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           }
           final Favpokemon _favpkmns = _favpokemon[index];
 
+          final Pokemon _pkmns = _pokemon.elementAt(index);
           double screenwidth = MediaQuery.of(context).size.width;
           Color typeColor = Color(0xFFFFFFFF);
           var types = _favpkmns.types[0];
           final typeLength = _favpkmns.types.length;
+          bool fav = _favpokemon.toString().contains(_pkmns.name);
 
           switch (types) {
             case 'normal':
@@ -255,7 +259,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               color: typeColor.withOpacity(0.6),
               child: InkWell(
                 onTap: () {
-                  /*
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -266,7 +269,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               fav,
                             )),
                   );
-                  */
                 },
                 child: Row(
                   children: <Widget>[
