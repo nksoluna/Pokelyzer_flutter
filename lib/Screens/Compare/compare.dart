@@ -197,24 +197,6 @@ class _CompareScreenState extends State<CompareScreen> {
             ),
           ),
         ),
-        Container(
-          alignment: Alignment.topRight,
-          margin: EdgeInsets.only(right: imageSize / 2 - 20),
-          child: RaisedGradientButton(
-            child: Text(
-              'Compare Pokemon!',
-              style: TextStyle(color: Colors.white),
-            ),
-            width: 150,
-            height: 30,
-            gradient: LinearGradient(
-              colors: <Color>[Colors.red[700]!, Colors.red[400]!],
-            ),
-            onPressed: () {
-              _pc.open();
-            },
-          ),
-        ),
       ],
     );
   }
