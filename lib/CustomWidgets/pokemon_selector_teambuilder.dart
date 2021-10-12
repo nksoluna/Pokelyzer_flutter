@@ -69,18 +69,18 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
         children: [
           Text(
             pokemonName.split("-")[0],
-            style: TextStyle(
-                fontSize: 21,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .merge(TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
           ),
         ],
       );
     return Text(pokemonName,
-        style: TextStyle(
-            fontSize: 21,
-            color: Colors.grey[600],
-            fontWeight: FontWeight.w600));
+        style: Theme.of(context)
+            .textTheme
+            .headline4!
+            .merge(TextStyle(fontSize: 17, fontWeight: FontWeight.bold)));
   }
 
   Widget buildPokemonType(Pokemon? pokemon) {

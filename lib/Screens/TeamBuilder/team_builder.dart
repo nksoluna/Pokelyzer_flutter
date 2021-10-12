@@ -54,6 +54,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
             PropertiesShow(teamProperties[1], "Immune")
           ],
           children: [
+            SizedBox(height: 20),
             Text('Team Strength/Weakness Analyzing',
                 style: Theme.of(context).textTheme.headline4!.merge(
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
