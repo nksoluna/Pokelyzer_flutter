@@ -2,15 +2,15 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
-import 'package:pokelyzer/Helpers/searchFunction.dart';
+import 'package:pokelyzer/Helpers/search_function.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/Screens/favorites/boxes.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_stat.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_strength.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_move.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_stat.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_strength.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
@@ -86,6 +86,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         _favpokemon[i].delete();
       }
     }
+    print(_favpokemon);
   }
 
   Widget buildfavbutton(
@@ -94,15 +95,8 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
       child: StarButton(
         isStarred: issaved,
         valueChanged: (_isStarred) {
-          if (_isStarred == true) {
-            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
-                !_isStarred);
-            print('${favpokemon.name} fav');
-          } else {
-            addfav(favpokemon.index, favpokemon.name, favpokemon.types,
-                !_isStarred);
-            print('${favpokemon.name} unfav');
-          }
+          addfav(
+              favpokemon.index, favpokemon.name, favpokemon.types, !_isStarred);
         },
         iconSize: 40,
       ),
@@ -187,12 +181,27 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             )));
   }
 
+  Widget buildEvolutionChainView() {
+    var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
+    return Center(
+      child: GridView.count(
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          children: List.generate(listIndex.length, (index) {
+            return Container(
+              padding: EdgeInsets.only(right: 20),
+              child:
+                  Image.asset('assets/images/pokemons/${listIndex[index]}.png'),
+            );
+          })),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final scrollController = ScrollController();
     final panelController = PanelController();
     var screenSize = MediaQuery.of(context).size;
-    var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
     Favpokemon favpokemon = new Favpokemon(0, '', []);
     favpokemon.index = widget.pokemon.index;
     favpokemon.name = widget.pokemon.name;
@@ -205,10 +214,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             Palette().getColorFromPokemonType(widget.pokemon).withOpacity(0.4),
         appBar: AppBar(
           backgroundColor: Palette().getColorFromPokemonType(widget.pokemon),
-          title: Text(
-            "Index NO.${widget.pokemon.index.toString()}",
-            style: TextStyle(fontStyle: FontStyle.normal),
-          ),
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),
@@ -227,28 +232,30 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                         padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                         height: screenSize.height / 3,
                         width: double.infinity,
-                        // alignment: Alignment.topCenter,
                         child: Image.asset(
                           'assets/images/pokemons/${widget.pokemon.index}.png',
                           height: screenSize.height / 1.6,
                           width: screenSize.width / 1.6,
                         )),
                     SizedBox(height: 30),
-                    Text(
-                      "Evolution Chain",
-                      style: TextStyle(fontSize: 16),
+                    //Evolution chain card
+                    Container(
+                      height: 40,
+                      width: 130,
+                      child: Card(
+                        color:
+                            Palette().getColorFromPokemonType(widget.pokemon),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        child: Center(
+                          child: Text("Evolution Chain",
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20),
-                    GridView.count(
-                        crossAxisCount: 3,
-                        shrinkWrap: true,
-                        children: List.generate(listIndex.length, (index) {
-                          return Container(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Image.asset(
-                                'assets/images/pokemons/${listIndex[index]}.png'),
-                          );
-                        })),
+                    buildEvolutionChainView(),
                     SizedBox(height: 40),
                   ],
                 ),

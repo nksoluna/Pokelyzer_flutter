@@ -6,7 +6,7 @@ import 'package:pokelyzer/models/favpokemon.dart';
 import 'Helpers/palette.dart';
 import 'Screens/Compare/compare.dart';
 import 'Screens/Home/home.dart';
-import 'Screens/TeamBuilder/teamBuilder.dart';
+import 'Screens/TeamBuilder/team_builder.dart';
 import 'Screens/pokemonall/pokemon_all.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pokelyzer/models/pokemon.dart';
