@@ -5,7 +5,7 @@ import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
-import 'package:pokelyzer/Screens/pokemon_info/pokemon_info.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/pokemon_info.dart';
 
 class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({Key? key}) : super(key: key);

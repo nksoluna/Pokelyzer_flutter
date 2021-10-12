@@ -5,7 +5,7 @@ import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:flutter/material.dart';
-import 'package:pokelyzer/Helpers/searchFunction.dart';
+import 'package:pokelyzer/Helpers/search_function.dart';
 import 'package:hive/hive.dart';
 
 class FilterWidget extends StatefulWidget {

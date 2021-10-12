@@ -2,15 +2,15 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
-import 'package:pokelyzer/Helpers/searchFunction.dart';
+import 'package:pokelyzer/Helpers/search_function.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
 import 'package:pokelyzer/Screens/favorites/boxes.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_stat.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_strength.dart';
-import 'package:pokelyzer/Screens/pokemon_info/widgets/tab_move.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_stat.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_strength.dart';
+import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {
@@ -214,10 +214,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
             Palette().getColorFromPokemonType(widget.pokemon).withOpacity(0.4),
         appBar: AppBar(
           backgroundColor: Palette().getColorFromPokemonType(widget.pokemon),
-          title: Text(
-            "Index NO.${widget.pokemon.index.toString()}",
-            style: TextStyle(fontStyle: FontStyle.normal),
-          ),
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),

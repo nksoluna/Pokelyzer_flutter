@@ -6,7 +6,7 @@ import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
 import 'package:pokelyzer/CustomWidgets/search_widget.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/Helpers/analyzing.dart';
-import 'package:pokelyzer/Screens/TeamBuilder/propertiesShow.dart';
+import 'package:pokelyzer/Screens/TeamBuilder/properties_show.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
