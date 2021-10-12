@@ -181,7 +181,7 @@ class _CompareScreenState extends State<CompareScreen> {
                 .headline4!
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
+          padding: const EdgeInsets.symmetric(vertical: 50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
