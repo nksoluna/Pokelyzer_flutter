@@ -45,8 +45,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'LastTime Tracker App',
       theme: ThemeData(
-        primaryColor: primaryColor,
-        accentColor: secondaryColor,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: primaryColor,
+          secondary: secondaryColor,
+        ),
         primarySwatch: Palette.kToDark,
         disabledColor: Colors.grey[600],
         brightness: Brightness.light,

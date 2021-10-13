@@ -75,6 +75,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     } else {
       deletefav(favpokemon);
     }
+    print(favpokemon);
   }
 
   void deletefav(Favpokemon favpokemon) async {
