@@ -86,7 +86,6 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         _favpokemon[i].delete();
       }
     }
-    print(_favpokemon);
   }
 
   Widget buildfavbutton(
@@ -185,13 +184,29 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
     return Center(
       child: GridView.count(
+          physics: ScrollPhysics(),
           crossAxisCount: 3,
           shrinkWrap: true,
           children: List.generate(listIndex.length, (index) {
-            return Container(
-              padding: EdgeInsets.only(right: 20),
-              child:
-                  Image.asset('assets/images/pokemons/${listIndex[index]}.png'),
+            return GestureDetector(
+              onTap: () {
+                if (widget.allPokemon[listIndex[index] - 1] != widget.pokemon) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PokemonInfoScreen(
+                            widget.allPokemon,
+                            widget.allPokemon[listIndex[index] - 1],
+                            _allType,
+                            widget.isfav)),
+                  );
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(15),
+                child: Image.asset(
+                    'assets/images/pokemons/${listIndex[index]}.png'),
+              ),
             );
           })),
     );
@@ -237,26 +252,40 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                           height: screenSize.height / 1.6,
                           width: screenSize.width / 1.6,
                         )),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     //Evolution chain card
                     Container(
-                      height: 40,
-                      width: 130,
                       child: Card(
-                        color:
-                            Palette().getColorFromPokemonType(widget.pokemon),
+                        color: Colors.white70,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
                         ),
-                        child: Center(
-                          child: Text("Evolution Chain",
-                              style: TextStyle(color: Colors.white)),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 130,
+                              child: Card(
+                                margin: const EdgeInsets.only(top: 18.0),
+                                color: Palette()
+                                    .getColorFromPokemonType(widget.pokemon),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: Center(
+                                  child: Text("Evolution Chain",
+                                      style: TextStyle(color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            buildEvolutionChainView(),
+                            SizedBox(height: 10),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    buildEvolutionChainView(),
-                    SizedBox(height: 40),
+                    SizedBox(height: 80),
                   ],
                 ),
               )),

@@ -15,10 +15,6 @@ class TabStatWidget extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.all(30),
             child: Wrap(runSpacing: 15, children: [
-              Text(
-                "Pokemon Stat",
-                style: TextStyle(fontSize: 20),
-              ),
               Container(
                 child: Row(
                   children: [
