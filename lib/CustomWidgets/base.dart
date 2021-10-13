@@ -77,6 +77,7 @@ class BaseWidget extends StatelessWidget {
                 ),
                 shape: RoundedRectangleBorder(borderRadius: radius),
                 bottom: TabBar(
+                  indicatorColor: Colors.white,
                   tabs: List.generate(
                       tabBar!.length, (index) => Tab(text: tabBar![index])),
                 ),

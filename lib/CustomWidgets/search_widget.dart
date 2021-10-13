@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,21 +75,64 @@ class SearchWidgetState extends State<SearchWidget> {
             ),
             Column(
               children: [
-                Container(
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(left: 0, top: 5),
-                    child: RawMaterialButton(
-                      fillColor: Colors.red[400],
-                      onPressed: () {
-                        Navigator.pop(context, widget.previousPokemon);
-                      },
-                      child: Text(
-                        "<",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                      shape: CircleBorder(),
-                    )),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left: 0, top: 5),
+                        child: RawMaterialButton(
+                          fillColor: Colors.red[400],
+                          onPressed: () {
+                            Navigator.pop(context, widget.previousPokemon);
+                          },
+                          child: Text(
+                            "<",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
+                        )),
+                    Container(
+                        margin: const EdgeInsets.only(right: 20, top: 2),
+                        child: RaisedGradientButton(
+                            height: 40,
+                            width: 130,
+                            gradient: LinearGradient(
+                              colors: <Color>[
+                                Colors.grey[50]!,
+                                Colors.grey[50]!
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SearchResult(getFavouritePokemon())));
+                            },
+                            child: Center(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Favourite ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18,
+                                      color: Colors.pink[500]),
+                                ),
+                                Icon(
+                                  Icons.favorite,
+                                  color: Colors.pink[500],
+                                ),
+                              ],
+                            )))),
+                  ],
+                ),
                 SizedBox(
                   height: 15,
                 ),

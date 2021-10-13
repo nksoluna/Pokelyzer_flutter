@@ -4,13 +4,13 @@ import 'package:hive/hive.dart';
 import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/Helpers/search_function.dart';
 import 'package:pokelyzer/Helpers/string_extension.dart';
+import 'package:pokelyzer/Screens/PokemonInfo/widgets/tab_move.dart';
+import 'package:pokelyzer/Screens/PokemonInfo/widgets/tab_stat.dart';
+import 'package:pokelyzer/Screens/PokemonInfo/widgets/tab_strength.dart';
 import 'package:pokelyzer/Screens/favorites/boxes.dart';
 import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
-import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_stat.dart';
-import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_strength.dart';
-import 'package:pokelyzer/Screens/pokemonInfo/widgets/tab_move.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PokemonInfoScreen extends StatefulWidget {

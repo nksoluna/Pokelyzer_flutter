@@ -24,36 +24,14 @@ class PokemonSelectorWidget extends StatefulWidget {
 class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildPokemonName(),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey[100],
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey[800]!,
-                offset: Offset(0.0, 2),
-                blurRadius: 5,
-              ),
-            ],
-          ),
-          width: widget.width,
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.symmetric(vertical: 15),
-          child: ClipOval(
-            child: Material(
-              type: MaterialType.transparency,
-              child: InkWell(
-                child: Image.asset(getImagePath()),
-                onTap: widget.onTap,
-              ),
-            ),
-          ),
-        ),
-        buildPokemonType(),
-      ],
+    return Expanded(
+      child: Column(
+        children: [
+          buildPokemonName(),
+          buildPokemonSelector(),
+          buildPokemonType(),
+        ],
+      ),
     );
   }
 
@@ -69,10 +47,39 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
   Widget buildPokemonName() {
     final pokemonName = widget.selectedPokemon?.name.capitalize() ?? '-';
     return Text(pokemonName,
-        style: Theme.of(context)
-            .textTheme
-            .headline4!
-            .merge(TextStyle(color: widget.textColor)));
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: widget.textColor,
+            fontSize: 30,
+            fontWeight: FontWeight.bold));
+  }
+
+  Widget buildPokemonSelector() {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.grey[100],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[800]!,
+            offset: Offset(0.0, 2),
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      width: widget.width,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      child: ClipOval(
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            child: Image.asset(getImagePath()),
+            onTap: widget.onTap,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildPokemonType() {
@@ -99,6 +106,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorWidget> {
     if (widget.selectedPokemon != null) {
       final typeLength = widget.selectedPokemon!.types.length;
       return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
               typeLength,
               (index) =>

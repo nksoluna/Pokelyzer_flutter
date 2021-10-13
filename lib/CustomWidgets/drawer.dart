@@ -116,7 +116,7 @@ class DrawerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      padding: const EdgeInsets.only(bottom: 30),
+      padding: const EdgeInsets.only(bottom: 5),
       child: IconButton(
         iconSize: 35,
         icon: const Icon(Icons.menu),

@@ -181,9 +181,9 @@ class _CompareScreenState extends State<CompareScreen> {
                 .headline4!
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
+          padding: const EdgeInsets.symmetric(vertical: 50),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: List.generate(
               selectedPokemon.length,
               (index) => PokemonSelectorWidget(
@@ -198,20 +198,26 @@ class _CompareScreenState extends State<CompareScreen> {
           ),
         ),
         Container(
-          alignment: Alignment.topRight,
-          margin: EdgeInsets.only(right: imageSize / 2 - 20),
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(horizontal: 35),
           child: RaisedGradientButton(
             child: Text(
-              'Compare Pokemon!',
+              'Clear selected pokemon',
               style: TextStyle(color: Colors.white),
             ),
-            width: 150,
-            height: 30,
             gradient: LinearGradient(
-              colors: <Color>[Colors.red[700]!, Colors.red[400]!],
+              colors: <Color>[
+                Colors.grey[800]!,
+                Colors.grey[700]!,
+                Colors.grey[600]!,
+                Colors.grey[700]!,
+                Colors.grey[800]!
+              ],
             ),
             onPressed: () {
-              _pc.open();
+              setState(() {
+                selectedPokemon = List.filled(2, null);
+              });
             },
           ),
         ),
@@ -324,5 +330,8 @@ class _CompareScreenState extends State<CompareScreen> {
     setState(() {
       selectedPokemon[index] = result;
     });
+    if (selectedPokemon.every((element) => element != null)) {
+      _pc.open();
+    }
   }
 }
