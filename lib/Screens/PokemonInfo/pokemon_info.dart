@@ -17,8 +17,8 @@ class PokemonInfoScreen extends StatefulWidget {
   final List<Pokemon> allPokemon;
   final Pokemon pokemon;
   final List<TypePokemon> allType;
-  bool isfav;
-  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isfav);
+  final bool isFav;
+  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isFav);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
@@ -27,18 +27,32 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final box = Hive.box<Favpokemon>('favpokemon');
   final panelController = PanelController();
   List<TypePokemon> _allType = [];
-  bool issave = false;
+  bool _isFav = false;
 
   @override
   void initState() {
     super.initState();
     _allType = widget.allType;
-    issave = widget.isfav;
+    _isFav = isFavourite();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  bool isFavourite() {
+    final box = Boxes.getFavpokemon();
+    List<Favpokemon> favPokemon = box.values.toList();
+
+    if (box.isEmpty) return false;
+
+    //check pokemon in favbox
+    for (var pokemon in favPokemon) {
+      if (pokemon.name == widget.pokemon.name) return true;
+    }
+
+    return false;
   }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
@@ -63,14 +77,14 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }));
   }
 
-  Future addfav(int index, String name, List<String> types, bool _isfav) async {
+  Future addfav(int index, String name, List<String> types, bool isFav) async {
     final favpokemon = Favpokemon(0, '', [])
       ..index = index
       ..name = name
       ..types = types;
 
     final box = Boxes.getFavpokemon();
-    if (_isfav == false) {
+    if (isFav == false) {
       box.add(favpokemon);
     } else {
       deletefav(favpokemon);
@@ -91,6 +105,9 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   Widget buildfavbutton(
       BuildContext context, Favpokemon favpokemon, int position, bool issaved) {
+    setState(() {
+      _isFav = !_isFav;
+    });
     return InkWell(
       child: StarButton(
         isStarred: issaved,
@@ -199,7 +216,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                             widget.allPokemon,
                             widget.allPokemon[listIndex[index] - 1],
                             _allType,
-                            widget.isfav)),
+                            widget.isFav)),
                   );
                 }
               },
@@ -233,7 +250,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),
-                child: buildfavbutton(context, favpokemon, position, issave))
+                child: buildfavbutton(context, favpokemon, position, _isFav))
           ],
         ),
         body: Stack(children: <Widget>[
