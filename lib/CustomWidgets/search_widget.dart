@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:pokelyzer/CustomWidgets/raised_gradient_button.dart';
-import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
 import 'package:flutter/cupertino.dart';

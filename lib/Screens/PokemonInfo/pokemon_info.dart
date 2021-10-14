@@ -17,8 +17,8 @@ class PokemonInfoScreen extends StatefulWidget {
   final List<Pokemon> allPokemon;
   final Pokemon pokemon;
   final List<TypePokemon> allType;
-  bool isfav;
-  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isfav);
+  final bool isFav;
+  PokemonInfoScreen(this.allPokemon, this.pokemon, this.allType, this.isFav);
   @override
   _PokemonInfoScreenState createState() => _PokemonInfoScreenState();
 }
@@ -27,18 +27,32 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
   final box = Hive.box<Favpokemon>('favpokemon');
   final panelController = PanelController();
   List<TypePokemon> _allType = [];
-  bool issave = false;
+  bool _isFav = false;
 
   @override
   void initState() {
     super.initState();
     _allType = widget.allType;
-    issave = widget.isfav;
+    _isFav = isFavourite();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  bool isFavourite() {
+    final box = Boxes.getFavpokemon();
+    List<Favpokemon> favPokemon = box.values.toList();
+
+    if (box.isEmpty) return false;
+
+    //check pokemon in favbox
+    for (var pokemon in favPokemon) {
+      if (pokemon.name == widget.pokemon.name) return true;
+    }
+
+    return false;
   }
 
   Widget buildPokemonTypes(Pokemon pokemon) {
@@ -63,18 +77,19 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }));
   }
 
-  Future addfav(int index, String name, List<String> types, bool _isfav) async {
+  Future addfav(int index, String name, List<String> types, bool isFav) async {
     final favpokemon = Favpokemon(0, '', [])
       ..index = index
       ..name = name
       ..types = types;
 
     final box = Boxes.getFavpokemon();
-    if (_isfav == false) {
+    if (isFav == false) {
       box.add(favpokemon);
     } else {
       deletefav(favpokemon);
     }
+    print(favpokemon);
   }
 
   void deletefav(Favpokemon favpokemon) async {
@@ -86,11 +101,13 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
         _favpokemon[i].delete();
       }
     }
-    print(_favpokemon);
   }
 
   Widget buildfavbutton(
       BuildContext context, Favpokemon favpokemon, int position, bool issaved) {
+    setState(() {
+      _isFav = !_isFav;
+    });
     return InkWell(
       child: StarButton(
         isStarred: issaved,
@@ -185,13 +202,29 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     var listIndex = getEvolutionsChainIndex(widget.allPokemon, widget.pokemon);
     return Center(
       child: GridView.count(
+          physics: ScrollPhysics(),
           crossAxisCount: 3,
           shrinkWrap: true,
           children: List.generate(listIndex.length, (index) {
-            return Container(
-              padding: EdgeInsets.only(right: 20),
-              child:
-                  Image.asset('assets/images/pokemons/${listIndex[index]}.png'),
+            return GestureDetector(
+              onTap: () {
+                if (widget.allPokemon[listIndex[index] - 1] != widget.pokemon) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PokemonInfoScreen(
+                            widget.allPokemon,
+                            widget.allPokemon[listIndex[index] - 1],
+                            _allType,
+                            widget.isFav)),
+                  );
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(15),
+                child: Image.asset(
+                    'assets/images/pokemons/${listIndex[index]}.png'),
+              ),
             );
           })),
     );
@@ -217,7 +250,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),
-                child: buildfavbutton(context, favpokemon, position, issave))
+                child: buildfavbutton(context, favpokemon, position, _isFav))
           ],
         ),
         body: Stack(children: <Widget>[
@@ -237,26 +270,40 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                           height: screenSize.height / 1.6,
                           width: screenSize.width / 1.6,
                         )),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     //Evolution chain card
                     Container(
-                      height: 40,
-                      width: 130,
                       child: Card(
-                        color:
-                            Palette().getColorFromPokemonType(widget.pokemon),
+                        color: Colors.white70,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
                         ),
-                        child: Center(
-                          child: Text("Evolution Chain",
-                              style: TextStyle(color: Colors.white)),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 130,
+                              child: Card(
+                                margin: const EdgeInsets.only(top: 18.0),
+                                color: Palette()
+                                    .getColorFromPokemonType(widget.pokemon),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: Center(
+                                  child: Text("Evolution Chain",
+                                      style: TextStyle(color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            buildEvolutionChainView(),
+                            SizedBox(height: 10),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    buildEvolutionChainView(),
-                    SizedBox(height: 40),
+                    SizedBox(height: 80),
                   ],
                 ),
               )),
