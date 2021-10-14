@@ -165,103 +165,50 @@ class SearchWidgetState extends State<SearchWidget> {
                 ),
                 Container(
                     child: Expanded(
-                        child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 9,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  height: 35,
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  child: Card(
-                                    color: selectedTypeArray[index]
-                                        ? typeColor[index]
-                                        : Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectedTypeArray[index] =
-                                              !selectedTypeArray[index];
-                                        });
-                                      },
-                                      child: Center(
-                                        child: Text(
-                                          allTypeString[index],
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: selectedTypeArray[index]
-                                                  ? Colors.white
-                                                  : typeColor[index]),
-                                        ),
+                  child: GridView.count(
+                      childAspectRatio: 4.5,
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      children: List.generate(allTypeString.length, (index) {
+                        return Center(
+                            child: Container(
+                                height: 35,
+                                width: 120,
+                                margin: EdgeInsets.only(
+                                  left: index % 2 == 0 ? 20 : 0,
+                                  right: index % 2 == 1 ? 20 : 0,
+                                  bottom: 10,
+                                ),
+                                child: Card(
+                                  color: selectedTypeArray[index]
+                                      ? typeColor[index]
+                                      : Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedTypeArray[index] =
+                                            !selectedTypeArray[index];
+                                      });
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        allTypeString[index],
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: selectedTypeArray[index]
+                                                ? Colors.white
+                                                : typeColor[index]),
                                       ),
                                     ),
-                                  ));
-                            }),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 9,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  height: 35,
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  child: Card(
-                                    color: selectedTypeArray[index + 9]
-                                        ? typeColor[index + 9]
-                                        : Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          color: Colors.grey, width: 1),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          selectedTypeArray[index + 9] =
-                                              !selectedTypeArray[index + 9];
-                                        });
-                                      },
-                                      child: Center(
-                                        child: Text(
-                                          allTypeString[index + 9],
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color:
-                                                  selectedTypeArray[index + 9]
-                                                      ? Colors.white
-                                                      : typeColor[index + 9]),
-                                        ),
-                                      ),
-                                    ),
-                                  ));
-                            }),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 50,
-                    ),
-                  ],
-                ))),
+                                  ),
+                                )));
+                      })),
+                )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
