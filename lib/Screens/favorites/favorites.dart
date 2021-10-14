@@ -63,11 +63,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           _allpokemon = pokemonlist;
           pokemonlist.forEach((element) {
             for (int i = 0; i < _favpokemon.length; i++) {
-              if (favlist[i].name == element.name) {
-                _pokemon.insert(i, element);
+              if (_favpokemon[i].name == element.name) {
+                _pokemon.add(element);
               }
             }
           });
+          if (_favpokemon.isNotEmpty) {
+            _favpokemon = _favpokemon.toSet().toList();
+            _favpokemon.sort((a, b) => a.index.compareTo(b.index));
+          }
         },
       );
     } catch (e) {
@@ -75,8 +79,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         _error = true;
       });
     }
-    print(_favpokemon);
-    print(_pokemon);
   }
 
   Widget build(BuildContext context) {
@@ -259,16 +261,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               color: typeColor.withOpacity(0.6),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PokemonInfoScreen(
-                              _allpokemon,
-                              _pkmns,
-                              _allType,
-                              fav,
-                            )),
-                  );
+                  Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                            builder: (context) => PokemonInfoScreen(
+                                  _allpokemon,
+                                  _pkmns,
+                                  _allType,
+                                  fav,
+                                )),
+                      )
+                      .then((value) => setState(() {
+                            fetchpokemon();
+                          }));
                 },
                 child: Row(
                   children: <Widget>[
