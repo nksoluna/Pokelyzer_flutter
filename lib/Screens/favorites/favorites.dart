@@ -61,6 +61,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           _allType = typelist;
           _favpokemon = favlist;
           _allpokemon = pokemonlist;
+          _pokemon = [];
           pokemonlist.forEach((element) {
             for (int i = 0; i < _favpokemon.length; i++) {
               if (_favpokemon[i].name == element.name) {
