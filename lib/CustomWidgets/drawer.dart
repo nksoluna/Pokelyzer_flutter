@@ -91,7 +91,7 @@ class DrawerWidget extends StatelessWidget {
         title: Text(text,
             style: TextStyle(
               color: isSelect
-                  ? Theme.of(context).accentColor
+                  ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).primaryColorDark,
             )),
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0),

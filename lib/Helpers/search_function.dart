@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+import 'package:pokelyzer/models/favpokemon.dart';
 import 'package:pokelyzer/models/pokemon.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
 
@@ -88,4 +90,17 @@ List<int> getEvolutionsChainIndex(List<Pokemon> allPokemon, Pokemon pokemon) {
   listIndex.sort();
   result = listIndex.toSet().toList();
   return result;
+}
+
+List<Pokemon> getFavouritePokemon() {
+  final favbox = Hive.box<Favpokemon>('favpokemon');
+  final allPokemonBox = Hive.box<Pokemon>('allpokemon');
+  List<Pokemon> allPokemon = [];
+  allPokemon.addAll(allPokemonBox.values);
+  List<Pokemon> favPokemons = [];
+  if (favbox.isNotEmpty)
+    for (int i = 0; i < favbox.length; i++) {
+      favPokemons.addAll(searchWithIndex(favbox.getAt(i)!.index, allPokemon));
+    }
+  return favPokemons;
 }

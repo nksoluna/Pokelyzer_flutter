@@ -21,7 +21,6 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   List<TypePokemon> allType = [];
   // weakness & strength[weakness is - , strength is + in list]  another is immune
   List<List<int>> teamProperties = List.filled(2, List.filled(18, 0));
-  double selectorWidth = 100;
   bool isTeamChanged = false;
   final scrollController = ScrollController();
   final panelController = PanelController();
@@ -40,6 +39,7 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double selectorWidth = MediaQuery.of(context).size.width / 4;
     var screenSize = MediaQuery.of(context).size;
     var imageSize = screenSize.width / 4.5;
     return Stack(
@@ -166,9 +166,11 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(Icons.find_replace, color: Colors.red),
-                      Text(
-                        "Current analyzed data is from previous team!",
-                        style: TextStyle(color: Colors.red),
+                      Expanded(
+                        child: Text(
+                          "Current analyzed data is from previous team!",
+                          style: TextStyle(color: Colors.red),
+                        ),
                       ),
                       SizedBox(
                         width: 30,

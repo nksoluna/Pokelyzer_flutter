@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/all_pokemon');
+                            Navigator.pushNamed(context, '/compare');
                           },
                         ),
                       ),
