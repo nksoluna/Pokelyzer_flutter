@@ -100,12 +100,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 child: Stack(
                   children: [
                     Row(children: [
-                      Text(
-                        'Favorites',
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
+                      Text('FAVORITES',
+                          style: Theme.of(context).textTheme.headline4!.merge(
+                              TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold))),
                       Container(
                         margin: EdgeInsets.only(left: 30),
                         width: 30,

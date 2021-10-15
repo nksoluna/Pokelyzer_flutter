@@ -94,12 +94,10 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                 margin: EdgeInsets.fromLTRB(170, 0, 0, 0),
                 child: Stack(
                   children: [
-                    Text(
-                      'POKEDEX',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
+                    Text('POKEDEX',
+                        style: Theme.of(context).textTheme.headline4!.merge(
+                            TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold))),
                   ],
                 ),
               ),
