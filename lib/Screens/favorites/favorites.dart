@@ -139,7 +139,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     if (_favpokemon.isEmpty) {
       return Container(
         child: Center(
-          child: Text('NONE FAV'),
+          child: Text("There's no favorites Pokemon in here"),
         ),
       );
     }
