@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'LastTime Tracker App',
+      title: 'Pokelyzer',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: primaryColor,
