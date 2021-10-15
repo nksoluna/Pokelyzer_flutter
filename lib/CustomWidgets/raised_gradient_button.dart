@@ -12,7 +12,7 @@ class RaisedGradientButton extends StatelessWidget {
     required this.child,
     required this.gradient,
     this.width = double.infinity,
-    this.height = 50.0,
+    this.height = 0,
     required this.onPressed,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class RaisedGradientButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height,
+      height: height == 0 ? MediaQuery.of(context).size.height * 0.07 : height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: gradient,

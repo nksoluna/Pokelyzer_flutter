@@ -203,7 +203,10 @@ class _CompareScreenState extends State<CompareScreen> {
           child: RaisedGradientButton(
             child: Text(
               'Clear selected pokemon',
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context)
+                  .textTheme
+                  .button!
+                  .merge(TextStyle(color: Colors.white)),
             ),
             gradient: LinearGradient(
               colors: <Color>[
