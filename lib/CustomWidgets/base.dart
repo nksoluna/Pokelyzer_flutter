@@ -3,6 +3,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'drawer.dart';
 
+// ignore: must_be_immutable
 class BaseWidget extends StatelessWidget {
   final List<Widget> children;
   final List<Widget>? panelBody;
