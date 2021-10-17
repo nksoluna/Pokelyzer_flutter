@@ -1,16 +1,16 @@
-# pokelyzer
+# Pokelyzer
 
-A new Flutter project.
+---------- Disclaimer --------- 
+
+This project is for educational purposes only. Opinions or points of view expressed in this project represent the view of the
+presenter, and does not necessarily represent the official position or policies of the Pokemon game or Pokemon 's Trademark
+Commission. Nothing in this project constitutes legal advice. The individuals appearing in this project, if any, are depicted for illustrative
+purposes only and are presumed innocent until proven guilty in a court of law.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Home Page
 
-A few resources to get you started if this is your first Flutter project:
+![home](https://user-images.githubusercontent.com/60749514/137622884-4dd57dc4-9a35-4fc2-ac78-2701535b05b6.PNG)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Pokedex
