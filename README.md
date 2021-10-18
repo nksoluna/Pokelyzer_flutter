@@ -1,5 +1,10 @@
 # Pokelyzer - Flutter
 
+
+[![Release](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)
+[![Date](https://img.shields.io/github/release-date/nksoluna/pokelyzer_flutter?color=orange)](https://img.shields.io/github/release-date/nksoluna/pokelyzer_flutter)
+[![Size](https://img.shields.io/github/repo-size/nksoluna/pokelyzer_flutter?color=red)](https://img.shields.io/github/repo-size/nksoluna/pokelyzer_flutter?color=red)
+
 Pokedex in mobile created with Flutter and Node.js .
 
 ## Table of Contents
