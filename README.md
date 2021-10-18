@@ -1,16 +1,36 @@
-# Pokelyzer
+# Pokelyzer - Flutter
 
----------- Disclaimer --------- 
+Pokedex in mobile created with Flutter and Node.js .
 
-This project is for educational purposes only. Opinions or points of view expressed in this project represent the view of the
-presenter, and does not necessarily represent the official position or policies of the Pokemon game or Pokemon 's Trademark
-Commission. Nothing in this project constitutes legal advice. The individuals appearing in this project, if any, are depicted for illustrative
-purposes only and are presumed innocent until proven guilty in a court of law.
+## Table of Contents
 
-## Getting Started
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Working](#Working)
+* [Features](#Features)
+* [Screenshots](#Screenshots)
 
-Home Page
+## General info
 
-![home](https://user-images.githubusercontent.com/60749514/137622884-4dd57dc4-9a35-4fc2-ac78-2701535b05b6.PNG)
 
-Pokedex
+
+
+## Technologies
+ Project is created with:
+* Flutter version :
+* Node.js version :
+
+
+## Setup
+Clone git with this command :
+```
+$ git clone https://github.com/nksoluna/Pokelyzer_flutter
+```
+And run this project by using flutter pub get and run :
+```
+$ cd pokelyzer_flutter
+$ flutter pub get 
+$ flutter run
+```
+	
