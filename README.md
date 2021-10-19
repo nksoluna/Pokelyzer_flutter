@@ -1,6 +1,6 @@
 # Pokelyzer - Flutter
 
-Pokedex in mobile created with Flutter.
+Individual and Multiple Pokemon strengths and weaknesses analyzing app.
 
 [![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/)
 [![Release](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)
@@ -21,8 +21,6 @@ Pokedex in mobile created with Flutter.
 
 
 
-
-
 ## Setup
 1. If you don't have Flutter SDK installed, please visit official Flutter site.
 
@@ -39,7 +37,7 @@ $ flutter run
 
 ## Features
 
-* Pokedex (700++ Pokemons)
+* Pokedex (up to generation 7 pokemons)
 * Search and Filter Pokemon with name , index or type
 * Check Pokemons Strength , Weakness and Immune
 * Check Pokemon's Evolution Chain
