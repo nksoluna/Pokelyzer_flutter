@@ -3,9 +3,9 @@
 Individual and Multiple Pokemon strengths and weaknesses analyzing app.
 
 [![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/)
-[![Release](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter?style=social)
+[![Release](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter)](https://img.shields.io/github/v/release/nksoluna/pokelyzer_flutter)
 [![Date](https://img.shields.io/github/release-date/nksoluna/pokelyzer_flutter?color=orange)](https://img.shields.io/github/release-date/nksoluna/pokelyzer_flutter)
-[![Size](https://img.shields.io/github/repo-size/nksoluna/pokelyzer_flutter?color=red)](https://img.shields.io/github/repo-size/nksoluna/pokelyzer_flutter?color=red)
+
 
 
 
@@ -103,4 +103,20 @@ This is some Features of Project in Real App .
 
 ![favorites_with_pokemon](https://user-images.githubusercontent.com/60749514/137769456-d91db0ad-6c6d-42e5-92e4-ae6040e11586.PNG)
 ![favorites_in_search_list](https://user-images.githubusercontent.com/60749514/137769453-8ef1f24b-cd96-4226-9390-58e61d87e94b.PNG)
+
+### Pokemon Info
+![pokemon_info](https://user-images.githubusercontent.com/60749514/137843218-d1d30f27-68cc-437b-b96d-767337cd9350.PNG)
+![stat](https://user-images.githubusercontent.com/60749514/137843226-8f7586c8-b650-47b3-bbba-74c56a0c492b.PNG)
+![strength](https://user-images.githubusercontent.com/60749514/137843228-e5cdb287-c836-4b82-b16d-37bd7fbd6bd0.PNG)
+![move](https://user-images.githubusercontent.com/60749514/137843230-b4416cd8-b4aa-4a04-bba3-14d6d51bbaa0.PNG)
+
+
+## Contact us 
+
+### &nbsp;&nbsp; nksoluna : https://github.com/nksoluna
+### &nbsp;&nbsp; zerkersaurian : https://github.com/zerkersaurian
+### &nbsp;&nbsp; iceman951 : https://github.com/iceman951
+### &nbsp;&nbsp; karnzx : https://github.com/karnzx
+
+
 
