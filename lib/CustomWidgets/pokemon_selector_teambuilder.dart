@@ -72,7 +72,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
             style: Theme.of(context)
                 .textTheme
                 .headline4!
-                .merge(TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                .merge(TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
           ),
         ],
       );
@@ -80,7 +80,7 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
         style: Theme.of(context)
             .textTheme
             .headline4!
-            .merge(TextStyle(fontSize: 17, fontWeight: FontWeight.bold)));
+            .merge(TextStyle(fontSize: 15, fontWeight: FontWeight.bold)));
   }
 
   Widget buildPokemonType(Pokemon? pokemon) {

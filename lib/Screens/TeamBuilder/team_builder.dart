@@ -39,7 +39,8 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double selectorWidth = MediaQuery.of(context).size.width / 4;
+    //double selectorWidth = MediaQuery.of(context).size.width / 4;
+    double selectorWidth = 100.00;
     var screenSize = MediaQuery.of(context).size;
     var imageSize = screenSize.width / 4.5;
     return Stack(
