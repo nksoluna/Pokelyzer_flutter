@@ -17,8 +17,9 @@ Individual and Multiple Pokemon strengths and weaknesses analyzing app.
 * [Screenshots](#screenshots)
 * [Contact us](#contact-us)
 
-## General info
-
+## Overview
+A Flutter app about Pokemon. Can view pokemon data up to Gen7 ,Comparing 2 pokemon strengths/weaknesses 
+and simulating team to view strengths/weaknesses of Pokemon team.
 
 
 ## Setup
