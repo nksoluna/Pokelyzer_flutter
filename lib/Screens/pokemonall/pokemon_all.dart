@@ -129,43 +129,33 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
       return Center(
           child: Padding(
         padding: const EdgeInsets.all(8),
-        child: CircularProgressIndicator(), // loading with circular loader
+        child: CircularProgressIndicator(),
       ));
     } else if (_error) {
-      // if error = true
       return Center(
         child: InkWell(
           onTap: () => setState(
             () {
-              _loading =
-                  true; //change loading to true and trying load same page
-              _error = false; //change error to false
-              fetchpokemon(); // tap to set new State
+              _loading = true;
+              _error = false;
+              fetchpokemon();
             },
           ),
           child: Padding(
-            // if cannot loading
             padding: const EdgeInsets.all(16),
-            child: Text(
-                "Error While Loading Data. Please Try Again"), // return this text to change the upper state
+            child: Text("Error While Loading Data. Please Try Again"),
           ),
         ),
       );
     } else {
-      // if error = false
       return ListView.builder(
-          itemCount: _pokemon.length +
-              (_hasmore
-                  ? 1
-                  : 0), // itemCount = amount of people and if _hasmore = true this count will stop in last element
+          itemCount: _pokemon.length + (_hasmore ? 1 : 0),
           itemBuilder: (context, index) {
             if (index == _pokemon.length) {
-              // if people.length has more     than nextpagethreshold
-              fetchpokemon(); //fetching people
+              fetchpokemon();
             }
             if (index == _pokemon.length + _nextPokemonThreshold) {
               if (_error) {
-                // same as error
                 return Center(
                   child: InkWell(
                     onTap: () => setState(
@@ -186,7 +176,7 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                 return Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(), // Primary Swatch
+                    child: CircularProgressIndicator(),
                   ),
                 );
               }
