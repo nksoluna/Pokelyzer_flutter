@@ -11,7 +11,7 @@ Individual and Multiple Pokemon strengths and weaknesses analyzing app.
 
 ## Table of Contents
 
-* [General info](#general-info)
+* [Overview](#overview)
 * [Setup](#setup)
 * [Features](#features)
 * [Screenshots](#screenshots)
