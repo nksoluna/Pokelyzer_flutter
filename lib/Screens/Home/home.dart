@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   shrinkWrap: true,
                   crossAxisCount: 2,
                   padding: const EdgeInsets.all(20),
-                  // crossAxisSpacing: 10,
-                  // mainAxisSpacing: 10,
                   children: [
                     Column(children: [
                       Container(
