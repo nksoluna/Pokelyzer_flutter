@@ -62,9 +62,10 @@ class _PokemonSelectorWidgetState extends State<PokemonSelectorBuilderWidget> {
     return 'assets/images/pokemons/201.png';
   }
 
+  // if there is - in pokemon's name then cut it
   Widget buildPokemonName(Pokemon? pokemon) {
     final pokemonName = widget.selectedPokemon?.name.capitalize() ?? '-';
-    if (pokemonName.contains("-") && pokemonName.length >= 10)
+    if (pokemonName.contains("-") && pokemonName.length >= 12)
       return Column(
         children: [
           Text(

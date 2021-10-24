@@ -22,7 +22,7 @@ class SearchWidgetState extends State<SearchWidget> {
   List<Pokemon> selectedPokemon = [];
   List<Pokemon> allPokemon = [];
   List<TypePokemon> allType = [];
-  List<bool> selectedTypeArray = [];
+  List<bool> selectedTypeArray = []; // selector
   List<Color> typeColor = [];
   late TextEditingController searchIndexController;
   late TextEditingController searchNameController;
@@ -80,6 +80,7 @@ class SearchWidgetState extends State<SearchWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // back button
                     Container(
                         alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(left: 0, top: 5),
@@ -95,6 +96,7 @@ class SearchWidgetState extends State<SearchWidget> {
                           padding: EdgeInsets.all(10.0),
                           shape: CircleBorder(),
                         )),
+                    // favourite pokemon button
                     Container(
                         margin: const EdgeInsets.only(right: 20, top: 2),
                         child: RaisedGradientButton(
@@ -135,6 +137,7 @@ class SearchWidgetState extends State<SearchWidget> {
                 SizedBox(
                   height: 15,
                 ),
+                // textfields for input
                 Container(
                   width: 300,
                   child: TextField(
@@ -162,6 +165,7 @@ class SearchWidgetState extends State<SearchWidget> {
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
+                // 18 type selector
                 Container(
                     child: Expanded(
                   child: GridView.count(
@@ -208,9 +212,11 @@ class SearchWidgetState extends State<SearchWidget> {
                                 )));
                       })),
                 )),
+                // buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // remove button
                     Container(
                         margin: const EdgeInsets.only(bottom: 10, right: 10),
                         child: RaisedGradientButton(
@@ -240,6 +246,7 @@ class SearchWidgetState extends State<SearchWidget> {
                                 ),
                               ],
                             )))),
+                    // search button
                     Container(
                         margin: const EdgeInsets.only(bottom: 10, right: 10),
                         child: RaisedGradientButton(
@@ -304,10 +311,10 @@ class SearchResultState extends State<SearchResult> {
       body: Center(
           child: Stack(
         children: [
-          // insert bg here
           Column(
             children: [
               Container(
+                  // back to search_widget button
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(left: 0, top: 5),
                   child: RawMaterialButton(
@@ -325,6 +332,7 @@ class SearchResultState extends State<SearchResult> {
               Divider(
                 color: Colors.grey,
               ),
+              // result pokemon list
               Expanded(
                   child: ListView.builder(
                       itemCount: widget.selectedPokemon.length,
@@ -346,11 +354,13 @@ class SearchResultState extends State<SearchResult> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  // if pokemon name has - in it ,cut them and replace with : and
+                                  // make name show 2 row instead of 1
                                   widget.selectedPokemon[index].name
                                               .contains("-") &&
                                           widget.selectedPokemon[index].name
                                                   .length >=
-                                              10
+                                              12
                                       ? Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -373,6 +383,7 @@ class SearchResultState extends State<SearchResult> {
                                           widget.selectedPokemon[index].name,
                                           style: TextStyle(fontSize: 20),
                                         ),
+                                  // if there is 2 type in pokemon show row of type(2) instead of no row for 1 type
                                   widget.selectedPokemon[index].types.length ==
                                           2
                                       ? Row(
