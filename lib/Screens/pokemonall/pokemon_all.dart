@@ -79,9 +79,9 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
 
   String buildPokemonName(Pokemon pokemon) {
     if (pokemon.name.contains("-") && pokemon.name.length >= 12) {
-      return pokemon.name.split("-")[0];
+      return pokemon.name.split("-")[0].toUpperCase();
     }
-    return pokemon.name;
+    return pokemon.name.toUpperCase();
   }
 
   Widget build(BuildContext context) {
