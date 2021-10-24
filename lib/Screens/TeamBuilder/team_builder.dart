@@ -163,6 +163,8 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                 onPressed: () {
                   setState(() {
                     selectedPokemon = List.filled(6, null);
+                    activeTypeStringList = List.filled(3, []);
+                    activeTypeValueList = List.filled(3, []);
                   });
                 },
               ),
