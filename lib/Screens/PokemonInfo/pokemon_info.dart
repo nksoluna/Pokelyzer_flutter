@@ -41,17 +41,14 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     super.dispose();
   }
 
+  //check pokemon in favbox
   bool isFavourite() {
     final box = Boxes.getFavpokemon();
     List<Favpokemon> favPokemon = box.values.toList();
-
     if (box.isEmpty) return false;
-
-    //check pokemon in favbox
     for (var pokemon in favPokemon) {
       if (pokemon.name == widget.pokemon.name) return true;
     }
-
     return false;
   }
 
@@ -102,8 +99,8 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     }
   }
 
-  Widget buildfavbutton(
-      BuildContext context, Favpokemon favpokemon, int position, bool issaved) {
+  Widget buildFavButton(
+      BuildContext context, Favpokemon favpokemon, bool issaved) {
     setState(() {
       _isFav = !_isFav;
     });
@@ -136,7 +133,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
 
   Widget buildSlidingPanel({
     required PanelController panelController,
-    required ScrollController scrollController,
+    
     required Pokemon pokemon,
   }) {
     BorderRadiusGeometry radius = BorderRadius.only(
@@ -178,16 +175,16 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                   child: TabBarView(
                     children: [
                       TabStatWidget(
-                        scrollController: scrollController,
+                        
                         pokemon: pokemon,
                       ),
                       TabSrengthWidget(
-                        scrollController: scrollController,
+                        
                         pokemon: pokemon,
                         allType: _allType,
                       ),
                       TabMoveWidget(
-                        scrollController: scrollController,
+                        
                         pokemon: pokemon,
                       ),
                     ],
@@ -238,7 +235,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
     favpokemon.index = widget.pokemon.index;
     favpokemon.name = widget.pokemon.name;
     favpokemon.types = widget.pokemon.types;
-    int position = 0;
+
     return Container(
       color: Colors.white,
       child: Scaffold(
@@ -249,7 +246,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
           actions: <Widget>[
             Container(
                 margin: EdgeInsets.only(right: 5),
-                child: buildfavbutton(context, favpokemon, position, _isFav))
+                child: buildFavButton(context, favpokemon, _isFav))
           ],
         ),
         body: Stack(children: <Widget>[
@@ -307,7 +304,7 @@ class _PokemonInfoScreenState extends State<PokemonInfoScreen> {
                 ),
               )),
           buildSlidingPanel(
-              scrollController: scrollController,
+              
               panelController: panelController,
               pokemon: widget.pokemon),
         ]),

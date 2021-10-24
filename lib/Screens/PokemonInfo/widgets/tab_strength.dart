@@ -9,11 +9,9 @@ class TabSrengthWidget extends StatelessWidget {
   final List<TypePokemon> allType;
   const TabSrengthWidget({
     Key? key,
-    required this.scrollController,
     required this.pokemon,
     required this.allType,
   }) : super(key: key);
-  final ScrollController scrollController;
 
   Widget buildStrength(List<int> typeProperty, List<String> strengthList,
           List<String> allTypeString) =>

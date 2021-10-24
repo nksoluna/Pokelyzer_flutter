@@ -7,72 +7,10 @@ class TabMoveWidget extends StatelessWidget {
   final Pokemon pokemon;
   const TabMoveWidget({
     Key? key,
-    required this.scrollController,
+
     required this.pokemon,
   }) : super(key: key);
-  final ScrollController scrollController;
 
-  Color gettypeColor(Move move) {
-    Color typeColor = Color(0xFFFFFFFF);
-    var types = move.damageType;
-    switch (types) {
-      case 'normal':
-        typeColor = Color(0xFFA8A878);
-        break;
-      case 'fire':
-        typeColor = Color(0xFFF08030);
-        break;
-      case 'water':
-        typeColor = Color(0xFF6890F0);
-        break;
-      case 'grass':
-        typeColor = Color(0xFF78C850);
-        break;
-      case 'electric':
-        typeColor = Color(0xFFF8D030);
-        break;
-      case 'ice':
-        typeColor = Color(0xFF98D8D8);
-        break;
-      case 'fighting':
-        typeColor = Color(0xFFC03028);
-        break;
-      case 'poison':
-        typeColor = Color(0xFFA040A0);
-        break;
-      case 'ground':
-        typeColor = Color(0xFFE0C068);
-        break;
-      case 'flying':
-        typeColor = Color(0xFFA890F0);
-        break;
-      case 'psychic':
-        typeColor = Color(0xFFF85888);
-        break;
-      case 'bug':
-        typeColor = Color(0xFFA8B820);
-        break;
-      case 'rock':
-        typeColor = Color(0xFFB8A038);
-        break;
-      case 'ghost':
-        typeColor = Color(0xFF705898);
-        break;
-      case 'dark':
-        typeColor = Color(0xFF705848);
-        break;
-      case 'dragon':
-        typeColor = Color(0xFF7038F8);
-        break;
-      case 'steel':
-        typeColor = Color(0xB8B8D0);
-        break;
-      case 'fairy':
-        typeColor = Color(0xFFEE99AC);
-        break;
-    }
-    return typeColor;
-  }
 
   Color getClassColor(Move move) {
     Color classColor = Color(0xFFFFFFFF);
@@ -97,7 +35,9 @@ class TabMoveWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return Card(
                 // color: Colors.grey[350],
-                color: gettypeColor(pokemon.moves[index]).withOpacity(0.7),
+                color: Palette()
+                    .getColorFromMove(pokemon.moves[index])
+                    .withOpacity(0.7),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
                 child: ListTile(

@@ -6,10 +6,10 @@ class TabStatWidget extends StatelessWidget {
   final Pokemon pokemon;
   const TabStatWidget({
     Key? key,
-    required this.scrollController,
+  
     required this.pokemon,
   }) : super(key: key);
-  final ScrollController scrollController;
+  
 
   Widget buildStatsBar() => Column(children: [
         Padding(
