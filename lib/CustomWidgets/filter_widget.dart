@@ -131,7 +131,7 @@ class FilterWidgetState extends State<FilterWidget> {
                       children: List.generate(allTypeString.length, (index) {
                         return Center(
                             child: Container(
-                                height: 35,
+                                height: 50,
                                 width: 120,
                                 margin: EdgeInsets.only(
                                   left: index % 2 == 0 ? 20 : 0,

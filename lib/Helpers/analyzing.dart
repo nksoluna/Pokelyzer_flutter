@@ -89,4 +89,19 @@ class Analyzing {
       }
     return result;
   }
+
+  List<int> getActiveTypeValueList(List<int> input, String operator) {
+    List<int> result = [];
+    if (operator == ">") {
+      for (int i = 0; i < 18; i++) {
+        if (input[i] > 0) result.add(input[i]);
+      }
+    }
+    if (operator == "<") {
+      for (int i = 0; i < 18; i++) {
+        if (input[i] < 0) result.add(input[i]);
+      }
+    }
+    return result;
+  }
 }

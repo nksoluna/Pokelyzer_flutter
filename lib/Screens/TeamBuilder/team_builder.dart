@@ -21,7 +21,10 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
   List<TypePokemon> allType = [];
   // weakness & strength[weakness is - , strength is + in list]  another is immune
   List<List<int>> teamProperties = List.filled(2, List.filled(18, 0));
-  bool isTeamChanged = false;
+  // index 0 = weakness ,1 = strength ,2 = immune
+  List<List<String>> activeTypeStringList = List.filled(3, []);
+  List<List<int>> activeTypeValueList = List.filled(3, []);
+
   final scrollController = ScrollController();
   final panelController = PanelController();
   @override
@@ -50,9 +53,12 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
           tabBar: ["Weakness", "Strength", "Immune"],
           panelRadius: 24,
           panelBody: [
-            PropertiesShow(teamProperties[0], "Weakness"),
-            PropertiesShow(teamProperties[0], "Strength"),
-            PropertiesShow(teamProperties[1], "Immune")
+            PropertiesShow(
+                activeTypeStringList[0], activeTypeValueList[0], "Weakness"),
+            PropertiesShow(
+                activeTypeStringList[1], activeTypeValueList[1], "Strength"),
+            PropertiesShow(
+                activeTypeStringList[2], activeTypeValueList[2], "Immune")
           ],
           children: [
             Text('Team Strength/Weakness Analyzing',
@@ -135,50 +141,32 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
                   ]),
             ),
             Container(
-              alignment: Alignment.topRight,
-              margin: EdgeInsets.only(right: imageSize / 2 - 20),
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 35),
               child: RaisedGradientButton(
                 child: Text(
-                  'Analyze!',
-                  style: TextStyle(color: Colors.white),
+                  'Clear selected pokemon',
+                  style: Theme.of(context)
+                      .textTheme
+                      .button!
+                      .merge(TextStyle(color: Colors.white)),
                 ),
-                width: 150,
-                height: 30,
                 gradient: LinearGradient(
-                  colors: <Color>[Colors.red[700]!, Colors.red[400]!],
+                  colors: <Color>[
+                    Colors.grey[800]!,
+                    Colors.grey[700]!,
+                    Colors.grey[600]!,
+                    Colors.grey[700]!,
+                    Colors.grey[800]!
+                  ],
                 ),
                 onPressed: () {
-                  panelController.open();
                   setState(() {
-                    List<List<int>> result =
-                        Analyzing().teamAnalyzing(selectedPokemon, allType);
-                    teamProperties[0] = result[0];
-                    teamProperties[1] = result[1];
-                    isTeamChanged = false;
+                    selectedPokemon = List.filled(6, null);
                   });
                 },
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            isTeamChanged
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.find_replace, color: Colors.red),
-                      Expanded(
-                        child: Text(
-                          "Current analyzed data is from previous team!",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      )
-                    ],
-                  )
-                : SizedBox()
           ],
         ),
       ],
@@ -194,8 +182,24 @@ class TeamBuilderScreenState extends State<TeamBuilderScreen> {
     );
 
     setState(() {
-      isTeamChanged = true;
       selectedPokemon[index] = result;
+      panelController.open();
+      List<List<int>> analyzinResult =
+          Analyzing().teamAnalyzing(selectedPokemon, allType);
+      teamProperties[0] = analyzinResult[0];
+      teamProperties[1] = analyzinResult[1];
+      activeTypeStringList[0] =
+          Analyzing().getActiveTypeStringList(teamProperties[0], "<");
+      activeTypeStringList[1] =
+          Analyzing().getActiveTypeStringList(teamProperties[0], ">");
+      activeTypeStringList[2] =
+          Analyzing().getActiveTypeStringList(teamProperties[1], ">");
+      activeTypeValueList[0] =
+          Analyzing().getActiveTypeValueList(teamProperties[0], "<");
+      activeTypeValueList[1] =
+          Analyzing().getActiveTypeValueList(teamProperties[0], ">");
+      activeTypeValueList[2] =
+          Analyzing().getActiveTypeValueList(teamProperties[1], ">");
     });
   }
 }

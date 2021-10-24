@@ -5,9 +5,11 @@ import 'package:pokelyzer/Helpers/palette.dart';
 import 'package:pokelyzer/models/type_pokemon.dart';
 
 class PropertiesShow extends StatefulWidget {
-  final List<int> properties;
+  final List<int> activeTypeValue;
+  final List<String> activeTypeString;
   final String propertiesToShow;
-  PropertiesShow(this.properties, this.propertiesToShow);
+  PropertiesShow(
+      this.activeTypeString, this.activeTypeValue, this.propertiesToShow);
   @override
   PropertiesShowState createState() => PropertiesShowState();
 }
@@ -16,6 +18,7 @@ class PropertiesShowState extends State<PropertiesShow> {
   List<String> allTypeString = getAllTypeInString();
   double headerFontSize = 17;
   double dataFontSize = 17;
+
   Widget createTypeTag(int index) {
     return Row(
       children: [
@@ -23,159 +26,38 @@ class PropertiesShowState extends State<PropertiesShow> {
           height: 30,
           width: 100,
           child: Card(
-            color: Palette()
-                .getSelectedTypeColor(allTypeString[index], allTypeString),
+            color: Palette().getSelectedTypeColor(
+                widget.activeTypeString[index], allTypeString),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
             child: Center(
-              child: Text(allTypeString[index],
+              child: Text(widget.activeTypeString[index],
                   style:
                       TextStyle(color: Colors.white, fontSize: dataFontSize)),
             ),
           ),
         ),
         Text(" x "),
-        Text(widget.properties[index].abs().toString())
+        Text(widget.activeTypeValue[index].abs().toString())
       ],
     );
   }
 
   Widget listTypeShow(String operator) {
-    if (operator == ">")
-      return Column(
-        children: Analyzing().totalActiveStrengthType(widget.properties) <= 9
-            ? [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(width: 100),
-                    Column(
-                      children: List.generate(18, (index) {
-                        if (widget.properties[index] > 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    ),
-                    SizedBox(width: 100),
-                  ],
-                ),
-              ]
-            : [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: List.generate(9, (index) {
-                        if (widget.properties[index] > 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    ),
-                    Column(
-                      children: List.generate(9, (index) {
-                        if (widget.properties[index + 9] > 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index + 9),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    )
-                  ],
-                )
-              ],
-      );
-    else
-      return Column(
-        children: Analyzing().totalActiveWeaknessType(widget.properties) <= 9
-            ? [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(width: 100),
-                    Column(
-                      children: List.generate(18, (index) {
-                        if (widget.properties[index] < 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    ),
-                    SizedBox(width: 100),
-                  ],
-                ),
-              ]
-            : [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: List.generate(9, (index) {
-                        if (widget.properties[index] < 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    ),
-                    Column(
-                      children: List.generate(9, (index) {
-                        if (widget.properties[index + 9] < 0) {
-                          return Column(
-                            children: [
-                              createTypeTag(index + 9),
-                              SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          );
-                        } else
-                          return SizedBox();
-                      }),
-                    )
-                  ],
-                )
-              ],
-      );
+    return Center(
+      child: GridView.count(
+        childAspectRatio: 4.5,
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        children: List.generate(widget.activeTypeString.length, (index) {
+          return Container(
+            margin: EdgeInsets.only(left: 30),
+            child: createTypeTag(index),
+          );
+        }),
+      ),
+    );
   }
 
   @override

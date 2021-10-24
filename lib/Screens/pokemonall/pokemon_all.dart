@@ -77,6 +77,13 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
     });
   }
 
+  String buildPokemonName(Pokemon pokemon) {
+    if (pokemon.name.contains("-") && pokemon.name.length >= 12) {
+      return pokemon.name.split("-")[0];
+    }
+    return pokemon.name;
+  }
+
   Widget build(BuildContext context) {
     return Container(
       child: BaseWidget(children: <Widget>[
@@ -280,7 +287,8 @@ class _AllpokemonScreenState extends State<AllpokemonScreen> {
                               child: Column(children: [
                                 Align(
                                     child: Text(
-                                  '${_pkmns.name.toUpperCase()}',
+                                  //'${_pkmns.name.toUpperCase()}',
+                                  buildPokemonName(_pkmns),
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
