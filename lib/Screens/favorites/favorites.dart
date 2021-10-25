@@ -105,7 +105,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold))),
                       Container(
-                        margin: EdgeInsets.only(left: 30),
+                        margin: EdgeInsets.only(left: 20),
                         width: 30,
                         height: 30,
                         child: FloatingActionButton(
